@@ -1,4 +1,5 @@
-![Bento Logo](docs/assets/bento.svg | width=250)
+![Bento Logo](./docs/img/bento.svg)
+<img src="./docs/img/bento.svg" width="250">
 # Bento Editor for Umbraco 8
 
 The Bento Editor is a content block editor for Umbraco 8 that takes advantage of the infinite editing features of Umbraco 8.
@@ -65,7 +66,7 @@ For example we could create a Promo Item and a Promo Element that both inherit f
 \
 This promotes reused and both views can share the common ```IPromoComp``` as the Model.
 
-## Datatype Setup
+## :bento: Datatype Setup
 Bento comes with two Umbraco Data Types, Bento Item and Bento Stack. Bento item is a simple single block editor.  This is useful for creating and managing items such as a carousel or header.
 
 The Bento Stack is why you are really here. The Bento Stack the editor that allows you to create stacked blocks.  Each block can have its own layout that contains areas.  Layouts can be as simple as a single cell, or as complex as a mosaic oddly arranged tiles.  We achieve this in the back office using [CSS Grid Layouts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout).
@@ -97,7 +98,7 @@ You should now be able to add your Bento Stack Data Type to a Document Type.
 
 > NOTE: you cannot drag items from one layout to another.
 
-## Templates / Views
+## :bento: Templates / Views
 Bento Layouts, Items and Elements are all CSHTML views that live in the ```/views/partials/bento``` folder.
 
 
@@ -151,7 +152,7 @@ The generated views look like this
 @using ContentModels = Umbraco.Web.PublishedModels;
  ```
 
-## Experimental Features 
+## :bento: Experimental Features 
 It is possible to render some styling in the back office.  This can be enabled via the ```Use back office CSS``` switch on the Bento Stack editor and supplying a path to a stylesheet in the ```CSS File Path``` field.
 
 > TIP: If you do want to use this its important that your CSS is very specific and it it helps to contain all of your CSS in a master class that wraps all yoru custom classes.  This will help ensure your CSS does not spill over and start effecting Umbraco back office styles.
