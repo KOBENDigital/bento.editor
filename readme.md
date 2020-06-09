@@ -1,4 +1,3 @@
-![Bento Logo](./docs/img/bento.svg)
 <img src="./docs/img/bento.svg" width="250">
 # Bento Editor for Umbraco 8
 
