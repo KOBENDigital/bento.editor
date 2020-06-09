@@ -1,0 +1,45 @@
+﻿<div ng-controller="bento.relationshipManagerApp as vm">
+	
+	<umb-load-indicator ng-if="vm.page.loading"></umb-load-indicator>
+
+	<umb-box ng-if="vm.relationships === null">
+		<umb-box-header title="Usage" />
+		<umb-box-content>
+			<div ng-if="!vm.page.loading">
+				<umb-empty-state size="small">
+					<localize key="relationType_noRelations">No relations for this relation type.</localize>
+				</umb-empty-state>
+			</div>
+		</umb-box-content>
+
+	</umb-box>
+	
+	<div ng-if="!vm.page.loading && vm.relationships !== null">
+
+		<umb-box ng-repeat="(key, items) in vm.relationships">
+
+			<umb-box-header title="{{key}}" />
+
+			<umb-box-content>
+
+				<div>
+					<umb-table items="items"
+					           item-properties="vm.options.includeProperties"
+					           allow-select-all="vm.allowSelectAll"
+					           on-select="vm.selectItem"
+					           on-click="vm.clickItem(item)"
+					           on-select-all="vm.selectAll($event)"
+					           on-selected-all="vm.isSelectedAll()"
+					           on-sorting-direction="vm.isSortDirection(col, direction)"
+					           on-sort="vm.sort">
+					</umb-table>
+
+				</div>
+
+			</umb-box-content>
+
+		</umb-box>
+
+	</div>
+
+</div>

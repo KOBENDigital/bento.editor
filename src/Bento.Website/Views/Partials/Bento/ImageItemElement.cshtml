@@ -1,0 +1,39 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.ImageItemElement>
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+
+@{
+	string classString = null;
+	var classList = new List<string>();
+
+
+	if (Model.HideOn.Any())
+	{
+		foreach (var hide in Model.HideOn)
+		{
+			switch (hide)
+			{
+				case "mobile":
+					classList.Add("hidden-m");
+					break;
+				case "tablet":
+					classList.Add("hidden-t");
+					break;
+				case "desktop":
+					classList.Add("hidden-d");
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	if (classList.Any())
+	{
+		classString = string.Join(" ", classList);
+	}
+
+
+}
+
+<img class="@classString" src="@(Model.Image?.Url)" />

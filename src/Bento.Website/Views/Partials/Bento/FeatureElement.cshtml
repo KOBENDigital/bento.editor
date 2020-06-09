@@ -1,0 +1,88 @@
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.FeatureElement>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	var id = Guid.NewGuid();
+	string classString = null;
+	string styleString = null;
+
+	var classList = new List<string>();
+	var styleList = new List<string>();
+
+	if (!string.IsNullOrEmpty(Model.BottomPadding) && Model.BottomPadding != "none")
+	{
+		classList.Add($"mb-{Model.BottomPadding}");
+	}
+
+	if (!string.IsNullOrEmpty(Model.TopPadding) && Model.TopPadding != "none")
+	{
+		classList.Add($"mt-{Model.TopPadding}");
+	}
+
+	if (!string.IsNullOrEmpty(Model.GutterLeft) && Model.GutterLeft != "none")
+	{
+		classList.Add($"gl-{Model.GutterLeft}");
+	}
+
+	if (!string.IsNullOrEmpty(Model.GutterRight) && Model.GutterRight != "none")
+	{
+		classList.Add($"gr-{Model.GutterRight}");
+	}
+
+	if (Model.CornerRadius != 0)
+	{
+		styleList.Add($"border-radius:{Model.CornerRadius}px;");
+	}
+
+	if (!string.IsNullOrEmpty(Model.CSsclass))
+	{
+		classList.Add(Model.CSsclass);
+	}
+
+	if (Model.TextColour != null && !string.IsNullOrEmpty(Model.TextColour.Label))
+	{
+		classList.Add($"txt-{Model.TextColour.Label}");
+	}
+
+	if (Model.BackgroundColour != null && !string.IsNullOrEmpty(Model.BackgroundColour.Label))
+	{
+		classList.Add($"bkg-{Model.BackgroundColour.Label}");
+	}
+
+	if (Model.Shadow)
+	{
+		classList.Add($"box-shadow");
+	}
+
+	if (classList.Any())
+	{
+		classString = string.Join(" ", classList);
+	}
+
+	if (styleList.Any())
+	{
+		styleString = string.Join(" ", styleList);
+	}
+}
+
+<div id="e-@id" class="feature-wrapper @classString">
+	<div class="feature">
+		<img class="no-shadow" src="@Model.Icon" />
+
+		<div class="feature-content">@Model.Summary</div>
+		@if (Model.HasValue("link"))
+		{
+			<div class="feature-button">
+				<a href="@Model.Link.Url" class="btn">@Model.Link.Name</a>
+			</div>
+		}
+	</div>
+</div>
+
+@if (!string.IsNullOrEmpty(styleString))
+{
+	<style>
+	#e-@id {
+			@Html.Raw(styleString)
+	}
+	</style>
+}

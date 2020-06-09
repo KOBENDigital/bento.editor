@@ -1,0 +1,154 @@
+﻿
+#tabsList {
+    overflow: hidden;
+    margin: 0;
+    position: fixed;
+    z-index: 99;
+    background: #f6f4f4;
+    width: 100%;
+}
+
+.tabLink {
+    position: relative;
+    display: inline-block;
+    list-style: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 20px;
+    background-color: rgba(255,255,255,1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.16);
+    border-right: 2px solid #f6f4f4;
+    transition: background-color 0.2s ease-in-out 0s;
+}
+
+.tabLink:first-child {
+    border-radius: 3px 0 0 0;
+}
+
+.tabLink:last-child {
+    border: 0 none;
+    border-radius: 0 3px 0 0;
+}
+
+.tabLink:first-child:last-child {
+    border-radius: 3px 3px 0 0;
+}
+
+.tabLink::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #f6f4f4;
+    opacity: 1;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.tabLink:not(.active):hover {
+    color: #2152a3;
+    background-color: #ffffff;
+}
+
+.tabLink.active {
+    background-color: #ffffff;
+}
+
+.tabLink.active::before {
+    opacity: 1;
+    left: 12px;
+    right: 12px;
+    height: 4px;
+    border-radius: 3px 3px 0 0;
+    background-color: #f5c1bc;
+}
+
+/* Validation */
+
+.tabLink .icon {
+    display: none;
+}
+
+.show-validation .tabLink.hasError .icon {
+    display: inline;
+    position: absolute;
+    color: #d42054;
+}
+
+.show-validation .tabLink.hasError span {
+    margin-left: 20px;
+}
+
+.tabLink p {
+    margin: 0;
+}
+
+/* Validation */
+
+.tabLink .icon {
+    display: none;
+}
+
+.show-validation .tabLink.hasError .icon {
+    display: inline;
+    position: absolute;
+    color: #d42054;
+}
+
+.show-validation .tabLink.hasError span {
+    margin-left: 20px;
+}
+
+.tabLink p {
+    margin: 0;
+}
+
+/* Validation */
+
+.tabLink .icon {
+    display: none;
+}
+
+.show-validation .tabLink.hasError .icon {
+    display: inline;
+    position: absolute;
+    color: #d42054;
+}
+
+.show-validation .tabLink.hasError span {
+    margin-left: 20px;
+}
+
+/* Hides the panel header so that the title is not repeated */
+.umb-group-panel#tab-0 .umb-group-panel__header,
+.umb-group-panel[style*=display][style*=block] .umb-group-panel__header {
+    display: none;
+}
+
+.umb-group-panel {
+    margin-bottom: 0;
+}
+.tabbed-panel {
+    padding-top: 60px;
+}
+
+.fake-top-background {
+    margin-top: -20px;
+    background: #f6f4f4;
+    height: 20px;
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+}
+
+/* hide the "Content" dropdown (avoid confusion) */
+.dropdown-menu.umb-sub-views-nav-item__anchor_dropdown {
+    display:none;
+}
+
+/* moves the Grid re-order bar down so it doesn't cover the tabs */
+#umb-grid > .umb-editor-sub-header[umb-sticky-bar] { 
+	top: 64px;
+}

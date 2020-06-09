@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "App_Plugins/Bento/Css/bento.css",
+    "inputFile": "App_Plugins/Bento/Css/bento.scss"
+  },
+  {
+    "outputFile": "App_Plugins/Bento/Css/bento.previews.css",
+    "inputFile": "App_Plugins/Bento/Css/bento.previews.scss"
+  },
+  {
+    "outputFile": "css/site.css",
+    "inputFile": "css/site.scss"
+  }
+]

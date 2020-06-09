@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+	<info>
+		<package>
+			<name>Bento.Core</name>
+			<version>0.0.23.0</version>
+			<license url="http://opensource.org/licenses/MIT">MIT License</license>
+			<url>https://github.com/KOBENDigital/Bento.Editor</url>
+			<requirements>
+				<major>1</major>
+				<minor>0</minor>
+				<patch>2</patch>
+			</requirements>
+		</package>
+		<author>
+			<name>KØBEN digital</name>
+			<website>https://koben.com.au/</website>
+		</author>
+		<readme>
+			<![CDATA[Core library for the Umbraco 8 Bento Editor]]>
+		</readme>
+	</info>
+	<DocumentTypes />
+	<Templates />
+	<Stylesheets />
+	<Macros />
+	<DictionaryItems />
+	<Languages />
+	<DataTypes />
+	<Actions />
+	<control />
+	<files />
+</umbPackage>

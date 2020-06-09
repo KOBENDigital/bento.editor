@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<umbPackage>
+  <info>
+    <package>
+      <name>Bento.Editor</name>
+      <version>0.0.23</version>
+      <iconUrl></iconUrl>
+      <licence url="https://opensource.org/licenses/MIT">MIT</licence>
+      <url>https://github.com/KOBENDigital/bento.editor</url>
+      <requirements type="strict">
+        <major>8</major>
+        <minor>6</minor>
+        <patch>0</patch>
+      </requirements>
+    </package>
+    <author>
+      <name>KOBEN digital</name>
+      <website>https://koben.com.au</website>
+    </author>
+    <readme><![CDATA[Bento Editor for Umbraco 8. A flexible block based editor that takes advantage of infinite editing.]]></readme>
+  </info>
+  <files>
+      <folder path="../../Bento.Website/App_Plugins/Bento" orgPath="App_Plugins/Bento" /> 
+      <folder path="../../Bento.Website/App_Plugins/BentoRelationshipManager" orgPath="App_Plugins/BentoRelationshipManager" /> 
+      <file path="../../Bento.Website/bin/Bento.Core.dll" orgPath="bin/Bento.Core.dll" />
+  </files>
+  <Actions />
+  <control />
+  <DocumentTypes />
+  <Templates />
+  <Stylesheets />
+  <Macros />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+</umbPackage>

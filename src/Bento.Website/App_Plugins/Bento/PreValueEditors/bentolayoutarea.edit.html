@@ -1,0 +1,144 @@
+﻿<div ng-controller="bentolayoutarea.edit.controller as vm">
+	<umb-editor-view>
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_EditLayoutArea">Edit Layout Area</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+		<umb-editor-container>
+
+
+			<umb-box>
+				<umb-box-header title-key="bento_areaSettings"></umb-box-header>
+				<umb-box-content>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label" for="layoutAlias">
+								<localize key="bento_areaName">Area name</localize>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<input type="text" name="{{vm.area.name}}" class="umb-property-editor umb-textstring" ng-model="vm.area.name" ng-change="vm.layoutChanged()" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_areaAlias">Area alias</localize>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<input type="text" name="{{vm.area.alias}}" class="umb-property-editor umb-textstring" ng-model="vm.area.alias" ng-change="vm.layoutChanged()" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_areaColumn">Area column</localize>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<input type="number" style="width:45%" name="{{vm.area.colLine1}}" ng-model="vm.area.colLine1" ng-change="vm.layoutChanged()" /> / <input type="number" style="width:45%" name="{{vm.area.colLine2}}" ng-model="vm.area.colLine2" ng-change="vm.layoutChanged()" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_areaRow">Area row</localize>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<input type="number" name="{{vm.area.rowLine1}}" style="width:45%" ng-model="vm.area.rowLine1" ng-change="vm.layoutChanged()" /> / <input type="number" name="{{vm.area.rowLine2}}" style="width:45%" ng-model="vm.area.rowLine2" ng-change="vm.layoutChanged()" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</umb-box-content>
+			</umb-box>
+			<umb-box ng-if="!vm.allowSort">
+
+				<umb-box-header title-key="bento_allowedItems"></umb-box-header>
+				<umb-box-content>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_areaElementTypes">Area Element Types</localize>
+							</label>
+							<div style="margin-bottom:1em">
+								<small class="control-description"><localize key="bento_areaElementTypesDescription">Optional. Select the element types the editor is allowed to embed</localize></small>
+							</div>
+							<div class="controls">
+								<div>
+									<prevalue-umb-editor model="vm.area.allowedElementTypes"></prevalue-umb-editor>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<label class="control-label">
+							<localize key="bento_areaContentTypes">Area Content Types</localize>
+						</label>
+						<div style="margin-bottom:1em">
+							<small class="control-description"><localize key="bento_areaContentTypesDescription">Optional. Select the content types the editor is allowed to create</localize></small>
+						</div>
+						<div class="controls">
+
+							<div>
+								<prevalue-umb-editor model="vm.area.allowedContentTypes"></prevalue-umb-editor>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+			</umb-box>
+			<umb-box ng-if="vm.allowSort">
+				<umb-box-header title-key="bento_sortingEnabled"></umb-box-header>
+				<umb-box-content>
+					<div class="bento-warning">
+						<localize accesskey="bento_sortingEnabledWarning">While sorting is enabled you cannot set restrictions on Element or Content types at the Area level.</localize>
+					</div>
+				</umb-box-content>
+			</umb-box>
+
+		</umb-editor-container>
+
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+										button-style="link"
+										label-key="general_close"
+										shortcut="esc"
+										action="vm.confirmClose()">
+				</umb-button>
+				<umb-button type="button"
+										button-style="action"
+										label-key="general_submit"
+										action="vm.submit()">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+
+	</umb-editor-view>
+	<umb-overlay ng-if="vm.closeOverlay.show"
+							 model="vm.closeOverlay"
+							 position="right">
+	</umb-overlay>
+</div>

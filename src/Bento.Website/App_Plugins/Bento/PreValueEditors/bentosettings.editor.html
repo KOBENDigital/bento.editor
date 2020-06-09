@@ -1,0 +1,34 @@
+﻿<div ng-controller="bento.settings.editor.controller as vm" class="umb-property-editor umb-contentpicker">
+
+	<ng-form name="multiUrlPickerForm">
+		<div ui-sortable="vm.sortableOptions" ng-model="vm.settings">
+			<div class="umb-node-preview" ng-repeat="setting in vm.settings">
+				<i class="umb-node-preview__icon icon-settings-alt-2"></i>
+				<div class="umb-node-preview__content">
+					<div class="umb-node-preview__name" ng-attr-title="{{setting.alias}}">{{setting.label}}</div>
+					<div style="max-width: 250px;">
+						{{setting.type}}{{(setting.required ? '*' : '')}}
+					</div>
+				</div>
+				<div class="umb-node-preview__actions">
+					<a class="umb-node-preview__action umb-node-preview__action--red" title="Edit" ng-click="vm.openSettingEditor(setting, $index)">
+						<localize key="general_edit">Edit</localize>
+					</a>
+				</div>
+				<div class="umb-node-preview__actions">
+					<a class="umb-node-preview__action umb-node-preview__action--red" title="Remove" ng-click="vm.remove($index)">
+						<localize key="general_remove">Remove</localize>
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<a class="umb-node-preview-add"
+		   href
+		   ng-click="vm.openSettingEditor()"
+		   prevent-default>
+			<localize key="general_add">Add</localize>
+		</a>
+	</ng-form>
+</div>

@@ -1,0 +1,10 @@
+﻿{
+  "javascript": [
+    "~/App_Plugins/Cultiv.Tabify/interceptor.js",
+    "~/App_Plugins/Cultiv.Tabify/directives/cttabbedcontent.directive.js",
+    "~/App_Plugins/Cultiv.Tabify/directives/ctvaltab.directive.js"
+  ],
+  "css": [
+    "~/App_Plugins/Cultiv.Tabify/tabify.css"
+  ]
+}
