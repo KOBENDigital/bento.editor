@@ -1,4 +1,5 @@
 <img src="./docs/img/bento.svg" width="250">
+
 # Bento Editor for Umbraco 8
 
 The Bento Editor is a content block editor for Umbraco 8 that takes advantage of the infinite editing features of Umbraco 8.
