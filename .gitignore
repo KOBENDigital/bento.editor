@@ -56,7 +56,7 @@ ipch/
 *.aps
 *.ncb
 *.opensdf
-*.sdf
+# *.sdf
 *.cachefile
 
 # Visual Studio profiler
@@ -134,8 +134,8 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 
 # SQL Server files
-App_Data/*.mdf
-App_Data/*.ldf
+# App_Data/*.mdf
+# App_Data/*.ldf
 
 
 #LightSwitch generated files
@@ -163,12 +163,12 @@ $RECYCLE.BIN/
 # =========================
 # Umbraco 
 # =========================
-media/
+# media/
 Cached/
 *.Publish.xml
 umbraco.config
 UmbracoTraceLog*
-App_Data/
+# App_Data/
 imageCache/
 TEMP/
 uSync.Archive/
@@ -194,3 +194,5 @@ node_modules/
 !/src/Bento.Website/umbraco/Views/prevalueeditors/singlecontenttypepicker.html
 !/src/Bento.Website/umbraco/Views/prevalueeditors/singlerequiredcontenttypepicker.html
 /src/.idea/
+
+src/Bento.Website/App_Data/cache/
