@@ -87,8 +87,8 @@ namespace Bento.Core.Events
 					if (bentoBlocksRelationType == null)
 					{
 						RelationType relationType = new RelationType(
-							RelationTypes.BentoItemsAlias,
 							RelationTypes.BentoItemsName,
+							RelationTypes.BentoItemsAlias,
 							true,
 							UmbracoObjectTypes.Document.GetGuid(),
 							UmbracoObjectTypes.Document.GetGuid());
