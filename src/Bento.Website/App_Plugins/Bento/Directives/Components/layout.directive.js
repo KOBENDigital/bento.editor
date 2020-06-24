@@ -37,11 +37,14 @@
 							$scope.itemUpdating = true;
 
 							ui.item.parent().find('.drop').removeClass('drop');
-							//angular.forEach($scope.layout.areas, function (val, key) {
-							//	$scope.areas[key].alias = val.alias;
-							//	$scope.areas[key].allowedElementTypes = val.allowedElementTypes;
-							//	$scope.areas[key].allowedContentTypes = val.allowedContentTypes;
-							//});
+
+							angular.forEach($scope.areas, function (area, $index) {
+
+								area.alias = $scope.layout.areas[$index].alias;
+
+							});
+
+							$scope.itemUpdating = true;
 
 							$scope.setSort(false);
 						},
@@ -82,17 +85,6 @@
 						},
 						update: function (e, ui) {
 							ui.item.parent().find('.drop').removeClass('drop');
-							//let alias = $scope.areas[ui.item.sortable.index].contentData.contentTypeAlias;
-							//let dropAllowedElements = $scope.areas[ui.item.sortable.dropindex].allowedElementTypes.split(',');
-							//let dropAllowedContent = $scope.areas[ui.item.sortable.dropindex].allowedContentTypes.split(',');
-							//let allowed = false;
-
-							//allowed = _.contains(dropAllowedContent, alias) || _.contains(dropAllowedElements, alias);
-
-							//if (!allowed) {
-							//	notificationsService.error("Unable to move item.  It is not allowed in the new position");
-							//	ui.item.sortable.cancel();
-							//}
 						}
 						,
 						'ui-floating': true,
