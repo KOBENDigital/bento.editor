@@ -1,7 +1,7 @@
 ﻿(function() {
 	'use strict';
 
-	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService) {
+	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService, $sce, $http) {
 
 		if ($scope.model.config.useCssFile && $scope.model.config.cssFilePath) {
 			assetsService.load([$scope.model.config.cssFilePath], $scope).then(function () {
@@ -157,6 +157,31 @@
 
 							$scope.model.value.push(layout);
 						});
+
+					let url = '/umbraco/backoffice/Api/Bento/LoadPreview';
+
+					var data = {
+						stackItems: JSON.stringify($scope.model.value)
+					};
+
+					$http.post(url, data).then(function (response) {
+
+						let bentoPreview = document.querySelector('.bento-stack-preview');
+						bentoPreview.removeChild(bentoPreview.firstChild);
+
+						let iframe = document.createElement("iframe");
+						bentoPreview.appendChild(iframe);
+
+
+						document.querySelector('.bento-stack-preview iframe').contentDocument.write($sce.trustAsHtml(response.data));
+
+
+					}).catch(function (error) {
+						console.log(error);
+
+					}).finally(function () {
+
+					});
 				}
 			});
 

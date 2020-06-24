@@ -252,6 +252,7 @@
     <Compile Include="Models\DetachedPublishedElement.cs" />
     <Compile Include="Models\DetachedPublishedProperty.cs" />
     <Compile Include="Models\LoadEmbeddedContentRequest.cs" />
+    <Compile Include="Models\LoadStackPreviewRequest.cs" />
     <Compile Include="Services\Interfaces\IEmbeddedContentService.cs" />
     <Compile Include="DataEditors\BentoItemConfiguration.cs" />
     <Compile Include="DataEditors\BentoItemConfigurationEditor.cs" />

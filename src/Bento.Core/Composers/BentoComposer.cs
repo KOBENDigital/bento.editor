@@ -7,6 +7,7 @@ using Bento.Core.Services.Interfaces;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Web;
+using Umbraco.Web.PublishedCache;
 
 namespace Bento.Core.Composers
 {
@@ -31,7 +32,8 @@ namespace Bento.Core.Composers
 			composition.Register(f =>
 			{
 				var s = f.GetInstance<IEmbeddedContentService>();
-				return new BentoApiController(s);
+				var p = f.GetInstance<IPublishedSnapshotAccessor>();
+				return new BentoApiController(s,p);
 			}, Lifetime.Request);
 
 			//content apps

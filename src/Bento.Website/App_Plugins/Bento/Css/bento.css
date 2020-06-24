@@ -108,6 +108,17 @@
     .bento-stack-item-wrapper.ui-sortable-helper .bento-stack-item-insert {
       display: none; }
 
+.bento-stack-wrapper {
+  display: flex; }
+  .bento-stack-wrapper .bento-stack-preview {
+    position: relative; }
+    .bento-stack-wrapper .bento-stack-preview iframe {
+      background: unset;
+      width: 100%;
+      height: 100%; }
+  .bento-stack-wrapper > div {
+    width: 50%; }
+
 .bento-stack-bottom-insert {
   text-align: center; }
 

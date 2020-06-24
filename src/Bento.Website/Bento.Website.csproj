@@ -571,6 +571,10 @@
     <Content Include="Views\Partials\Bento\Stylers\bentolayoutsettings.cshtml" />
     <Content Include="Views\Partials\Bento\HeadingItem.cshtml" />
     <Content Include="Views\Partials\Bento\HeadingItemBackOffice.cshtml" />
+    <Content Include="Views\Partials\Bento\Layouts\demo.cshtml" />
+    <Content Include="Views\Partials\Bento\SearchBoxElement.cshtml" />
+    <Content Include="Views\Partials\Bento\SearchBoxElementBackOffice.cshtml" />
+    <Content Include="Views\_bentoPreview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

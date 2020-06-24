@@ -1,4 +1,34 @@
-﻿.twoColumns {
+﻿.demo {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	grid-template-areas: "heading heading" "left right" "footer right";
+	grid-gap: 1em;
+
+	&-heading {
+		grid-area: heading;
+	}
+
+	&-left {
+		grid-area: left;
+	}
+
+	&-right{
+		gird-area: right;
+	}
+
+	&-footer{
+
+		grid-area: footer;
+	}
+
+	@media screen and (max-width:$tablet) {
+		grid-template-columns: 1fr;
+		grid-template-areas: "heading" "left" "right" "footer";
+	}
+}
+
+
+.twoColumns {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-areas: "first second";
