@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>Bento.Editor</id>
-		<version>0.0.23.0</version>
+		<version>0.0.25.0</version>
 		<title>Bento Editor for Umbraco 8</title>
 		<authors>KØBEN digital</authors>
 		<owners>KØBEN digital</owners>
