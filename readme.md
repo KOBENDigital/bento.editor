@@ -10,6 +10,16 @@ It is heavily inspired by the best parts of the original Umbraco Grid Editor wit
 
 License: MIT
 
+## :bento: Building and running the source
+
+After forking and cloning the repo, open the VS solution and run the Bento.Website project.  It uses the embeded SQLCE database. This will enable you to play with some test content and learn how some of the concepts of bento work.
+
+The Umbraco login details:
+
+username: admin@admin.com
+password: bentobentobento
+
+
 ## :bento: Install
 
 Umbraco must be installed first.
