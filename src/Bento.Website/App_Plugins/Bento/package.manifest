@@ -34,6 +34,7 @@
 		"/App_Plugins/Bento/directives/components/blockpicker.directive.js",
 		"/App_Plugins/Bento/resources/bento.resource.js",
 		"/App_Plugins/Bento/resources/bento.setting.factory.js",
+		"/App_Plugins/Bento/resources/bento.previewProcessor.factory.js",
 		"/App_Plugins/Bento/PreValueEditors/prevalueumbeditor.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/contenttypepicker.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/singlecontenttypepicker.controller.js",

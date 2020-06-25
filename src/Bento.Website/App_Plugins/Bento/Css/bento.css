@@ -116,6 +116,18 @@
       background: unset;
       width: 100%;
       height: 100%; }
+    .bento-stack-wrapper .bento-stack-preview:after {
+      content: '';
+      background: rgba(255, 255, 255, 0);
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .5s; }
+    .bento-stack-wrapper .bento-stack-preview-updating:after {
+      background: rgba(255, 255, 255, 0.8); }
   .bento-stack-wrapper > div {
     width: 50%; }
 

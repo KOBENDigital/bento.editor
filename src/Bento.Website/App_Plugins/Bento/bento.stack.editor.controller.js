@@ -1,7 +1,7 @@
 ﻿(function() {
 	'use strict';
 
-	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService, $sce, $http) {
+	function bentoStackEditorController($scope, editorService, notificationsService, bentoPreviewProcessorFactory, assetsService, $sce) {
 
 		if ($scope.model.config.useCssFile && $scope.model.config.cssFilePath) {
 			assetsService.load([$scope.model.config.cssFilePath], $scope).then(function () {
@@ -25,6 +25,9 @@
 		vm.toggleDeleteConfirm = toggleDeleteConfirm;
 		vm.setLayout = setLayout;
 		vm.getAvailableLayouts = getAvailableLayouts;
+		vm.previewVisible = true; //get from configuraiton or when made visible.
+		vm.previewUpdating = false;
+		vm.previewRequests = [];
 
 		$scope.model.hideLabel = $scope.model.config.hideLabel;
 
@@ -47,48 +50,44 @@
 			// KOBEN BENTO MIGRATION.  SHOULD BE REMOVED BEFORE PUBLIC RELEASE //
 
 
+			//if (!$scope.model.value[0].alias) {
+
+			//	var arrayOfLayouts = [];
+
+			//	angular.forEach($scope.model.value, function (val, key) {
+			//		let item = {};
+			//		item.settings = val.settings;
+			//		item.alias = layouts[0].alias;
+			//		let area = {};
+			//		area.id = val.id;
+			//		area.key = undefined; //we dont have one again until we save.
+			//		area.alias = layouts[0].areas[0].alias;
+			//		item.areas = [];
+			//		item.areas.push(area);
+			//		arrayOfLayouts.push(item);
+			//	});
+
+			//	$scope.model.value = arrayOfLayouts;
+
+			//}
+
+			//if ($scope.model.value[0].settings instanceof String) {
 
 
-			if (!$scope.model.value[0].alias) {
+			//	angular.forEach($scope.model.value, function (val, key) {
 
-				var arrayOfLayouts = [];
+			//		var oldSettings = JSON.parse(val.settings);
 
-				angular.forEach($scope.model.value, function (val, key) {
-					let item = {};
-					item.settings = val.settings;
-					item.alias = layouts[0].alias;
-					let area = {};
-					area.id = val.id;
-					area.key = undefined; //we dont have one again until we save.
-					area.alias = layouts[0].areas[0].alias;
-					item.areas = [];
-					item.areas.push(area);
-					arrayOfLayouts.push(item);
-				});
+			//		var settings = {};
 
-				$scope.model.value = arrayOfLayouts;
+			//		settings.contentTypeAlias = $scope.model.config.layoutSettingsDoctypeAlias;
+			//		settings.key = guid();
 
-			}
+			//		val.settings = settings;
 
-			if ($scope.model.value[0].settings instanceof String) {
+			//	});
 
-
-				angular.forEach($scope.model.value, function (val, key) {
-
-					var oldSettings = JSON.parse(val.settings);
-
-					var settings = {};
-
-					settings.contentTypeAlias = $scope.model.config.layoutSettingsDoctypeAlias;
-					settings.key = guid();
-
-					val.settings = settings;
-
-				});
-
-			}
-
-
+			//}
 
 
 			// END OF KOBEN MIGRATION                                          //
@@ -158,32 +157,55 @@
 							$scope.model.value.push(layout);
 						});
 
-					let url = '/umbraco/backoffice/Api/Bento/LoadPreview';
+					if (vm.previewVisible) {
 
-					var data = {
-						stackItems: JSON.stringify($scope.model.value)
-					};
+						updatePreivew();
 
-					$http.post(url, data).then(function (response) {
+					}
 
-						let bentoPreview = document.querySelector('.bento-stack-preview');
-						bentoPreview.removeChild(bentoPreview.firstChild);
-
-						let iframe = document.createElement("iframe");
-						bentoPreview.appendChild(iframe);
-
-
-						document.querySelector('.bento-stack-preview iframe').contentDocument.write($sce.trustAsHtml(response.data));
-
-
-					}).catch(function (error) {
-						console.log(error);
-
-					}).finally(function () {
-
-					});
 				}
 			});
+
+
+		function updatePreivew() {
+			vm.previewUpdating = true;
+
+			//this is not working???  Followed setup as described at https://odetocode.com/blogs/scott/archive/2014/04/24/canceling-http-requests-in-angularjs.aspx#:~:text=One%20of%20the%20objects%20you,cancel%20the%20corresponding%20HTTP%20request
+
+			for (let i = 0; i < vm.previewRequests.length; i++) {
+				vm.previewRequests[i].cancel('cancel preview');
+			}
+
+			var data = {
+				stackItems: JSON.stringify($scope.model.value)
+			};
+
+
+			var request = bentoPreviewProcessorFactory.getPreview(data);
+
+			vm.previewRequests.push(request);
+
+			request.promise.then(function (response) {
+
+				//hack until I can get the canceller to work.
+				if (vm.previewRequests.indexOf(request) + 1 === vm.previewRequests.length) {
+					let bentoPreview = document.querySelector('.bento-stack-preview');
+					bentoPreview.removeChild(bentoPreview.firstChild);
+
+					let iframe = document.createElement("iframe");
+					bentoPreview.appendChild(iframe);
+					document.querySelector('.bento-stack-preview iframe').contentDocument.write($sce.trustAsHtml(response));
+
+					vm.previewRequests.splice(vm.previewRequests.indexOf(request), 1);
+					vm.previewUpdating = false;
+				} else {
+					vm.previewRequests.splice(vm.previewRequests.indexOf(request), 1);
+				}
+			}, function (reason) {
+				console.log(reason);
+			});
+
+		}
 
 		function createEmptyArea(area) {
 			var emptyArea = {};

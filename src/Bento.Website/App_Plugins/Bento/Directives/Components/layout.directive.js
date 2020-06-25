@@ -44,8 +44,6 @@
 
 							});
 
-							$scope.itemUpdating = true;
-
 							$scope.setSort(false);
 						},
 						change: function (e, ui) {
@@ -200,7 +198,23 @@
 
 				$scope.$watch('areas', function (newValue, oldValue) {
 
-					$scope.updating = true;
+
+					//working out if the grid area assigned has actually changed.  Not the just the order fo the array.
+					var same = false;
+
+					for (let i = 0; i < newValue.length; i++) {
+						var old = oldValue.find(function (o) { return o.key === newValue[i].key; });
+						if (newValue[i].alias === old.alias) {
+							same = true;
+						} else {
+							same = false;
+							break;
+						}
+					}
+
+					if (!same) {
+						$scope.updating = true;
+					}
 
 				}, true);
 
