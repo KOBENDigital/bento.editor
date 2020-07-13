@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>Bento.Core</id>
-		<version>0.0.25.0</version>
+		<version>0.0.26.0</version>
 		<title>Core library for the Umbraco 8 Bento Editor</title>
 		<authors>KØBEN digital</authors>
 		<owners>KØBEN digital</owners>
