@@ -456,6 +456,7 @@
     <Content Include="App_Plugins\Bento\PreValueEditors\bentolayout.editor.html" />
     <Content Include="App_Plugins\Bento\Directives\Components\layout.preview.directive.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\prevalueUmbEditor.controller.js" />
+    <Content Include="App_Plugins\Bento\Resources\bento.previewProcessor.factory.js" />
     <Content Include="App_Plugins\Bento\Views\Components\bento-layout-preview.html" />
     <Content Include="App_Plugins\Bento\PreValueEditors\contenttypepicker.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\singlecontenttypepicker.controller.js" />
