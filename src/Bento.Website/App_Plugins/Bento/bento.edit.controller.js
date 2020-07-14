@@ -46,7 +46,9 @@
 		function submit() {
 			if ($scope.model.submit) {
 				$scope.$broadcast('formSubmitting', { scope: $scope });
-				$scope.model.submit($scope.model);
+				if (vm.bentoEditForm.$valid) {
+					$scope.model.submit($scope.model);
+				}
 			}
 		}
 		function close() {
