@@ -12,7 +12,7 @@
 			<umb-load-indicator ng-if="vm.loading">
 			</umb-load-indicator>
 			<div ng-if="!vm.loading">
-				<ng-form val-form-manager>
+				<ng-form name="vm.bentoEditForm" val-form-manager>
 					<umb-tabbed-content ng-if="!vm.directiveExists" content="vm.content"></umb-tabbed-content>
 					<ct-tabbed-content ng-if="vm.directiveExists" content="vm.content">
 					</ct-tabbed-content>
