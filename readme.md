@@ -118,7 +118,7 @@ Bento Stack properties are of type ```IEnumerable<Bento.Core.Models.StackItem>``
 ```
 @foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty){
   <section>
-      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
+      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
   </section>
 }
 ```
