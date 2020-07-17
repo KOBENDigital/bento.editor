@@ -3,7 +3,7 @@
 	<info>
 		<package>
 			<name>Bento.Editor</name>
-			<version>0.0.26.0</version>
+			<version>0.0.27.0</version>
 			<license url="http://opensource.org/licenses/MIT">MIT License</license>
 			<url>https://github.com/KOBENDigital/Bento.Editor</url>
 			<requirements>
