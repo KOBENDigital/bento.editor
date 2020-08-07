@@ -1,7 +1,7 @@
-﻿(function() {
+﻿(function () {
 	'use strict';
 
-	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService) {
+	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService, localizationService, overlayService) {
 
 		if ($scope.model.config.useCssFile && $scope.model.config.cssFilePath) {
 			assetsService.load([$scope.model.config.cssFilePath], $scope).then(function () {
@@ -12,7 +12,7 @@
 
 
 		var vm = this;
-
+		vm.culture = $scope.model.culture;
 		vm.layouts = [];
 		vm.sorting = false;
 		vm.firstSort = true;
@@ -96,8 +96,8 @@
 
 
 			vm.layouts = _.map($scope.model.value,
-				function(item) {
-					var layout = _.find(layouts, function(lo) {
+				function (item) {
+					var layout = _.find(layouts, function (lo) {
 						return lo.alias === item.alias;
 					});
 
@@ -125,21 +125,21 @@
 		}
 
 		$scope.$watch('vm.itemUpdating',
-			function(newValue, oldValue) {
+			function (newValue, oldValue) {
 
 				if (newValue) {
 					vm.itemUpdating = false;
 					$scope.model.value = [];
 
 					angular.forEach(vm.layouts,
-						function(val, key) {
+						function (val, key) {
 							var layout = {
 								alias: val.alias,
 								settings: val.settings
 							};
 
 							layout.areas = _.map(val.areas,
-								function(area) {
+								function (area) {
 									return {
 										id: area.id,
 										key: area.key,
@@ -183,8 +183,29 @@
 			openLayouts(item, index, false);
 		}
 
-		function toggleDeleteConfirm(item, show) {
-			item.deleteConfirmVisible = show;
+		function toggleDeleteConfirm(index) {
+
+
+
+			localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+				const overlay = {
+					title: data[1],
+					content: data[0],
+					closeButtonLabel: data[2],
+					submitButtonLabel: data[3],
+					submitButtonStyle: "danger",
+					close: function () {
+						overlayService.close();
+					},
+					submit: function () {
+						remove(index);
+						overlayService.close();
+					}
+				};
+
+				overlayService.open(overlay);
+			});
+
 		}
 
 		function remove(index) {
@@ -218,8 +239,8 @@
 			var availableLayouts = getAvailableLayouts();
 
 			if (availableLayouts.length === 1) {
-					//dont bother opening we only have 1;
-					vm.setLayout(item, availableLayouts[0], index);
+				//dont bother opening we only have 1;
+				vm.setLayout(item, availableLayouts[0], index);
 				return;
 			}
 
@@ -250,10 +271,10 @@
 			};
 
 			editorService.open(options);
-			
+
 		}
 
-		function setLayout(item, layout,index) {
+		function setLayout(item, layout, index) {
 			//used to represent the layout in the stack
 			item.name = layout.name;
 			item.alias = layout.alias;
@@ -333,7 +354,7 @@
 			var options = {
 				title: 'Edit',
 				embed: true,
-				size:'small',
+				size: 'small',
 				nodeData: layoutSettings,
 				documentTypeAlias: layout.layout.layoutSettings,//$scope.model.config.layoutSettingsDoctypeAlias,
 				documentTypeName: 'Layout Settings',
@@ -363,7 +384,7 @@
 
 		vm.sortOptions = {
 			handle: '> .bento-stack-item .bento-stack-item-handle',
-			stop: function(e, ui) {
+			stop: function (e, ui) {
 				vm.itemUpdating = true;
 			},
 			'ui-floating': true,

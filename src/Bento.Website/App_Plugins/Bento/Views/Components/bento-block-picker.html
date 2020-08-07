@@ -38,7 +38,7 @@
 			<div ng-if="!embedded">
 				<i class="icon icon-books"></i>
 
-				<a href ng-click="convert(id)" ng-if="adminOnly"><i class="icon icon-pushpin"></i></a>
+				<a href ng-click="convert(id)" ng-if="adminOnly  && allowedElementTypes.length > 0"><i class="icon icon-pushpin"></i></a>
 
 			</div>
 			<div>

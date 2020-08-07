@@ -15,7 +15,8 @@
 				icon: '=',
 				config: '=',
 				area: '=',
-				updating: '='
+				updating: '=',
+				culture: '='
 			},
 
 			controller: function ($scope, $element) {
@@ -246,7 +247,8 @@
 										filterCssClass: 'not-allowed not-published',
 										filter: $scope.allowedContentTypes,
 										submit: function (model) {
-											//todo: do we need to be passing the whole node around? i reckon the id'd be enough...
+											//todo: do we need to be passing the whole node around? i reckon the id'd be enough...										
+
 											$scope.contentNode = model.selection[0];
 
 											$scope.id = $scope.contentNode.id;
@@ -375,7 +377,7 @@
 							guid: guid(),
 							contentTypeAlias: $scope.contentTypeAlias,
 							dataJson: JSON.stringify($scope.contentData),
-							culture: (typeof ($routeParams.mculture) !== 'undefined') ? $routeParams.mculture : null
+							culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
 						};
 
 
@@ -404,8 +406,8 @@
 
 						//mvc view
 						let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.id;
-						if (typeof ($routeParams.mculture) !== 'undefined') {
-							url += '&culture=' + $routeParams.mculture;
+						if (typeof ($scope.culture) !== 'undefined') {
+							url += '&culture=' + $scope.culture;
 						}
 
 						$http.get(url).then(function (response) {
