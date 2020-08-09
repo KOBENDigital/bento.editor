@@ -10,22 +10,25 @@ namespace Bento.Core.Controllers
 	public class BentoApiController : Umbraco.Web.Mvc.UmbracoAuthorizedController
 	{
 		private readonly IEmbeddedContentService _EmbeddedContentService;
+		private readonly IVariationContextAccessor _variationContextAccessor;
 
-		public BentoApiController(IEmbeddedContentService embeddedContentService)
+		public BentoApiController(IEmbeddedContentService embeddedContentService, IVariationContextAccessor variationContextAccessor)
 		{
+			_variationContextAccessor = variationContextAccessor;
 			_EmbeddedContentService = embeddedContentService ?? throw new ArgumentNullException(nameof(embeddedContentService));
+			
 		}
 
 		public ActionResult LoadLibraryContent(int id, string culture)
 		{
 			if (!string.IsNullOrEmpty(culture))
 			{
-				System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(culture);
-				System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+				_variationContextAccessor.VariationContext = new VariationContext(culture);
 			}
 
 			var model = Umbraco.Content(id) ?? UmbracoContext.Content.GetById(true, id);
 
+			
 			return View($"~/Views/Partials/Bento/{model.ContentType.Alias}BackOffice.cshtml", model);
 		}
 
@@ -68,8 +71,7 @@ namespace Bento.Core.Controllers
 		{
 			if (!string.IsNullOrEmpty(data.Culture))
 			{
-				System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(data.Culture);
-				System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(data.Culture);
+				_variationContextAccessor.VariationContext = new VariationContext(data.Culture);
 			}
 
 			if (string.IsNullOrWhiteSpace(data.Guid))

@@ -26,8 +26,8 @@ namespace Bento.Core.ContentApps
 
 					return app;
 			}
-
-			throw new NotSupportedException($"Object type {source.GetType()} is not supported here.");
+			return null;
+			//throw new NotSupportedException($"Object type {source.GetType()} is not supported here.");
 		}
 	}
 }

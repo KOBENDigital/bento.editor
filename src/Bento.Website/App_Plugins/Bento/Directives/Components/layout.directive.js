@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoLayoutDirective(notificationsService, $routeParams, $sce, $http) {
+	function bentoLayoutDirective(notificationsService, $routeParams, $sce, $http, localizationService, overlayService) {
 		var directive = {
 			restrict: 'E',
 			templateUrl: '/App_Plugins/Bento/Views/Components/bento-layout.html',
@@ -15,7 +15,8 @@
 				config: '=',
 				updating: '=',
 				index: '=',
-				settings: '='
+				settings: '=',
+				culture: '='
 			},
 
 			controller: function ($scope, $element) {
@@ -115,7 +116,7 @@
 							guid: guid(),
 							contentTypeAlias: $scope.settings.contentTypeAlias,
 							dataJson: JSON.stringify($scope.settings),
-							culture: typeof $routeParams.mculture !== 'undefined' ? $routeParams.mculture : null
+							culture: typeof($scope.culture) !== 'undefined' ? $scope.culture : null
 						};
 
 						$http.post(url, data).then(function (response) {
@@ -163,8 +164,29 @@
 					}
 				}
 
-				function toggleDeleteConfirm(area, show) {
-					area.deleteConfirmVisible = show;
+				function toggleDeleteConfirm(index) {
+
+					localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+						const overlay = {
+							title: data[1],
+							content: data[0],
+							closeButtonLabel: data[2],
+							submitButtonLabel: data[3],
+							submitButtonStyle: "danger",
+							close: function () {
+								overlayService.close();
+							},
+							submit: function () {
+								remove(index);
+								overlayService.close();
+							}
+						};
+
+						overlayService.open(overlay);
+					});
+
+
+
 				}
 
 				function remove(index) {

@@ -5,21 +5,16 @@
 		<div ng-repeat="area in areas" class="bento-layout-item" style="{{areaStyles[$index]}}">
 
 
-			<div class="umb-box-header bento-layout-item-header" ng-show="areas.length > 1">
+			<div class="umb-box-header bento-layout-item-header">
 				<div class="bento-layout-item-title" ng-mousedown="setSort(true)" ng-mouseup="setSort(false)"><i class="icon {{ area.icon }}"></i> {{ area.name }}</div>
 				<div class="bento-stack-item-tools">
 					<div style="position:relative;">
-						<a href="" ng-click="toggleDeleteConfirm(area, true)"><i class="umb-control-tool-icon icon-trash"></i></a>
-						<umb-confirm-action ng-if="area.deleteConfirmVisible"
-																direction="left"
-																on-confirm="remove($index)"
-																on-cancel="toggleDeleteConfirm(area, false)">
-						</umb-confirm-action>
+						<a href="" ng-if="area.key !== undefined" ng-click="toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
 					</div>
 				</div>
 			</div>
 			<div class="content">
-				<bento-block-picker updating="updating" id="area.id" key="area.key" content-node="area.contentNode" content-data="area.contentData" icon="area.icon" content-name="area.name" config="config" area="area"></bento-block-picker>
+				<bento-block-picker updating="updating" id="area.id" key="area.key" content-node="area.contentNode" content-data="area.contentData" icon="area.icon" content-name="area.name" config="config" area="area" culture="culture"></bento-block-picker>
 			</div>
 		</div>
 	</div>
