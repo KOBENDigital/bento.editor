@@ -1,4 +1,4 @@
-﻿<div ng-controller="bento.edit.controller as vm">
+﻿<div ng-controller="bento.edit.controller as vm" class="form-horizontal">
 
 	<umb-editor-view>
 		<umb-editor-header name="vm.title"
@@ -14,8 +14,8 @@
 			<div ng-if="!vm.loading">
 				<ng-form name="vm.bentoEditForm" val-form-manager>
 					<umb-tabbed-content ng-if="!vm.directiveExists" content="vm.content"></umb-tabbed-content>
-					<ct-tabbed-content ng-if="vm.directiveExists" content="vm.content">
-					</ct-tabbed-content>
+					<matryoshka-tabbed-content ng-if="vm.directiveExists" content="vm.content">
+					</matryoshka-tabbed-content>
 				</ng-form>
 			</div>
 

@@ -130,7 +130,7 @@
 				if (newValue) {
 					vm.itemUpdating = false;
 					$scope.model.value = [];
-
+					
 					angular.forEach(vm.layouts,
 						function (val, key) {
 							var layout = {
@@ -159,6 +159,14 @@
 						});
 				}
 			});
+
+		$scope.$watch('model.value', function (newVal, oldVal) {
+
+			if (!angular.equals(newVal,oldVal)) {
+				$scope.propertyForm.$setDirty();
+			}
+
+		});
 
 		function createEmptyArea(area) {
 			var emptyArea = {};

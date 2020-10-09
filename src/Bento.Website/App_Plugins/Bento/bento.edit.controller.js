@@ -10,8 +10,8 @@
 		vm.close = close;
 		vm.embed = $scope.model.embed;
 
-		//check for cultive tabify
-		vm.directiveExists = $injector.has('ctTabbedContentDirective');
+		//check for Matryoshka
+		vm.directiveExists = $injector.has('matryoshkaTabbedContentDirective');
 
 		vm.title = "Edit " + $scope.model.documentTypeName;
 

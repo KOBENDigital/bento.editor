@@ -8,8 +8,8 @@ using  Umbraco.Web;
 using  Umbraco.ModelsBuilder;
 using  Umbraco.ModelsBuilder.Umbraco;
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "40b0bd16b410e52e")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "f8182c767d817788")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.6")]
 
 
 // FILE: models.generated.cs
@@ -216,6 +216,13 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
 		[ImplementPropertyType("contentStack")]
 		public IEnumerable<Bento.Core.Models.StackItem> ContentStack => this.Value<IEnumerable<Bento.Core.Models.StackItem>>("contentStack");
+
+		///<summary>
+		/// dirty check
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("dirtyCheck")]
+		public string DirtyCheck => this.Value<string>("dirtyCheck");
 	}
 
 	/// <summary>Heading Item Element</summary>
@@ -335,6 +342,13 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
 		[ImplementPropertyType("bodyText")]
 		public IHtmlString BodyText => this.Value<IHtmlString>("bodyText");
+
+		///<summary>
+		/// nested
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("nested")]
+		public IEnumerable<FeatureElement> Nested => this.Value<IEnumerable<FeatureElement>>("nested");
 
 		///<summary>
 		/// Hide?

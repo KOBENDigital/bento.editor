@@ -97,6 +97,7 @@
 						view: '/App_Plugins/Bento/bento.create.html',
 						embed: embed,
 						config: $scope.config,
+						size: 'medium',
 						area: $scope.area,
 						submit: function (model) {
 
