@@ -163,6 +163,8 @@ The generated views look like this
  ```
 
 ## :bento: Backoffice CSS 
-It is possible to render your styles in the back office.  This can be enabled via the ```Use back office CSS``` switch on the Bento Stack editor and supplying a path to a stylesheet in the ```CSS File Path``` field.  As each block is rendered in a Shadow Dom, your styles will not effect the main Umbraco Styles.
+It is possible to render your styles in the back office.  This can be enabled via the ```Use back office CSS``` switch on the Bento Stack editor and supplying a path to a stylesheet in the ```CSS File Path``` field.  As each block is rendered in a Shadow DOM, your styles will not effect the main Umbraco Styles.
+
+It is important to note, if you have used ```@import``` to include a Google font in your stylesheet, this does not work in Shadow DOM.  For this reason we have included a field to paste the URL to your font and they will be loaded separately.
 
 An example of the using the back office stylesheets can be found in the source repo in the Web Project.
