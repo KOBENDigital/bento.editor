@@ -1,5 +1,5 @@
 <img src="./docs/img/bento.svg" width="250">
-
+[![NuGet release](https://img.shields.io/nuget/v/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor)
 # Bento Editor for Umbraco 8
 
 The Bento Editor is a content block editor for Umbraco 8 that takes advantage of the infinite editing features of Umbraco 8.
