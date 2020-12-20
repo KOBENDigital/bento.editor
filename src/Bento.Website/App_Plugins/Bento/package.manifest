@@ -32,6 +32,7 @@
 		"/App_Plugins/Bento/directives/components/setting.edit.directive.js",
 		"/App_Plugins/Bento/directives/components/blockdoctypegrid.directive.js",
 		"/App_Plugins/Bento/directives/components/blockpicker.directive.js",
+		"/App_Plugins/Bento/directives/components/bentoblockpreview.component.js",
 		"/App_Plugins/Bento/resources/bento.resource.js",
 		"/App_Plugins/Bento/resources/bento.setting.factory.js",
 		"/App_Plugins/Bento/PreValueEditors/prevalueumbeditor.controller.js",
@@ -44,6 +45,7 @@
 		"/App_Plugins/Bento/PreValueEditors/bentosetting.edit.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/bentoprevalue.edit.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/bento.credits.controller.js"
+
 
 	],
 	"css": [

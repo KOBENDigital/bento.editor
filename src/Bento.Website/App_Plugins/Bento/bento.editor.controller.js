@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoEditorController($scope, contentResource) {
+	function bentoEditorController($scope,$sce, assetsService) {
 
 		var vm = this;
 
@@ -16,6 +16,15 @@
 		vm.item.contentData = undefined;
 		vm.contentNode = undefined;
 		vm.config = $scope.model.config;
+
+
+		if ($scope.model.config.useCssFile && $scope.model.config.fontCssUrls) {
+			vm.cssFonts = $scope.model.config.fontCssUrls.split('*');
+		}
+
+		vm.trustSrc = function (src) {
+			return $sce.trustAsResourceUrl(src);
+		};
 		
 
 		vm.name = "...";

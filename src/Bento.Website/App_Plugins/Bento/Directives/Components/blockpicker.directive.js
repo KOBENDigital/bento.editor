@@ -47,7 +47,7 @@
 				}
 
 				function hasLibrary() {
-					if ($scope.allowedContentTypes) {
+					if ($scope.config.libraryFolderDoctypeAlias !== null && $scope.allowedContentTypes) {
 						return true;
 					}
 					return  false;
@@ -387,7 +387,10 @@
 						$http.post(url, data).then(function (response) {
 
 							$scope.getView = function () {
-								return $sce.trustAsHtml(response.data);
+
+								
+									return $sce.trustAsHtml(response.data);
+								
 							};
 
 						}).catch(function (error) {

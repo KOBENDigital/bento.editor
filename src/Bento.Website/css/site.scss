@@ -10,23 +10,21 @@ $body: 'Montserrat', sans-serif;
 @import 'mixins';
 @import 'layouts';
 
-body.bento{
+body{
 	margin: 0;
 	padding: 2em;
-}
-.bento {
-	font-family: $body;
+	
 	font-size: 16px;
 	color: $black;
-
+	}
 	a {
 		font-weight: bold;
 	}
 
-	h1, h2, h3 {
-		font-family: $heading;
-		color: $dark-blue;
-	}
+h1, h2, h3 {
+	font-family: $heading;
+	color: $dark-blue;
+}
 
 	h1 {
 		color: $steel;
@@ -59,10 +57,11 @@ body.bento{
 		font-weight: 700;
 	}
 
-	p {
-		line-height: 1.5em;
-		margin-bottom: .5em;
-	}
+p {
+	line-height: 1.5em;
+	margin-bottom: .5em;
+	font-family: $body;
+}
 
 	a {
 		font-weight: bold;
@@ -479,4 +478,4 @@ body.bento{
 	.box-shadow {
 		@include box-shadow;
 	}
-}
+

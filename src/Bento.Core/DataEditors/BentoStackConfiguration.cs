@@ -21,16 +21,16 @@ Description = "", HideLabel = true
 		[ConfigurationField(
 				"libraryFolderDoctypeAlias",
 				"Library Folder content type",
-				"~/App_Plugins/Bento/Views/PreValueEditors/singlerequiredcontenttypepicker.html",
-				Description = "Select the library folder content type (this is where item folder types are created). This can be relative to the root node or the content root."
+				"~/App_Plugins/Bento/Views/PreValueEditors/singlecontenttypepicker.html",
+				Description = "Select the library folder content type (this is where item folder types are created). This can be relative to the root node or the content root. Only required if you are creating reusable items."
 			)]
 		public string LibraryFolderDoctypeAlias { get; set; }
 
 		[ConfigurationField(
 			"itemTypeFolderDoctypeAlias",
 			"Item Type Folder content type",
-			"~/App_Plugins/Bento/Views/PreValueEditors/singlerequiredcontenttypepicker.html",
-			Description = "Select the item folder folder content type (this is where items are created)."
+			"~/App_Plugins/Bento/Views/PreValueEditors/singlecontenttypepicker.html",
+			Description = "Select the item folder content type (this is where items are created within the library folder). Only required if you are creating reusable items."
 		)]
 		public string ItemTypeFolderDoctypeAlias { get; set; }
 
@@ -79,7 +79,7 @@ Description = "", HideLabel = true
 			"useCssFile",
 			"Use back office CSS",
 			"boolean",
-			Description = "[EXPERIMENTAL] allows you to use back office CSS to style your content.  Your CSS needs consider specifity to avoid clashes with the other back office styles."
+			Description = "Allows you to use back office CSS to style your content."
 		)]
 		public bool UseCssFile { get; set; }
 
@@ -87,9 +87,17 @@ Description = "", HideLabel = true
 			"cssFilePath",
 			"CSS File Path",
 			"textString",
-			Description = "[EXPERIMENTAL] Path to your custom CSS file to provide styling for the back office"
+			Description = "Path to your custom CSS file to provide styling for the back office."
 		)]
 		public string CssFilePath { get; set; }
+
+		[ConfigurationField(
+			"fontCssUrls",
+			"Font CSS Urls",
+			"textString",
+			Description = "If you are using a custom web font from goolge or equivilant and would like to use it in the back office previews, paste the urls here separated by *'s"
+		)]
+		public string FontCssUrls { get; set; }
 
 		[ConfigurationField(
 			"hideLabel",

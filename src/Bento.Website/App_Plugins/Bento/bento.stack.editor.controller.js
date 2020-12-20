@@ -1,13 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoStackEditorController($scope, editorService, notificationsService, contentResource, assetsService, localizationService, overlayService) {
-
-		if ($scope.model.config.useCssFile && $scope.model.config.cssFilePath) {
-			assetsService.load([$scope.model.config.cssFilePath], $scope).then(function () {
-				//loads the css files
-			});
-		}
+	function bentoStackEditorController($scope, $sce, editorService, notificationsService, contentResource, assetsService, localizationService, overlayService) {
 
 
 
@@ -25,6 +19,14 @@
 		vm.toggleDeleteConfirm = toggleDeleteConfirm;
 		vm.setLayout = setLayout;
 		vm.getAvailableLayouts = getAvailableLayouts;
+
+		if ($scope.model.config.useCssFile && $scope.model.config.fontCssUrls) {
+			vm.cssFonts = $scope.model.config.fontCssUrls.split('*');
+		}
+
+		vm.trustSrc = function (src) {
+			return $sce.trustAsResourceUrl(src);
+		};
 
 		$scope.model.hideLabel = $scope.model.config.hideLabel;
 

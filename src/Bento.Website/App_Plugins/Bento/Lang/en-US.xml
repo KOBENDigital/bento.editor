@@ -11,10 +11,10 @@
 		<key alias="layoutOptions">Layout Options</key>
 		<key alias="layoutSettings">Layout Settings</key>
 		<key alias="EditLayoutArea">Edit Layout Area</key>
-		<key alias="areaElementTypes">Allowed Area Elements</key>
-		<key alias="areaContentTypes">Allowed Area Content Types</key>
-		<key alias="areaContentTypesDescription">Select the content types the editor is allowed to create</key>
-		<key alias="areaElementTypesDescription">Select the element types the editor is allowed to embed</key>
+		<key alias="areaElementTypes">Allowed single use item types</key>
+		<key alias="areaContentTypes">Allowed reusable library item types</key>
+		<key alias="areaContentTypesDescription">Select the item types the editor is allowed to create in or select from the library.  Requires library to be configured.</key>
+		<key alias="areaElementTypesDescription">Select the single use item types the editor is allowed to embed.</key>
 		<key alias="editPreValueOptions">Edit Pre Value Options</key>
 		<key alias="editSetting">Edit Setting</key>
 		<key alias="layoutName">Layout name</key>
@@ -61,11 +61,11 @@
 
 		<key alias="allowSorting">Allow Sorting?</key>
 		<key alias="sortingEnabled">Sorting Enabled</key>
-		<key alias="sortingEnabledWarning">While sorting is enabled you cannot set restrictions on Element or Content types at the Area level.</key>
-		<key alias="allowSortingDescription">When enabled, areas in a layout can be sorted. NOTE: all areas will be configured to allow all of the below Element and Content Types and area restrictions will not apply.</key>
-		<key alias="allowedElementTypes">Allowed Elements</key>
-		<key alias="allowedContentTypes">Allowed Content Types</key>
+		<key alias="sortingEnabledWarning">While sorting is enabled you cannot set restrictions on allowed item types at the area level.</key>
+		<key alias="allowSortingDescription">When enabled, areas in a layout can be sorted. NOTE: all areas will be configured to allow all of the below item types and area restrictions will not apply.</key>
+		<key alias="allowedElementTypes">Allowed single use item types</key>
+		<key alias="allowedContentTypes">Allowed reusable library item types</key>
 		<key alias="layoutSettingsDescription">Select the content type (this is used to configure the layout settings for each bento layout).</key>
-		<key alias="noItemTypes">No elements or content types configured for this layout area</key>
+		<key alias="noItemTypes">No item types or reusable library types configured for this layout area</key>
 	</area>
 </language>
