@@ -1,5 +1,5 @@
 ﻿<div ng-controller="bento.editor.controller as vm">
-	<link rel="stylesheet" href="{{vm.trustSrc(url)}}" ng-repeat="url in vm.cssFonts" />
+	<link ng-repeat="url in vm.cssFonts" data-ng-if="url" rel="stylesheet" data-ng-href="{{vm.trustSrc(url)}}" />
 	<div class="bento-stack-item umb-box">
 		<div class="umb-box-header bento-stack-item-handle no-grab">
 			<div><i class="icon {{ vm.icon }}"></i> {{ vm.name }}</div>

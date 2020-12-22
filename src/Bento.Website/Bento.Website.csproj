@@ -435,6 +435,7 @@
     <Content Include="App_Plugins\Bento\Css\bento.min.css">
       <DependentUpon>bento.css</DependentUpon>
     </Content>
+    <Content Include="App_Plugins\Bento\Directives\Components\bentoblocksettingspreview.component.js" />
     <Content Include="App_Plugins\Bento\Directives\Components\bentoblockpreview.component.js" />
     <Content Include="App_Plugins\Bento\Directives\Components\blockdoctypegrid.directive.js" />
     <Content Include="App_Plugins\Bento\Directives\Components\blockpicker.directive.js" />

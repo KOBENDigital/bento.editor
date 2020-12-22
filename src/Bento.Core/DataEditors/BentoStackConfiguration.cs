@@ -99,6 +99,15 @@ Description = "", HideLabel = true
 		)]
 		public string FontCssUrls { get; set; }
 
+
+		[ConfigurationField(
+	"useBlockSettingsCss",
+	"Use block settings CSS",
+	"boolean",
+	Description = "Allows for some previewing of styles of the layout css.  Requires a view with the name the same and the alias of the document type used for your bento layout settings. Place this file in the /views/partials/bento/stylers folder"
+)]
+		public bool UseBlockSettingsCss { get; set; }
+
 		[ConfigurationField(
 			"hideLabel",
 			"Hide Label",

@@ -1,5 +1,4 @@
 ﻿.bento-item-preview {
-  background: #fff;
   cursor: zoom-in;
   transition: box-shadow 0.5s; }
   .bento-item-preview:hover {
@@ -121,9 +120,8 @@
   background: #fff;
   padding: 1px; }
   .bento-layout-wrapper .bento-layout-item {
-    border: 1px #eee solid;
-    position: relative;
-    background: #f6f4f4; }
+    border: 1px #ccc solid;
+    position: relative; }
     .bento-layout-wrapper .bento-layout-item-header {
       background-color: #fff; }
     .bento-layout-wrapper .bento-layout-item .bento-stack-item-tools a {

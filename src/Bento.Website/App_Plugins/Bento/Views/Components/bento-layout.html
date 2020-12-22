@@ -1,5 +1,5 @@
 ﻿<div class="bento-layout">
-	<div ng-bind-html="getStyler()"></div>
+	<bento-block-settings-preview style-html="{{getStyler()}}" use-block-settings-css="{{config.useBlockSettingsCss}}" stylesheet="{{config.cssFilePath}}"></bento-block-settings-preview>
 	<div class="bento-layout-wrapper" style="{{layoutStyle}}" ng-class="{'show-drop-targets': sorting && allowSort,'is-sortable': allowSort}" ui-sortable="sortOptions" ng-model="areas">
 
 		<div ng-repeat="area in areas" class="bento-layout-item" style="{{areaStyles[$index]}}">
