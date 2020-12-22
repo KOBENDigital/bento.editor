@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
 	<metadata>
 		<id>Bento.Editor</id>
-		<version>0.1.2.0</version>
+		<version>0.1.4.0</version>
 		<title>Bento Editor for Umbraco 8</title>
 		<authors>KØBEN digital</authors>
 		<owners>KØBEN digital</owners>
@@ -18,7 +18,7 @@
 		<dependencies>
 			<dependency id="UmbracoCms.Core" version="8.6.0" />
 			<dependency id="UmbracoCms.Web" version="8.6.0" />
-			<dependency id="Bento.Core" version="0.1.2.0" />
+			<dependency id="Bento.Core" version="0.1.4.0" />
 		</dependencies>
 	</metadata>
 

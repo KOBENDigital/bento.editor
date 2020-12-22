@@ -17,7 +17,7 @@
 	<!-- PROPERTIES -->
 	<PropertyGroup >
 		<ProjectName>Bento.Core</ProjectName>
-		<PackageVersion>0.1.2.0</PackageVersion>
+		<PackageVersion>0.1.4.0</PackageVersion>
 		<VersionSuffix></VersionSuffix>
 		<MinUmbracoVersion>8.6.0</MinUmbracoVersion>
 	</PropertyGroup>

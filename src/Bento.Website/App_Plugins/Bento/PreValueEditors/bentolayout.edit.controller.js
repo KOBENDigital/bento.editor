@@ -174,6 +174,14 @@
 				});
 
 
+			} else {
+
+				if (typeof vm.model.allowedElementTypes === 'object') {
+					vm.model.allowedElementTypes = '';
+				}
+				if (typeof vm.model.allowedContentTypes === 'object') {
+					vm.model.allowedContentTypes = '';
+				}
 			}
 
 
