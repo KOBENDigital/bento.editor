@@ -26,7 +26,7 @@
 
                 if (newVal !== oldVal) {
 
-                    if (model.stylesheet && model.useBlockSettingsCss) {
+                    if (model.stylesheet && model.useBlockSettingsCss === 'true') {
 
                         shadowRoot.innerHTML = `
                             <link href="/app_plugins/bento/css/bento.css" rel="stylesheet" type="text/css">
