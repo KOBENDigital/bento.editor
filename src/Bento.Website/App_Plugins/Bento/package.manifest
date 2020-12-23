@@ -45,7 +45,10 @@
 		"/App_Plugins/Bento/PreValueEditors/bentolayoutarea.edit.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/bentosetting.edit.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/bentoprevalue.edit.controller.js",
-		"/App_Plugins/Bento/PreValueEditors/bento.credits.controller.js"
+		"/App_Plugins/Bento/PreValueEditors/bento.credits.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/singlecssfilepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/singlejsfilepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/jscodeeditor.controller.js"
 
 
 	],

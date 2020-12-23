@@ -70,8 +70,8 @@ Description = "", HideLabel = true
 
 		[ConfigurationField(
 			"cssFilePath",
-			"CSS File Path",
-			"textString",
+			"CSS File",
+			"/App_Plugins/Bento/Views/PreValueEditors/singlecssfilepicker.html",
 			Description = "Path to your custom CSS file to provide styling for the back office."
 		)]
 		public string CssFilePath { get; set; }
@@ -83,6 +83,39 @@ Description = "", HideLabel = true
 			Description = "If you are using a custom web font from goolge or equivilant and would like to use it in the back office previews, paste the urls here separated by *'s"
 		)]
 		public string FontCssUrls { get; set; }
+
+
+		[ConfigurationField(
+	"useBlockSettingsCss",
+	"Use block settings CSS",
+	"boolean",
+	Description = "Allows for some previewing of styles of the layout css.  Requires a view with the name the same and the alias of the document type used for your bento layout settings. Place this file in the /views/partials/bento/stylers folder"
+)]
+		public bool UseBlockSettingsCss { get; set; }
+
+		[ConfigurationField(
+"usePreviewJs",
+"Use custom back office JS in preivews",
+"boolean",
+Description = "An advanced feature that allows you to run javascript code in your custom previews"
+)]
+		public bool UsePreviewJs { get; set; }
+
+		[ConfigurationField(
+"jsFilePath",
+"JS file",
+"/App_Plugins/Bento/Views/PreValueEditors/singlejsfilepicker.html",
+Description = "enter the location of a custom JS  file that contains your common back office preview JS code"
+)]
+		public string JsFilePath { get; set; }
+
+		[ConfigurationField(
+"jsUserCode",
+"User JS Code",
+"/App_Plugins/Bento/Views/PreValueEditors/jscodeeditor.html",
+Description = "Enter any JS that you wish to run when a preview loads.  E.G. backOfficeCropSwap(preview); The 'preview' object will give your custom JS the container shadowRoot of the preview output."
+)]
+		public string JsUserCode { get; set; }
 
 		[ConfigurationField(
 			"hideLabel",

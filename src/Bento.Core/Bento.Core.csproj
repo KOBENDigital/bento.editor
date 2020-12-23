@@ -246,6 +246,7 @@
     <Compile Include="Constants\RelationTypes.cs" />
     <Compile Include="ContentApps\RelationshipManager.cs" />
     <Compile Include="DataEditors\DataEditorConstants.cs" />
+    <Compile Include="Events\DatatypeServiceEvents.cs" />
     <Compile Include="Extensions\ContentTypeServiceExtensions.cs" />
     <Compile Include="JsonConverters\NullToDefaultConverter.cs" />
     <Compile Include="Models\ContentTypeContainer.cs" />

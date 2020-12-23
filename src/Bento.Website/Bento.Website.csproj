@@ -457,7 +457,10 @@
     <Content Include="App_Plugins\Bento\PreValueEditors\bentolayout.editor.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\bentolayout.editor.html" />
     <Content Include="App_Plugins\Bento\Directives\Components\layout.preview.directive.js" />
+    <Content Include="App_Plugins\Bento\PreValueEditors\jscodeeditor.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\prevalueUmbEditor.controller.js" />
+    <Content Include="App_Plugins\Bento\PreValueEditors\singlejsfilepicker.controller.js" />
+    <Content Include="App_Plugins\Bento\PreValueEditors\singlecssfilepicker.controller.js" />
     <Content Include="App_Plugins\Bento\Views\Components\bento-layout-preview.html" />
     <Content Include="App_Plugins\Bento\PreValueEditors\contenttypepicker.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\singlecontenttypepicker.controller.js" />
@@ -469,6 +472,9 @@
     <Content Include="App_Plugins\Bento\Views\Components\bento-block-picker.html" />
     <Content Include="App_Plugins\Bento\Views\PreValueEditors\contenttypepicker.html" />
     <Content Include="App_Plugins\Bento\Views\PreValueEditors\prevalue-umb-editor.html" />
+    <Content Include="App_Plugins\Bento\Views\PreValueEditors\jscodeeditor.html" />
+    <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlejsfilepicker.html" />
+    <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlecssfilepicker.html" />
     <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlecontenttypepicker.html" />
     <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlerequiredcontenttypepicker.html" />
     <Content Include="App_Plugins\Bento\Views\Components\bento-layout.html" />

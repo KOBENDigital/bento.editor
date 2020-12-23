@@ -3,7 +3,7 @@
 
 	function bentoStackEditorController($scope, $sce, editorService, notificationsService, contentResource, assetsService, localizationService, overlayService) {
 
-
+		
 
 		var vm = this;
 		vm.culture = $scope.model.culture;
@@ -20,7 +20,13 @@
 		vm.setLayout = setLayout;
 		vm.getAvailableLayouts = getAvailableLayouts;
 
-		if ($scope.model.config.useCssFile && $scope.model.config.fontCssUrls) {
+		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
+			assetsService.loadJs($scope.model.config.jsFilePath, $scope).then(function () {
+				
+			});
+		}
+
+		if ($scope.model.config.useCssFile && $scope.model.config.fontCssUrls && $scope.model.config.fontCssUrls !== null && $scope.model.config.fontCssUrls !== '') {
 			vm.cssFonts = $scope.model.config.fontCssUrls.split('*');
 		}
 

@@ -9,10 +9,13 @@
             bindings: {
                 stylesheet: "@",
                 previewHtml: "@",
-                useCss: "@"
+                useCss: "@",
+                useBackofficeJs: "@",
+                userCode: "@",
             }
         }
         );
+
 
     function BentoBlockPreviewController($scope, $compile, $element) {
         var model = this;
@@ -20,7 +23,6 @@
 
         model.$onInit = function () {
 
-            var shadowRoot = $element[0].attachShadow({ mode: 'open' });
 
             $scope.$watch('model.previewHtml', function (oldVal, newVal) {
 
@@ -28,19 +30,33 @@
 
                     if (model.stylesheet && model.useCss === 'true') {
 
+                        var bentoPreview = 'bentoPreview-' + Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
+                        $element[0].id = bentoPreview;
+                        var shadowRoot = $element[0].attachShadow({ mode: 'open' });
+
                         shadowRoot.innerHTML = `
                             <link href="${model.stylesheet}" rel="stylesheet" type="text/css">
                             ${model.previewHtml}
-                        `;
+                            `;
+                            if (model.useBackofficeJs === 'true') {
+                                var script = document.createElement('script');
+                                var scriptSource = `
+                                var bentoPreview = document.querySelector('#${bentoPreview}').shadowRoot;
+                                ${model.userCode}
+                            `;
+                            script.textContent = `${scriptSource}`;
+                            shadowRoot.appendChild(script);
+                        }
 
+                        $compile(shadowRoot)($scope);
                     }
                     else {
-                        shadowRoot.innerHTML = `
+                        $element[0].innerHTML = `
                             ${model.previewHtml}
                         `;
                     }
 
-                    $compile(shadowRoot)($scope);
+
                 }
 
             });

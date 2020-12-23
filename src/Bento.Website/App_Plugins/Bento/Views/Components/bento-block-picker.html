@@ -29,7 +29,7 @@
 			<div class="backend-content">
 				<umb-load-indicator ng-if="updating"></umb-load-indicator>
 				<div class="bento">
-					<bento-block-preview preview-html="{{getView(this)}}" use-css="{{config.useCssFile}}" stylesheet="{{config.cssFilePath}}"></bento-block-preview>
+					<bento-block-preview preview-html="{{getView(this)}}" use-css="{{config.useCssFile}}" stylesheet="{{config.cssFilePath}}" use-backoffice-js="{{config.usePreviewJs}}" user-code="{{config.jsUserCode}}"></bento-block-preview>
 				</div>
 			</div>
 
