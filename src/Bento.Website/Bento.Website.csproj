@@ -517,6 +517,7 @@
       <DependentUpon>site.css</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="scripts\site.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

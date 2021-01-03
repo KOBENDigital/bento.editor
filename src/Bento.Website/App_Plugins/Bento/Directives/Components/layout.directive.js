@@ -109,7 +109,7 @@
 				}
 				
 				function updateLayoutStyle() {
-					if ($scope.config.useCssFile && $scope.config.cssFilePath) {
+					if ($scope.config.useCssFile && $scope.config. && $scope.config.cssFilePath) {
 						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedStyler';
 
 						let data = {
