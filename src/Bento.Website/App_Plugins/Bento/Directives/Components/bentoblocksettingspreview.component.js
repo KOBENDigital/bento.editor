@@ -20,7 +20,8 @@
 
         model.$onInit = function () {
 
-            var shadowRoot = $element[0].attachShadow({ mode: 'open' });
+            var shadowRoot = $element[0].shadowRoot !== null ? $element[0].shadowRoot : $element[0].attachShadow({ mode: 'open' });
+
 
             $scope.$watch('model.styleHtml', function (oldVal, newVal) {
 

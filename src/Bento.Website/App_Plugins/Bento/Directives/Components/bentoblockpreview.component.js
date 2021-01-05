@@ -32,7 +32,8 @@
 
                         var bentoPreview = 'bentoPreview-' + Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
                         $element[0].id = bentoPreview;
-                        var shadowRoot = $element[0].attachShadow({ mode: 'open' });
+                        var shadowRoot = $element[0].shadowRoot !== null ? $element[0].shadowRoot : $element[0].attachShadow({ mode: 'open' });
+
 
                         shadowRoot.innerHTML = `
                             <link href="${model.stylesheet}" rel="stylesheet" type="text/css">
