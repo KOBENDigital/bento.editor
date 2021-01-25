@@ -73,7 +73,7 @@ namespace Bento.Core.Events
 			{
 				List<string> editors = new List<string>
 				{
-					Umbraco.Core.Constants.PropertyEditors.Aliases.Grid,
+					//Umbraco.Core.Constants.PropertyEditors.Aliases.Grid,
 					BentoItemDataEditor.EditorAlias,
 					BentoStackDataEditor.EditorAlias
 				};
