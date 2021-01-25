@@ -29,7 +29,15 @@ namespace Bento.Core.Models
 
 	public class Control
 	{
+		[JsonProperty("editor")]
+		public Editor Editor { get; set; }
 		[JsonProperty("value")]
 		public object Value { get; set; }
+	}
+
+	public class Editor
+	{
+		[JsonProperty("alias")]
+		public string Alias { get; set; }
 	}
 }
