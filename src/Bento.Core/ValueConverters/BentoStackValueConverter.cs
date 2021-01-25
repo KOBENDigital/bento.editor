@@ -83,35 +83,79 @@ namespace Bento.Core.ValueConverters
 					item.Settings = embeddedContentService.ConvertValueToContent(item.SettingsData["key"].ToString(), (string)item.SettingsData["contentTypeAlias"], item.SettingsData);
 				}
 
-				foreach (var area in item.Areas.Where(x => x.Id != 0 || x.Key != Guid.Empty))
+				foreach (var area in item.Areas)
 				{
+					if (area.Contents == null)
+						area.Contents = new List<AreaItem>();
 
-					IPublishedElement content = null;
-					if(area.Key != Guid.Empty && area.ContentData == null)
+					//Old "Single Item" Area setup
+					//This is for when we have an OldStyleItem that has not been updated by backOffice
+					IPublishedElement oldstyleContent = GetPublishedElementBy(embeddedContentService, area.Key, area.Id, area.ContentData);
+					if (oldstyleContent != null)
 					{
-						content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Key);
-					} else if(area.Id != 0 && area.ContentData == null)
-					{
-						content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Id);
-					} else if(area.ContentData != null)
-					{
-						// we need to convert the embedded item;
-						content = embeddedContentService.ConvertValueToContent(area.Key.ToString(), (string)area.ContentData["contentTypeAlias"], area.ContentData);
+						area.Contents.Insert(0, new AreaItem()
+						{
+							Id = area.Id.Value,
+							Name = area.Name,
+							Alias = area.Alias,
+							ContentData = area.ContentData,
+							Key = oldstyleContent.Key,
+							Content = oldstyleContent
+						});
+						area.ResetContents();
 					}
 
-					if (content == null)
+					//New "Multiple Items" Area setup
+					foreach (var areaItem in area.Contents.Where(x => x.Id != 0 || x.Key != Guid.Empty))
 					{
-						continue;
+						IPublishedElement content = GetPublishedElementBy(embeddedContentService, areaItem.Key, areaItem.Id, areaItem.ContentData);
+
+						if (content == null)
+						{
+							continue;
+						}
+
+						areaItem.Key = content.Key;
+						areaItem.Content = content;
 					}
 
-					area.Key = content.Key;
-					area.Content = content;
+					//This is to allow old "Single Item" Views to work using the first element of "Multiple Items"
+					var oldStyleArea = area.Contents.FirstOrDefault();
+					if (oldStyleArea != null)
+					{
+						area.Id = oldStyleArea.Id;
+						area.Name = oldStyleArea.Name;
+						area.Alias = oldStyleArea.Alias;
+						area.ContentData = oldStyleArea.ContentData;
+						area.Key = oldStyleArea.Key;
+						area.Content = oldStyleArea.Content;
+					}
 				}
 
 				convertedItems.Add(item);
 			}
 
 			return convertedItems;
+		}
+
+		private IPublishedElement GetPublishedElementBy(IEmbeddedContentService embeddedContentService, Guid? key, int? id, Dictionary<string, object> contentData)
+		{
+			IPublishedElement content = null;
+			if (key.HasValue && key != Guid.Empty && contentData == null)
+			{
+				content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(key.Value);
+			}
+			else if (id.HasValue && id != 0 && contentData == null)
+			{
+				content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(id.Value);
+			}
+			else if (contentData != null)
+			{
+				// we need to convert the embedded item;
+				content = embeddedContentService.ConvertValueToContent(key.ToString(), (string)contentData["contentTypeAlias"], contentData);
+			}
+
+			return content;
 		}
 
 		public object ConvertIntermediateToObject(IPublishedElement owner, IPublishedPropertyType propertyType, PropertyCacheLevel referenceCacheLevel, object inter, bool preview)

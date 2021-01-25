@@ -123,7 +123,7 @@ namespace Bento.Core.Events
 								continue;
 							}
 
-							var bentoContent = contentService.GetById(area.Id);
+							var bentoContent = contentService.GetById(area.Id.Value);
 
 							if (bentoContent == null)
 							{
@@ -135,7 +135,7 @@ namespace Bento.Core.Events
 							ProcessRelationship(contentService, bentoContent, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
 						}
 					}
-					else
+					else if (contentProperty.PropertyType.PropertyEditorAlias == BentoStackDataEditor.EditorAlias)
 					{
 						foreach (Property.PropertyValue value in contentProperty.Values)
 						{
@@ -154,7 +154,7 @@ namespace Bento.Core.Events
 							IEnumerable<StackItem> items = JsonConvert.DeserializeObject<IEnumerable<StackItem>>(valueString, new StackItemConverter());
 
 							var itemList = items.Where(x => x.Areas != null && x.Areas.Any())
-								.SelectMany(stackItem => stackItem.Areas.Where(x => x.Id > 0), (stackItem, x) => contentService.GetById(x.Id))
+								.SelectMany(stackItem => stackItem.Areas.SelectMany(y => y.Contents).Where(x => x.Id > 0), (stackItem, x) => contentService.GetById(x.Id))
 								.Where(bentoContent => bentoContent != null)
 								.Distinct();
 
