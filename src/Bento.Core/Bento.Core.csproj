@@ -242,9 +242,14 @@
     <Compile Include="Composers\BentoComposer.cs" />
     <Compile Include="Constants\BentoGridDataEditor.cs" />
     <Compile Include="Constants\BentoItemDataEditor.cs" />
+    <Compile Include="Constants\BentoMultiItemDataEditor.cs" />
     <Compile Include="Constants\BentoStackDataEditor.cs" />
     <Compile Include="Constants\RelationTypes.cs" />
     <Compile Include="ContentApps\RelationshipManager.cs" />
+    <Compile Include="DataEditors\BentoMultiItemConfiguration.cs" />
+    <Compile Include="DataEditors\BentoMultiItemConfigurationEditor.cs" />
+    <Compile Include="DataEditors\BentoMultiItemDataEditor.cs" />
+    <Compile Include="DataEditors\BentoMultiItemDataValueEditor.cs" />
     <Compile Include="DataEditors\DataEditorConstants.cs" />
     <Compile Include="Events\DatatypeServiceEvents.cs" />
     <Compile Include="Extensions\ContentTypeServiceExtensions.cs" />
@@ -282,6 +287,7 @@
     <Compile Include="Services\PluralizationServiceWrapper.cs" />
     <Compile Include="Services\EmbeddedContentService.cs" />
     <Compile Include="ValueConverters\BentoItemValueConverter.cs" />
+    <Compile Include="ValueConverters\BentoMultiItemValueConverter.cs" />
     <Compile Include="ValueConverters\BentoStackValueConverter.cs" />
   </ItemGroup>
   <ItemGroup>

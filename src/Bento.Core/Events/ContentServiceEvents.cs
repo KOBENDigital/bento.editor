@@ -15,6 +15,8 @@ using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
 using Umbraco.Core.Services.Implement;
 using BentoItemDataEditor = Bento.Core.Constants.BentoItemDataEditor;
+using BentoMultiItemDataEditor = Bento.Core.Constants.BentoMultiItemDataEditor;
+using BentoStackDataEditor = Bento.Core.Constants.BentoStackDataEditor;
 
 namespace Bento.Core.Events
 {
@@ -133,6 +135,37 @@ namespace Bento.Core.Events
 							BentoItemConfiguration config = (BentoItemConfiguration)editor.Configuration;
 
 							ProcessRelationship(contentService, bentoContent, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
+						}
+					}
+					else if (contentProperty.PropertyType.PropertyEditorAlias == BentoMultiItemDataEditor.EditorAlias)
+					{
+						foreach (Property.PropertyValue value in contentProperty.Values)
+						{
+							if (value.PublishedValue == null)
+							{
+								break;
+							}
+
+							var area = JsonConvert.DeserializeObject<Area>(value.PublishedValue.ToString());
+
+							foreach (var areaItem in area.Contents)
+							{
+								if (areaItem.Id <= 0)
+								{
+									continue;
+								}
+
+								var bentoContent = contentService.GetById(areaItem.Id);
+
+								if (bentoContent == null)
+								{
+									continue;
+								}
+
+								BentoItemConfiguration config = (BentoItemConfiguration)editor.Configuration;
+
+								ProcessRelationship(contentService, bentoContent, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
+							}
 						}
 					}
 					else if (contentProperty.PropertyType.PropertyEditorAlias == BentoStackDataEditor.EditorAlias)
