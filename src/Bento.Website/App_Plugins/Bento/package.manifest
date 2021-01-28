@@ -32,6 +32,7 @@
 		"/App_Plugins/Bento/directives/components/setting.edit.directive.js",
 		"/App_Plugins/Bento/directives/components/blockdoctypegrid.directive.js",
 		"/App_Plugins/Bento/directives/components/blockpicker.directive.js",
+		"/App_Plugins/Bento/directives/components/blockinserter.directive.js",
 		"/App_Plugins/Bento/directives/components/bentoblockpreview.component.js",
 		"/App_Plugins/Bento/directives/components/bentoblocksettingspreview.component.js",
 		"/App_Plugins/Bento/resources/bento.resource.js",
