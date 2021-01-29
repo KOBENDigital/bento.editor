@@ -22,22 +22,33 @@
 							</label>
 							<div class="controls">
 								<div class="umb-property-editor">
-									<div>
-										<input type="text" name="{{vm.area.name}}" class="umb-property-editor umb-textstring" ng-model="vm.area.name" ng-change="vm.layoutChanged()" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="control-group umb-control-group">
-						<div class="umb-el-wrap">
-							<label class="control-label">
-								<localize key="bento_areaAlias">Area alias</localize>
-							</label>
-							<div class="controls">
-								<div class="umb-property-editor">
-									<div>
-										<input type="text" name="{{vm.area.alias}}" class="umb-property-editor umb-textstring" ng-model="vm.area.alias" ng-change="vm.layoutChanged()" />
+									<div class="umb-editor-header__name-wrapper">
+										<input data-element="editor-name-field"
+										       no-password-manager
+										       type="text"
+										       id="name"
+										       class="umb-editor-header__name-input"
+										       localize="placeholder"
+										       placeholder="@placeholders_entername"
+										       name="vm.area.name"
+										       ng-model="vm.area.name"
+										       ng-class="{'name-is-empty': vm.area.name === null || vm.area.name === ''}"
+										       ng-change="vm.layoutChanged()"
+										       umb-auto-focus
+										       focus-on-filled="true"
+										       val-server-field="vm.area.name"
+										       required
+										       aria-required="true"
+										       autocomplete="off"
+										       maxlength="255" />
+										<umb-generate-alias data-element="editor-alias"
+										                    class="umb-panel-header-alias"
+										                    alias="vm.area.alias"
+										                    alias-from="vm.area.name"
+										                    enable-lock="true"
+										                    validation-position="'right'"
+										                    server-validation-field="Alias">
+										</umb-generate-alias>
 									</div>
 								</div>
 							</div>
