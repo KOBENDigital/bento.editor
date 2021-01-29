@@ -461,6 +461,7 @@
     <Content Include="App_Plugins\Bento\PreValueEditors\prevalueUmbEditor.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\singlejsfilepicker.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\singlecssfilepicker.controller.js" />
+    <Content Include="App_Plugins\Bento\Views\Components\bento-block-inserter.html" />
     <Content Include="App_Plugins\Bento\Views\Components\bento-layout-preview.html" />
     <Content Include="App_Plugins\Bento\PreValueEditors\contenttypepicker.controller.js" />
     <Content Include="App_Plugins\Bento\PreValueEditors\singlecontenttypepicker.controller.js" />
@@ -532,6 +533,7 @@
     <Content Include="App_Plugins\Bento\bento-settings-schema.json" />
     <Content Include="App_Plugins\Bento\Css\bento.stack.scss" />
     <Content Include="App_Plugins\Bento\Directives\Components\setting.edit.directive.js" />
+    <Content Include="App_Plugins\Bento\Directives\Components\blockinserter.directive.js" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
