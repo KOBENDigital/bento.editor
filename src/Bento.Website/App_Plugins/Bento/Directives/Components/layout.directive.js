@@ -40,9 +40,7 @@
 							ui.item.parent().find('.drop').removeClass('drop');
 
 							angular.forEach($scope.areas, function (area, $index) {
-
 								area.alias = $scope.layout.areas[$index].alias;
-
 							});
 
 							$scope.itemUpdating = true;
@@ -52,36 +50,22 @@
 						change: function (e, ui) {
 							$(ui.helper).parent().find('.drop').removeClass('drop');
 
-
 							var helper = $(ui.helper).parent().find('.ui-sortable-helper');
 							var placeholder = $(ui.helper).parent().find('.ui-sortable-placeholder');
 							var lastIndex = $(ui.helper).parent().children().length-1;
 
-
-
-
 							if (placeholder.index() === 0 || placeholder.index() === 1 && placeholder.next().index() === lastIndex) {
-
-
 								if (helper.index() < placeholder.index()) {
 									placeholder.prev().addClass('drop');
 								} else {
 									placeholder.next().addClass('drop');
 								}
-
-								
 							}
 							else if (placeholder.index() === 1 && helper.index() === 0 || placeholder.next().index() === -1 || placeholder.next().index() === lastIndex && helper.index() !== lastIndex) {
-
 									placeholder.prev().addClass('drop');
-								
 							} else {
-
-
 									placeholder.next().addClass('drop');
 							}
-							
-							
 							
 						},
 						update: function (e, ui) {
@@ -134,25 +118,15 @@
 					}
 				}
 
-
-
-
-
 				function initLayout() {
-
-				
-
 					$scope.layoutStyle = '';
-
 
 					//setup the columns configuration
 					$scope.layoutStyle += 'grid-template-columns: ';
 					$scope.layoutStyle += $scope.layout.columns.join(' ') + ";";
 						
-
 					$scope.areaStyles = [];
 					
-
 					for (var i = 0; i < $scope.layout.areas.length; i++) {
 						var area = $scope.layout.areas[i];
 
@@ -185,8 +159,6 @@
 						overlayService.open(overlay);
 					});
 
-
-
 				}
 
 				function remove(index) {
@@ -195,6 +167,7 @@
 					$scope.areas[index].key = undefined;
 					$scope.areas[index].contentNode = undefined;
 					$scope.areas[index].contentData = undefined;
+					$scope.areas[index].contents = [];
 
 					//needs translation
 					$scope.areas[index].name = "...";
@@ -203,7 +176,6 @@
 
 					$scope.updating = true;
 				}
-
 
 				function guid() {
 					function s4() {
@@ -215,33 +187,23 @@
 						s4() + '-' + s4() + s4() + s4();
 				}
 
-
 				initLayout();
 				updateLayoutStyle();
 
-
 				$scope.$watch('areas', function (newValue, oldValue) {
-
 					$scope.updating = true;
-
 				}, true);
 
 				$scope.$watch('layout', function (newValue, oldValue) {
-
 					//reinit layout
 					$scope.initLayout();
 					$scope.updating = true;
-
 				}, true);
 
 
 				$scope.$watch('settings', function (newValue, oldValue) {
-
 						$scope.updateLayoutStyle();
-
 				}, true);
-
-
 
 			}
 		};

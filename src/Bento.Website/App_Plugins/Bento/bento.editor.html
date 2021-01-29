@@ -1,4 +1,5 @@
-﻿<div ng-controller="bento.editor.controller as vm">
+﻿<!-- This is the "Bento Item" template -->
+<div ng-controller="bento.editor.controller as vm">
 	<link ng-repeat="url in vm.cssFonts" data-ng-if="url" rel="stylesheet" data-ng-href="{{vm.trustSrc(url)}}" />
 	<div class="bento-stack-item umb-box">
 		<div class="umb-box-header bento-stack-item-handle no-grab">
@@ -14,7 +15,14 @@
 				</div>
 			</div>
 		</div>
-		<!--<bento-block-picker id="vm.item.id" icon="vm.icon" content-name="vm.name" updating="vm.updating" config="model.config"></bento-block-picker>-->
-		<bento-block-picker updating="vm.updating" id="vm.item.id" key="vm.item.key" content-node="vm.contentNode" content-data="vm.item.contentData" icon="vm.item.icon" content-name="vm.name" config="vm.config"></bento-block-picker>
+		<div class="content">
+			<div ng-repeat="areaItem in vm.item.contents">
+				<div class="action-buttons" ng-if="vm.canAddMultiple()">
+					<!-- ToDo: Use a bento-block-inserter to replicate the layouts hover functionality (to make this behave as an insert above) -->
+				</div>
+				<bento-block-picker updating="vm.updating" id="areaItem.id" key="areaItem.key" content-node="areaItem.contentNode" content-data="areaItem.contentData" icon="areaItem.icon" content-name="areaItem.name" config="vm.config" index="$index" area="vm.item"></bento-block-picker>
+			</div>
+			<bento-block-inserter ng-if="vm.canAddContent()" updating="vm.updating" config="vm.config" area="vm.item"></bento-block-inserter>
+		</div>
 	</div>
 </div>
