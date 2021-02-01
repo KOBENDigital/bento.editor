@@ -1,0 +1,7 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Web.PublishedModels;
+@{
+	Layout = "_layout.cshtml";
+}
+
+@Html.Partial("~/Views/partials/renderStackMulti.cshtml", Model.ContentStack)
