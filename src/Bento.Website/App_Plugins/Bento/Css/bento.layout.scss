@@ -13,9 +13,15 @@
 		border: 1px #ccc solid;
 		position: relative;
 		//background: #f6f4f4;
-
 		&-header {
 			background-color: #fff;
+			position: relative;
+
+			.bento-stack-item-tools {
+				a {
+					color: #000;
+				}
+			}
 		}
 
 		.bento-stack-item-tools {
@@ -40,11 +46,9 @@
 
 	&.show-drop-targets {
 
-  	.drop {
+		.drop {
 			border: 5px solid #1b264f;
 		}
-
-		
 	}
 
 	&.is-sortable {
