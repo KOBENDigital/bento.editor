@@ -94,6 +94,9 @@ Bento Item setup is straight forward.  Create a new DataType, either in the Data
 
 You should now be able to add your Bento Item type to a Document Type and create a Bento Item.
 
+### Bento Multi Item
+As ```Bento Items``` above, but it allows more than one item to be created under it.
+
 ### Bento Stack
 The Bento Stack is similar to the Bento Item setup except for a key difference that it requires Layouts. To setup a new stack either create a new Data Type in the Data Type section or during Document Type creation.
 
