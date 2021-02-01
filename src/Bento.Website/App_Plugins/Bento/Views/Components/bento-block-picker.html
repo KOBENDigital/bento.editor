@@ -2,6 +2,19 @@
 	<umb-load-indicator ng-if="updating"></umb-load-indicator>
 	<div class="clearfix"></div>
 	<div class="bento-item-preview"  ng-if="hasId(id) || hasContentData(contentData)">
+		<div class="umb-box-header bento-layout-item-header">
+			<div class="bento-layout-item-title"><i class="icon {{ icon }}"></i> {{ contentName }}</div>
+			<div class="bento-stack-item-tools">
+				<div style="position:relative;">
+					<a href="" ng-click="toggleDeleteConfirm(true)"><i class="umb-control-tool-icon icon-trash"></i></a>
+					<umb-confirm-action ng-if="deleteConfirmVisible"
+															direction="left"
+															on-confirm="remove(index)"
+															on-cancel="toggleDeleteConfirm(false)">
+					</umb-confirm-action>
+				</div>
+			</div>
+		</div>
 		<div class="backend-block" ng-click="open()">
 			<div class="backend-content">
 				<umb-load-indicator ng-if="updating"></umb-load-indicator>
@@ -13,7 +26,7 @@
 		<div  class="bento-item-preview-meta">
 			<div ng-if="!embedded">
 				<i class="icon icon-books"></i>
-				<a href ng-click="convert(id)" ng-if="adminOnly  && allowedElementTypes.length > 0"><i class="icon icon-pushpin"></i></a>
+				<a href="#" ng-click="convert(id)" ng-if="adminOnly  && allowedElementTypes.length > 0"><i class="icon icon-pushpin"></i></a>
 			</div>
 			<div>
 				<umb-badge size="xs" color="{{status.color}}">

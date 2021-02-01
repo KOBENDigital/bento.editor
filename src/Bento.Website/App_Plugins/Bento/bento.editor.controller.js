@@ -61,8 +61,9 @@
 			if (data.contents !== undefined) {
 				vm.item.contents = data.contents;
 			} else {
+				vm.item.contents = [];
 				if (data.contentData || data.id || data.key) { // if any of these things were set by $scope.model.value (should be unset by next save)
-					data.contents.push({ id: data.id, name: data.name, alias: data.alias, key: data.key, contentData: data.contentData, icon: data.icon, contentNode: data.contentNode });
+					vm.item.contents.push({ id: data.id, name: data.name, alias: data.alias, key: data.key, contentData: data.contentData, icon: data.icon, contentNode: data.contentNode });
 				}
 			}
 		}

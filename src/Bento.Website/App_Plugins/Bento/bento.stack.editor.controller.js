@@ -133,11 +133,9 @@
 							val.contents.push({ id: val.id, name: val.name, alias: val.alias, key: val.key, contentData: val.contentData, icon: val.icon, contentNode: val.contentNode });
 							// remove from model
 							delete val.id;
-							delete val.name;
 							delete val.alias;
 							delete val.key;
 							delete val.contentData;
-							delete val.icon;
 							delete val.contentNode; 
 						}
 					});
@@ -181,10 +179,11 @@
 								}
 							);
 
-							if (val.areas.length === 1) {
+							//Does this make it easier or harder? (could hide block-picker header if only 1 item)
+							/*if (val.areas.length === 1) {
 								val.name = val.areas[0].name;
 								val.icon = val.areas[0].icon;
-							}
+							}*/
 
 							$scope.model.value.push(layout);
 						});

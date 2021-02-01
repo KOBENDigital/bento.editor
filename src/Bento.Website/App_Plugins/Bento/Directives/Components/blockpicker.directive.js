@@ -35,8 +35,9 @@
 				$scope.allowedContentTypes = "";
 				$scope.allowedElementTypes = "";
 
-
-
+				$scope.deleteConfirmVisible = false;
+				$scope.toggleDeleteConfirm = toggleDeleteConfirm;
+				$scope.remove = remove;
 
 
 				function hasElements() {
@@ -431,43 +432,52 @@
 				}
 
 				function init() {
-
-					//set layout allowed block 
-					if ($scope.area !== undefined) {
-						// this could probably be done better
-
-						if ($scope.area.allowedElementTypes.value !== undefined && $scope.area.allowedElementTypes.value !== '') {
-							$scope.allowedElementTypes = $scope.area.allowedElementTypes.value;
-						}
-						if (typeof $scope.area.allowedElementTypes === 'string' && $scope.area.allowedElementTypes) {
-							$scope.allowedElementTypes = $scope.area.allowedElementTypes;
-						}
-
-						if ($scope.area.allowedContentTypes.value !== undefined && $scope.area.allowedContentTypes.value !== '') {
-							$scope.allowedContentTypes = $scope.area.allowedContentTypes.value;
-						}
-						if (typeof $scope.area.allowedContentTypes === 'string' && $scope.area.allowedContentTypes) {
-							$scope.allowedContentTypes = $scope.area.allowedContentTypes;
-						}
-
-						//set bento item allowed blocks
-					} else {
-
+					//set bento item allowed blocks
+					if ($scope.config !== undefined) {
 						if ($scope.config.allowedDoctypeAliases) {
 							$scope.allowedContentTypes = $scope.config.allowedDoctypeAliases;
 						}
-
 						if ($scope.config.allowedElementAliases) {
 							$scope.allowedElementTypes = $scope.config.allowedElementAliases;
 						}
-
 					}
 
+					//set bento stack allowed blocks
+					if ($scope.area !== undefined) {
+						// this could probably be done better
+						if ($scope.area.allowedElementTypes !== undefined) {
+							if ($scope.area.allowedElementTypes.value !== undefined && $scope.area.allowedElementTypes.value !== '') {
+								$scope.allowedElementTypes = $scope.area.allowedElementTypes.value;
+							}
+							if (typeof $scope.area.allowedElementTypes === 'string' && $scope.area.allowedElementTypes) {
+								$scope.allowedElementTypes = $scope.area.allowedElementTypes;
+							}
+						}
+
+						if ($scope.area.allowedContentTypes !== undefined) {
+							if ($scope.area.allowedContentTypes.value !== undefined && $scope.area.allowedContentTypes.value !== '') {
+								$scope.allowedContentTypes = $scope.area.allowedContentTypes.value;
+							}
+							if (typeof $scope.area.allowedContentTypes === 'string' && $scope.area.allowedContentTypes) {
+								$scope.allowedContentTypes = $scope.area.allowedContentTypes;
+							}
+						}
+					}
 				}
 
 				init();
 
 				initBlock();
+
+				function toggleDeleteConfirm(show) {
+					$scope.deleteConfirmVisible = show;
+				}
+
+				function remove(index) {
+					//remove the item
+					$scope.area.contents.splice(index, 1);
+					$scope.updating = true;
+				}
 			}
 		};
 
