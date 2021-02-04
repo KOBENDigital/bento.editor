@@ -6,12 +6,7 @@
 			<div class="bento-layout-item-title"><i class="icon {{ icon }}"></i> {{ contentName }}</div>
 			<div class="bento-stack-item-tools">
 				<div style="position:relative;">
-					<a href="" ng-click="toggleDeleteConfirm(true)"><i class="umb-control-tool-icon icon-trash"></i></a>
-					<umb-confirm-action ng-if="deleteConfirmVisible"
-															direction="left"
-															on-confirm="remove(index)"
-															on-cancel="toggleDeleteConfirm(false)">
-					</umb-confirm-action>
+					<a href="" ng-click="toggleDeleteConfirm(index)"><i class="umb-control-tool-icon icon-trash"></i></a>
 				</div>
 			</div>
 		</div>

@@ -8,7 +8,7 @@
 				<!--<div class="bento-layout-item-title" ng-mousedown="setSort(true)" ng-mouseup="setSort(false)"><i class="icon {{ area.icon }}"></i> {{ area.name }}</div>-->
 				<div class="bento-stack-item-tools">
 					<div style="position:relative;">
-						<a href="" ng-click="toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
+						<a ng-if="area.contents.length > 0" href="" ng-click="toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
 					</div>
 				</div>
 			</div>

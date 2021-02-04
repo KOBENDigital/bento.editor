@@ -139,7 +139,7 @@
 				}
 
 				function toggleDeleteConfirm(index) {
-					localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+					localizationService.localizeMany(["content_nestedContentDeleteAllItems", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
 						const overlay = {
 							title: data[1],
 							content: data[0],

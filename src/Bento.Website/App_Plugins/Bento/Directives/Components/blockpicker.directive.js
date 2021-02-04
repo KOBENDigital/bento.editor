@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoBlockPickerDirective(editorService, bentoResource, contentResource, userService, $routeParams, $sce, $http) {
+	function bentoBlockPickerDirective(editorService, bentoResource, contentResource, userService, $routeParams, $sce, $http, localizationService, overlayService) {
 
 		var directive = {
 			restrict: 'E',
@@ -35,7 +35,6 @@
 				$scope.allowedContentTypes = "";
 				$scope.allowedElementTypes = "";
 
-				$scope.deleteConfirmVisible = false;
 				$scope.toggleDeleteConfirm = toggleDeleteConfirm;
 				$scope.remove = remove;
 
@@ -469,8 +468,25 @@
 
 				initBlock();
 
-				function toggleDeleteConfirm(show) {
-					$scope.deleteConfirmVisible = show;
+				function toggleDeleteConfirm(index) {
+					localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+						const overlay = {
+							title: data[1],
+							content: data[0],
+							closeButtonLabel: data[2],
+							submitButtonLabel: data[3],
+							submitButtonStyle: "danger",
+							close: function () {
+								overlayService.close();
+							},
+							submit: function () {
+								remove(index);
+								overlayService.close();
+							}
+						};
+
+						overlayService.open(overlay);
+					});
 				}
 
 				function remove(index) {

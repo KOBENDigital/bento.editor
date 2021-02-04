@@ -583,6 +583,13 @@
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\BlockList\Default.cshtml" />
+    <Content Include="Views\HomeMulti.cshtml" />
+    <Content Include="Views\Partials\Bento\LayoutsMulti\DefaultLayout.cshtml" />
+    <Content Include="Views\Partials\Bento\LayoutsMulti\ThreeColumnLayout.cshtml" />
+    <Content Include="Views\Partials\Bento\LayoutsMulti\TwoColumns.cshtml" />
+    <Content Include="Views\Partials\Bento\SearchBoxElement.cshtml" />
+    <Content Include="Views\Partials\Bento\SearchBoxElementBackOffice.cshtml" />
+    <Content Include="Views\Partials\renderStackMulti.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
