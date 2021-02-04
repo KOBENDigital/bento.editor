@@ -15,8 +15,9 @@
 		vm.selectedTypeAlias = '';
 		vm.selectedTypeName = '';
 		vm.embed = $scope.model.embed;
-		vm.allowedContentTypes = $scope.model.area !== undefined ? $scope.model.area.allowedContentTypes : $scope.model.config.allowedDoctypeAliases;
-		vm.allowedElementTypes = $scope.model.area !== undefined ? $scope.model.area.allowedElementTypes : $scope.model.config.allowedElementAliases;
+		// Add checks for area.* as area should never be undefined now (as it is our array container for items)
+		vm.allowedContentTypes = $scope.model.area !== undefined && $scope.model.area.allowedContentTypes !== undefined ? $scope.model.area.allowedContentTypes : $scope.model.config.allowedDoctypeAliases;
+		vm.allowedElementTypes = $scope.model.area !== undefined && $scope.model.area.allowedElementTypes !== undefined ? $scope.model.area.allowedElementTypes : $scope.model.config.allowedElementAliases;
 
 		function init() {
 

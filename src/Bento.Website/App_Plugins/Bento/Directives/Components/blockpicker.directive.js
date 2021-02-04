@@ -22,8 +22,8 @@
 			controller: function ($scope, $element) {
 
 				$scope.open = open;
-				$scope.create = create;
-				$scope.useExisting = useExisting;
+				//$scope.create = create;
+				//$scope.useExisting = useExisting;
 				$scope.hasId = hasId;
 				$scope.hasContentData = hasContentData;
 				$scope.initBlock = initBlock;
@@ -87,10 +87,8 @@
 					return value;
 				}
 
-				function create(embed) {
+				/*function create(embed) {
 					var options;
-
-
 
 					options = {
 						title: 'Bento block',
@@ -127,13 +125,11 @@
 					};
 
 					editorService.open(options);
-				}
+				}*/
 
 
 				function convert(id) {
 					var options;
-
-
 
 					options = {
 						title: 'Convert',
@@ -164,9 +160,6 @@
 
 					editorService.open(options);
 				}
-
-
-
 
 				function open() {
 
@@ -233,13 +226,11 @@
 
 				}
 
-				function useExisting() {
+				/*function useExisting() {
 
 					bentoResource.getLibraryFolderId($routeParams.id, $scope.config.libraryFolderDoctypeAlias)
 						.then(function (ent) {
 							var libraryFolderId = ent;
-
-
 									var contentPicker = {
 										section: "content",
 										treeAlias: "content",
@@ -267,7 +258,7 @@
 									editorService.treePicker(contentPicker);
 	
 						});
-				}
+				}*/
 
 				function hasId(value) {
 					return value !== null && parseInt(value, 10) > 0;

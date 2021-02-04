@@ -115,7 +115,7 @@
 				// Initers
 
 				function init() {
-					//set bento item allowed blocks
+					//set bento allowed ContentTypes and ElementTypes
 					if ($scope.config !== undefined) {
 						if ($scope.config.allowedDoctypeAliases) {
 							$scope.allowedContentTypes = $scope.config.allowedDoctypeAliases;
@@ -124,8 +124,7 @@
 							$scope.allowedElementTypes = $scope.config.allowedElementAliases;
 						}
 					}
-
-					//set bento stack allowed blocks
+					//if Area has the settings (Stack) instead of config (Item)
 					if ($scope.area !== undefined) {
 						// this could probably be done better
 						if ($scope.area.allowedElementTypes !== undefined) {
