@@ -33,7 +33,7 @@
 
 				if ($scope.allowSort) {
 					$scope.sortOptions = {
-						handle: '.bento-layout-item-title',
+						handle: '.bento-layout-area-title',
 						stop: function (e, ui) {
 							$scope.itemUpdating = true;
 
