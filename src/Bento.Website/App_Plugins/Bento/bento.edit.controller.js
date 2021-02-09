@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoEditController($scope, $injector, contentResource) {
+	function bentoEditController($scope, $injector, contentResource, localizationService, overlayService, navigationService) {
 
 		var vm = this;
 
@@ -16,9 +16,6 @@
 		vm.title = "Edit " + $scope.model.documentTypeName;
 
 		contentResource.getScaffold(-20, $scope.model.documentTypeAlias).then(function (data) {
-
-
-
 
 			// Merge current value
 			if ($scope.model.nodeData) {
@@ -51,9 +48,36 @@
 				}
 			}
 		}
+
 		function close() {
 			if ($scope.model.close) {
-				$scope.model.close();
+				if (vm.bentoEditForm.$dirty) {
+					localizationService.localizeMany(["prompt_unsavedChanges", "prompt_unsavedChangesWarning", "prompt_discardChanges", "prompt_stay"]).then(
+						function (values) {
+							var overlay = {
+								"view": "default",
+								"title": values[0],
+								"content": values[1],
+								"disableBackdropClick": true,
+								"disableEscKey": true,
+								"submitButtonLabel": values[2],
+								"closeButtonLabel": values[3],
+								submit: function () {
+									overlayService.close();
+									navigationService.hideDialog();
+									$scope.model.close();
+								},
+								close: function () {
+									overlayService.close();
+								}
+							};
+							overlayService.open(overlay);
+						}
+					);
+				} else {
+					navigationService.hideDialog();
+					$scope.model.close();
+				}
 			}
 		}
 	}
