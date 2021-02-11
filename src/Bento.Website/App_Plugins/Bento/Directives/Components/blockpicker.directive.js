@@ -482,8 +482,8 @@
 
 				function remove(index) {
 					//remove the item
-					$scope.area.contents.splice(index, 1);
 					$scope.updating = true;
+					$scope.area.contents.splice(index, 1);
 				}
 			}
 		};

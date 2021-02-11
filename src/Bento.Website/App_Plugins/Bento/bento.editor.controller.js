@@ -31,18 +31,16 @@
 		vm.trustSrc = function (src) {
 			return $sce.trustAsResourceUrl(src);
 		};
-		
-
-		vm.name = "...";
-		vm.item.icon = "icon-brick";
 
 		$scope.model.hideLabel = $scope.model.config.hideLabel;
 
 		if ($scope.model.value) {
-/// old bento hacks
+			/// old bento hacks
 			var data = {};
 
-			if ($scope.model.value.id !== undefined) {
+			if ($scope.model.value.contents !== undefined) {
+				data = $scope.model.value;
+			} else if ($scope.model.value.id !== undefined) {
 				data = $scope.model.value;
 			} else {
 				// some old version of Bento?
@@ -51,7 +49,7 @@
 				data.contentData = undefined;
 				data.icon = undefined;
 			}
-///
+			///
 
 			//vm.item.id = data.id;
 			//vm.item.key = data.key;
@@ -61,6 +59,8 @@
 			if (data.contents !== undefined) {
 				vm.item.contents = data.contents;
 			} else {
+				if (canAddMultiple())
+					console.log('data');
 				vm.item.contents = [];
 				if (data.contentData || data.id || data.key) { // if any of these things were set by $scope.model.value (should be unset by next save)
 					vm.item.contents.push({ id: data.id, name: data.name, alias: data.alias, key: data.key, contentData: data.contentData, icon: data.icon, contentNode: data.contentNode });
@@ -68,14 +68,26 @@
 			}
 		}
 
-		$scope.$watch('vm.updating', function (newValue, oldValue) {
+		function validate() {
+			if (canAddMultiple()) {
+				if (vm.item.contents.length < $scope.model.config.minNumber) {
+					$scope.bentoEditorForm.minCount.$setValidity("minCount", false);
+				} else {
+					$scope.bentoEditorForm.minCount.$setValidity("minCount", true);
+				}
+				if (vm.item.contents.length > $scope.model.config.maxNumber) {
+					$scope.bentoEditorForm.maxCount.$setValidity("maxCount", false);
+				} else {
+					$scope.bentoEditorForm.maxCount.$setValidity("maxCount", true);
+				}
+			}
+		}
+
+		$scope.$on("formSubmitting", function () {
+			validate();
 			if (canAddMultiple()) {
 				//save multiple
-				if (vm.item.contents.length < $scope.model.config.minNumber || vm.item.contents.length > $scope.model.config.maxNumber) {
-					// validation warning
-				} else {
-					$scope.model.value = JSON.stringify(vm.item);
-                }
+				$scope.model.value = JSON.stringify(vm.item);
 			} else {
 				//save singular
 				var data = vm.item.contents[0];
@@ -85,6 +97,11 @@
 				}
 			}
 		});
+
+		/*$scope.$watch('vm.updating', function (newValue, oldValue) {
+			console.log('vm.updating');
+			vm.updating = false;
+		});*/
 
 		function toggleDeleteConfirm(show) {
 			vm.deleteConfirmVisible = show;
