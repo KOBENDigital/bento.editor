@@ -1,0 +1,17 @@
+﻿<div class="bento-picker-button-wrapper">
+	<div ng-if="!hasElements() && !hasLibrary()">
+		<localize key="bento_noItemTypes">No area elements or content types have been configured</localize>
+	</div>
+	<div class="bento-picker-button" ng-click="create(true)" ng-if="hasElements()">
+		<i class="icon icon-pushpin"></i>
+		<div class="help-text"><localize key="bento_createElement">Add Content</localize></div>
+	</div>
+	<div class="bento-picker-button" ng-click="create(false)" ng-if="hasLibrary()">
+		<i class="icon icon-page-add"></i>
+		<div class="help-text"><localize key="bento_createNew">Create new library item</localize></div>
+	</div>
+	<div class="bento-picker-button" ng-click="useExisting()" ng-if="hasLibrary()">
+		<i class="icon icon-books"></i>
+		<div class="help-text"><localize key="bento_useExisting">Use existing from library item</localize></div>
+	</div>
+</div>

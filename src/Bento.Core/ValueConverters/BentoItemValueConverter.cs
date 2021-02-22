@@ -55,16 +55,18 @@ namespace Bento.Core.ValueConverters
 				//had to move to this because someone broke DI for propertyValueConverts between 8.2 and 8.5
 				var embeddedContentService = Umbraco.Web.Composing.Current.Factory.GetInstance<IEmbeddedContentService>();
 
-
+				//This could be problematic to update to multiple items as it is meant to return single IPublishedElement
+				//And making it return either IPublishedElement or IEnumerable based on data could break existing views
+				//So for backwards compatibility we could create a new BentoMultipleItem DataType (with a min/max)
 
 				IPublishedElement content = null;
-				if (area.Key != Guid.Empty && area.ContentData == null)
+				if (area.Key.HasValue && area.Key != Guid.Empty && area.ContentData == null)
 				{
-					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Key);
+					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Key.Value);
 				}
-				else if (area.Id != 0 && area.ContentData == null)
+				else if (area.Id.HasValue && area.Id != 0 && area.ContentData == null)
 				{
-					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Id);
+					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Id.Value);
 				}
 				else if (area.ContentData != null)
 				{

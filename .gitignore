@@ -196,3 +196,4 @@ node_modules/
 /src/.idea/
 
 src/Bento.Website/App_Data/cache/
+src/Bento.Website/Umbraco.sdf

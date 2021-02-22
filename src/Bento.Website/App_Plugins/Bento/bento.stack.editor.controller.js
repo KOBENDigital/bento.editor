@@ -123,6 +123,21 @@
 
 						val.allowedElementTypes = area.allowedElementTypes !== undefined ? area.allowedElementTypes : '';
 						val.allowedContentTypes = area.allowedContentTypes !== undefined ? area.allowedContentTypes : '';
+
+						// update old area code into new
+						// create array object if it doesn't exist
+						if (!val.contents)
+							val.contents = [];
+						// add existing content (if Old "Single Item") to array
+						if (val.contentData || val.id || val.key) {
+							val.contents.push({ id: val.id, name: val.name, alias: val.alias, key: val.key, contentData: val.contentData, icon: val.icon, contentNode: val.contentNode });
+							// remove from model
+							delete val.id;
+							delete val.alias;
+							delete val.key;
+							delete val.contentData;
+							delete val.contentNode; 
+						}
 					});
 
 					//this could come from layout settings if not set use the generic icon
@@ -130,6 +145,11 @@
 
 					return item;
 				});
+		}
+		function createEmptyAreaWithContents(area) {
+			var emptyArea = createEmptyArea(area);
+			emptyArea.contents = area.contents;
+			return emptyArea;
 		}
 
 		$scope.$watch('vm.itemUpdating',
@@ -149,19 +169,21 @@
 							layout.areas = _.map(val.areas,
 								function (area) {
 									return {
-										id: area.id,
-										key: area.key,
+										//id: area.id,
+										//key: area.key,
 										name: area.name,
 										alias: area.alias,
-										contentData: area.contentData
+										//contentData: area.contentData
+										contents: area.contents
 									};
 								}
 							);
 
-							if (val.areas.length === 1) {
+							//Does this make it easier or harder? (could hide block-picker header if only 1 item)
+							/*if (val.areas.length === 1) {
 								val.name = val.areas[0].name;
 								val.icon = val.areas[0].icon;
-							}
+							}*/
 
 							$scope.model.value.push(layout);
 						});
@@ -183,8 +205,9 @@
 			emptyArea.deleteConfirmVisible = false;
 			emptyArea.id = undefined;
 			emptyArea.key = undefined;
-			emptyArea.contentData = undefined;
 			emptyArea.alias = area.alias;
+			emptyArea.contentData = undefined;
+			emptyArea.contents = [];
 			emptyArea.allowedContentTypes = area.allowedContentTypes;
 			emptyArea.allowedElementTypes = area.allowedElementTypes;
 			return emptyArea;
@@ -287,7 +310,6 @@
 			};
 
 			editorService.open(options);
-
 		}
 
 		function setLayout(item, layout, index) {

@@ -12,7 +12,6 @@ namespace Bento.Core.Models
 		[JsonProperty("alias")]
 		public String Alias { get; set; }
 
-
 		[JsonProperty("areas")]
 		public IEnumerable<Area> Areas { get; set; } = new List<Area>();
 

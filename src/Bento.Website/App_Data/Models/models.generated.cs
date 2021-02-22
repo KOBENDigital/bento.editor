@@ -19,8 +19,8 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "f8182c767d817788")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.6")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "bfcb89c2312b4042")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.3")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -188,11 +188,32 @@ namespace Umbraco.Web.PublishedModels
 		// properties
 
 		///<summary>
-		/// Bento Item Test
+		/// Bento Item (library)
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("bentiItemTest2")]
+		public IPublishedElement BentiItemTest2 => this.Value<IPublishedElement>("bentiItemTest2");
+
+		///<summary>
+		/// Bento Item (content)
 		///</summary>
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
 		[ImplementPropertyType("bentoItemTest")]
 		public IPublishedElement BentoItemTest => this.Value<IPublishedElement>("bentoItemTest");
+
+		///<summary>
+		/// Bento Item (empty)
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("bentoItemTest3")]
+		public IPublishedElement BentoItemTest3 => this.Value<IPublishedElement>("bentoItemTest3");
+
+		///<summary>
+		/// Bento Multi Item
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("bentoMultiItem")]
+		public Bento.Core.Models.Area BentoMultiItem => this.Value<Bento.Core.Models.Area>("bentoMultiItem");
 
 		///<summary>
 		/// Content Stack
@@ -200,13 +221,6 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
 		[ImplementPropertyType("contentStack")]
 		public IEnumerable<Bento.Core.Models.StackItem> ContentStack => this.Value<IEnumerable<Bento.Core.Models.StackItem>>("contentStack");
-
-		///<summary>
-		/// dirty check
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
-		[ImplementPropertyType("dirtyCheck")]
-		public string DirtyCheck => this.Value<string>("dirtyCheck");
 	}
 
 	/// <summary>Heading Item Element</summary>
@@ -326,13 +340,6 @@ namespace Umbraco.Web.PublishedModels
 		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
 		[ImplementPropertyType("bodyText")]
 		public IHtmlString BodyText => this.Value<IHtmlString>("bodyText");
-
-		///<summary>
-		/// nested
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
-		[ImplementPropertyType("nested")]
-		public IEnumerable<FeatureElement> Nested => this.Value<IEnumerable<FeatureElement>>("nested");
 
 		///<summary>
 		/// Hide?
@@ -964,6 +971,20 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// Page Body
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("pageBody")]
+		public Newtonsoft.Json.Linq.JToken PageBody => this.Value<Newtonsoft.Json.Linq.JToken>("pageBody");
+
+		///<summary>
+		/// Use bento.grid.editor to ensure new code works with it
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("useBentoGridEditorToEnsureNewCodeWorksWithIt")]
+		public string UseBentoGridEditorToEnsureNewCodeWorksWithIt => this.Value<string>("useBentoGridEditorToEnsureNewCodeWorksWithIt");
 	}
 
 	/// <summary>Folder</summary>

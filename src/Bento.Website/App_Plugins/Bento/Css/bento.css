@@ -279,3 +279,12 @@
     color: #d8d7d9;
     padding-top: 50px;
     padding-bottom: 50px; }
+
+
+/* Multiple Items class */
+.bento-layout-wrapper .bento-layout-item-header {
+    position: relative;
+}
+    .bento-layout-wrapper .bento-layout-item-header .bento-stack-item-tools a {
+        color: #000;
+    }

@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function bentoBlockPickerDirective(editorService, bentoResource, contentResource, userService, $routeParams, $sce, $http) {
+	function bentoBlockPickerDirective(editorService, bentoResource, contentResource, userService, $routeParams, $sce, $http, localizationService, overlayService) {
 
 		var directive = {
 			restrict: 'E',
@@ -22,8 +22,8 @@
 			controller: function ($scope, $element) {
 
 				$scope.open = open;
-				$scope.create = create;
-				$scope.useExisting = useExisting;
+				//$scope.create = create;
+				//$scope.useExisting = useExisting;
 				$scope.hasId = hasId;
 				$scope.hasContentData = hasContentData;
 				$scope.initBlock = initBlock;
@@ -35,8 +35,8 @@
 				$scope.allowedContentTypes = "";
 				$scope.allowedElementTypes = "";
 
-
-
+				$scope.toggleDeleteConfirm = toggleDeleteConfirm;
+				$scope.remove = remove;
 
 
 				function hasElements() {
@@ -87,10 +87,8 @@
 					return value;
 				}
 
-				function create(embed) {
+				/*function create(embed) {
 					var options;
-
-
 
 					options = {
 						title: 'Bento block',
@@ -127,13 +125,11 @@
 					};
 
 					editorService.open(options);
-				}
+				}*/
 
 
 				function convert(id) {
 					var options;
-
-
 
 					options = {
 						title: 'Convert',
@@ -164,9 +160,6 @@
 
 					editorService.open(options);
 				}
-
-
-
 
 				function open() {
 
@@ -233,13 +226,11 @@
 
 				}
 
-				function useExisting() {
+				/*function useExisting() {
 
 					bentoResource.getLibraryFolderId($routeParams.id, $scope.config.libraryFolderDoctypeAlias)
 						.then(function (ent) {
 							var libraryFolderId = ent;
-
-
 									var contentPicker = {
 										section: "content",
 										treeAlias: "content",
@@ -267,7 +258,7 @@
 									editorService.treePicker(contentPicker);
 	
 						});
-				}
+				}*/
 
 				function hasId(value) {
 					return value !== null && parseInt(value, 10) > 0;
@@ -431,43 +422,69 @@
 				}
 
 				function init() {
-
-					//set layout allowed block 
-					if ($scope.area !== undefined) {
-						// this could probably be done better
-
-						if ($scope.area.allowedElementTypes.value !== undefined && $scope.area.allowedElementTypes.value !== '') {
-							$scope.allowedElementTypes = $scope.area.allowedElementTypes.value;
-						}
-						if (typeof $scope.area.allowedElementTypes === 'string' && $scope.area.allowedElementTypes) {
-							$scope.allowedElementTypes = $scope.area.allowedElementTypes;
-						}
-
-						if ($scope.area.allowedContentTypes.value !== undefined && $scope.area.allowedContentTypes.value !== '') {
-							$scope.allowedContentTypes = $scope.area.allowedContentTypes.value;
-						}
-						if (typeof $scope.area.allowedContentTypes === 'string' && $scope.area.allowedContentTypes) {
-							$scope.allowedContentTypes = $scope.area.allowedContentTypes;
-						}
-
-						//set bento item allowed blocks
-					} else {
-
+					//set bento item allowed blocks
+					if ($scope.config !== undefined) {
 						if ($scope.config.allowedDoctypeAliases) {
 							$scope.allowedContentTypes = $scope.config.allowedDoctypeAliases;
 						}
-
 						if ($scope.config.allowedElementAliases) {
 							$scope.allowedElementTypes = $scope.config.allowedElementAliases;
 						}
-
 					}
 
+					//set bento stack allowed blocks
+					if ($scope.area !== undefined) {
+						// this could probably be done better
+						if ($scope.area.allowedElementTypes !== undefined) {
+							if ($scope.area.allowedElementTypes.value !== undefined && $scope.area.allowedElementTypes.value !== '') {
+								$scope.allowedElementTypes = $scope.area.allowedElementTypes.value;
+							}
+							if (typeof $scope.area.allowedElementTypes === 'string' && $scope.area.allowedElementTypes) {
+								$scope.allowedElementTypes = $scope.area.allowedElementTypes;
+							}
+						}
+
+						if ($scope.area.allowedContentTypes !== undefined) {
+							if ($scope.area.allowedContentTypes.value !== undefined && $scope.area.allowedContentTypes.value !== '') {
+								$scope.allowedContentTypes = $scope.area.allowedContentTypes.value;
+							}
+							if (typeof $scope.area.allowedContentTypes === 'string' && $scope.area.allowedContentTypes) {
+								$scope.allowedContentTypes = $scope.area.allowedContentTypes;
+							}
+						}
+					}
 				}
 
 				init();
 
 				initBlock();
+
+				function toggleDeleteConfirm(index) {
+					localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+						const overlay = {
+							title: data[1],
+							content: data[0],
+							closeButtonLabel: data[2],
+							submitButtonLabel: data[3],
+							submitButtonStyle: "danger",
+							close: function () {
+								overlayService.close();
+							},
+							submit: function () {
+								remove(index);
+								overlayService.close();
+							}
+						};
+
+						overlayService.open(overlay);
+					});
+				}
+
+				function remove(index) {
+					//remove the item
+					$scope.updating = true;
+					$scope.area.contents.splice(index, 1);
+				}
 			}
 		};
 
