@@ -118,9 +118,9 @@ Bento Layouts, Items and Elements are all CSHTML views that live in the ```/view
 Bento Stack properties are of type ```IEnumerable<Bento.Core.Models.StackItem>```. Rending a Bento Stack property can be done as follows:
 
 ```
-@foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty){
+@foreach(Bento.Core.Models.StackItem item in Model.MyBentoStackProperty){
   <section>
-      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
+      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
   </section>
 }
 ```
