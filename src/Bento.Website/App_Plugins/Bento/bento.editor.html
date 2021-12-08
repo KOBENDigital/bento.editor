@@ -1,0 +1,20 @@
+﻿<div ng-controller="bento.editor.controller as vm">
+	<link ng-repeat="url in vm.cssFonts" data-ng-if="url" rel="stylesheet" data-ng-href="{{vm.trustSrc(url)}}" />
+	<div class="bento-stack-item umb-box">
+		<div class="umb-box-header bento-stack-item-handle no-grab">
+			<div><i class="icon {{ vm.icon }}"></i> {{ vm.name }}</div>
+			<div class="bento-stack-item-tools" ng-if="vm.item.id !== undefined">
+				<div style="position:relative;">
+					<a href="" ng-click="vm.toggleDeleteConfirm(true)"><i class="umb-control-tool-icon icon-trash"></i></a>
+					<umb-confirm-action ng-if="vm.deleteConfirmVisible"
+										direction="left"
+										on-confirm="vm.remove()"
+										on-cancel="vm.toggleDeleteConfirm(false)">
+					</umb-confirm-action>
+				</div>
+			</div>
+		</div>
+		<!--<bento-block-picker id="vm.item.id" icon="vm.icon" content-name="vm.name" updating="vm.updating" config="model.config"></bento-block-picker>-->
+		<bento-block-picker updating="vm.updating" id="vm.item.id" key="vm.item.key" content-node="vm.contentNode" content-data="vm.item.contentData" icon="vm.item.icon" content-name="vm.name" config="vm.config"></bento-block-picker>
+	</div>
+</div>

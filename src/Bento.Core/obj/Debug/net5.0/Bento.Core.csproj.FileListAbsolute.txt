@@ -1,0 +1,5 @@
+c:\WIP\bentov9\Bento\Bento.Core\obj\Debug\net5.0\Bento.Core.csproj.AssemblyReference.cache
+c:\WIP\bentov9\Bento\Bento.Core\obj\Debug\net5.0\Bento.Core.GeneratedMSBuildEditorConfig.editorconfig
+c:\WIP\bentov9\Bento\Bento.Core\obj\Debug\net5.0\Bento.Core.AssemblyInfoInputs.cache
+c:\WIP\bentov9\Bento\Bento.Core\obj\Debug\net5.0\Bento.Core.AssemblyInfo.cs
+c:\WIP\bentov9\Bento\Bento.Core\obj\Debug\net5.0\Bento.Core.csproj.CoreCompileInputs.cache

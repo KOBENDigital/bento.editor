@@ -1,0 +1,21 @@
+﻿<div class="bento-layout">
+	<bento-block-settings-preview style-html="{{getStyler()}}" use-block-settings-css="{{config.useBlockSettingsCss}}" stylesheet="{{config.cssFilePath}}"></bento-block-settings-preview>
+	<div class="bento-layout-wrapper" style="{{layoutStyle}}" ng-class="{'show-drop-targets': sorting && allowSort,'is-sortable': allowSort}" ui-sortable="sortOptions" ng-model="areas">
+
+		<div ng-repeat="area in areas" class="bento-layout-item" style="{{areaStyles[$index]}}">
+
+
+			<div class="umb-box-header bento-layout-item-header">
+				<div class="bento-layout-item-title" ng-mousedown="setSort(true)" ng-mouseup="setSort(false)"><i class="icon {{ area.icon }}"></i> {{ area.name }}</div>
+				<div class="bento-stack-item-tools">
+					<div style="position:relative;">
+						<a href="" ng-if="area.key !== undefined" ng-click="toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="content">
+				<bento-block-picker updating="updating" id="area.id" key="area.key" content-node="area.contentNode" content-data="area.contentData" icon="area.icon" content-name="area.name" config="config" area="area" culture="culture"></bento-block-picker>
+			</div>
+		</div>
+	</div>
+</div>

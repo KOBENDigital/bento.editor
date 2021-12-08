@@ -1,0 +1,125 @@
+﻿.bento-layout {
+	background: #fff;
+}
+
+.bento-layout-wrapper {
+	transition: all .5s;
+	display: grid;
+	grid-gap: 1px;
+	background: #fff;
+	padding: 1px;
+
+	.bento-layout-item {
+		border: 1px #ccc solid;
+		position: relative;
+		//background: #f6f4f4;
+
+		&-header {
+			background-color: #fff;
+		}
+
+		.bento-stack-item-tools {
+			a {
+				color: #1b264f;
+			}
+		}
+
+		&.ui-sortable-helper {
+			width: auto !important;
+			height: auto !important;
+
+			&:after {
+				display: none;
+			}
+
+			.bento-stack-item-tools, .content {
+				display: none;
+			}
+		}
+	}
+
+	&.show-drop-targets {
+
+  	.drop {
+			border: 5px solid #1b264f;
+		}
+
+		
+	}
+
+	&.is-sortable {
+		.bento-layout-item-title {
+			cursor: grab;
+
+			&:active {
+				cursor: grabbing;
+			}
+		}
+	}
+}
+
+.bento-layout-preview {
+	//background: #eee;
+	padding: 3px;
+	border-radius: 3px;
+
+	&:hover {
+		background: #f5c1bc;
+		cursor: pointer;
+
+		.bento-layout-wrapper {
+			background: #f5c1bc;
+		}
+	}
+
+	.bento-layout-wrapper {
+		grid-gap: 3px;
+		background: #eee;
+	}
+
+	.bento-layout-item {
+		padding: 5px;
+		color: #999;
+	}
+
+	&-markers {
+		padding-top:10px;
+
+		&> div {
+		border-left: 1px solid #000;
+		height: 3px;
+		position:relative;
+
+		&>span{
+			font-size:10px;
+			display:block;
+			position:absolute;
+			top: -20px;
+			left: -3px;
+
+			&.last{
+				left:unset;
+				right: -3px;
+			}
+		}
+
+		&:last-child {
+			border-right: 1px solid #000;
+			height: 3px;
+		}
+		}
+	}
+}
+
+.bento-styler-wrapper {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+
+	.bento-styler {
+		width: 100%;
+		height: 100%;
+	}
+}

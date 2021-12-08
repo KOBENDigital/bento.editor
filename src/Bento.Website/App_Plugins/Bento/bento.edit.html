@@ -1,0 +1,41 @@
+﻿<div ng-controller="bento.edit.controller as vm" class="form-horizontal">
+
+	<umb-editor-view>
+		<umb-editor-header name="vm.title"
+											 name-locked="true"
+											 hide-alias="true"
+											 hide-icon="true"
+											 hide-description="true">
+		</umb-editor-header>
+
+		<umb-editor-container>
+			<umb-load-indicator ng-if="vm.loading">
+			</umb-load-indicator>
+			<div ng-if="!vm.loading">
+				<ng-form name="vm.bentoEditForm" val-form-manager>
+					<umb-tabbed-content ng-if="!vm.directiveExists" content="vm.content"></umb-tabbed-content>
+					<matryoshka-tabbed-content ng-if="vm.directiveExists" content="vm.content">
+					</matryoshka-tabbed-content>
+				</ng-form>
+			</div>
+
+		</umb-editor-container>
+
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+										button-style="link"
+										label-key="general_close"
+										shortcut="esc"
+										action="vm.close()">
+				</umb-button>
+				<umb-button type="button"
+										button-style="success"
+										label-key="bento_save"
+										shortcut="ctrl+s"
+										action="vm.submit(model)">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+	</umb-editor-view>
+</div>

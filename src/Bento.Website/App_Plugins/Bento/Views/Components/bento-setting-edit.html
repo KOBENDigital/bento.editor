@@ -1,0 +1,139 @@
+﻿<div>
+	<div class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<label class="control-label ng-binding" for="text-setting-alias" ng-attr-title="Setting alias">
+				<localize key="bento_alias">Alias</localize>
+			</label>
+			<div class="controls" id="text-setting-alias">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<input type="text" name="setting.alias" class="umb-property-editor umb-textstring ng-scope" ng-model="setting.alias" ng-change="settingChanged()" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<label class="control-label ng-binding" for="text-setting-label" ng-attr-title="Setting label">
+				<localize key="bento_label">Label</localize>
+			</label>
+			<div class="controls" id="text-setting-label">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<input type="text" name="setting.label" class="umb-property-editor umb-textstring ng-scope" ng-model="setting.label" ng-change="settingChanged()" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<div class="controls" id="text-setting-required">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<label class="checkbox umb-form-check umb-form-check--checkbox">
+								<input type="checkbox"
+											 name="setting.required"
+											 ng-model="setting.required"
+											 ng-checked="setting.required"
+											 ng-change="settingChanged()"
+											 class="umb-form-check__input" />
+								<div class="umb-form-check__state umb-form-check__state" aria-hidden="true">
+									<div class="umb-form-check__check">
+										<i class="umb-form-check__icon icon-check"></i>
+									</div>
+								</div>
+								<span class="umb-form-check__text"><localize key="bento_required">Required</localize></span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="setting.type === 'string' || setting.type === 'text'" class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<label class="control-label ng-binding" for="text-setting-validation" ng-attr-title="Setting validation pattern">
+				<localize key="bento_validationPatern">Validation patern</localize>
+			</label>
+			<div class="controls" id="text-setting-validation">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<input type="text" name="setting.validationPattern" class="umb-property-editor umb-textstring ng-scope" ng-model="setting.validationPattern" ng-change="settingChanged()" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="setting.type === 'radio' || setting.type === 'checklist' || setting.type === 'dropdown'" class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<label class="control-label ng-binding" for="text-setting-pre-values" ng-attr-title="Setting pre values">
+				<localize key="bento_preValues">Pre values</localize>
+			</label>
+			<div class="controls" id="text-setting-pre-values">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<ng-form name="multiUrlPickerForm">
+								<div ui-sortable="sortableOptions" ng-model="setting.preValues">
+									<div class="umb-node-preview" ng-repeat="preValue in setting.preValues">
+										<i class="umb-node-preview__icon icon-setting"></i>
+										<div class="umb-node-preview__content">
+											<div class="umb-node-preview__name" ng-attr-title="{{preValue.value}}">{{preValue.label}}</div>
+										</div>
+										<div class="umb-node-preview__actions">
+											<a class="umb-node-preview__action umb-node-preview__action--red" title="Edit" ng-click="openPreValueEditor(preValue, $index)"><localize key="general_edit">Edit</localize></a>
+										</div>
+										<div class="umb-node-preview__actions">
+											<a class="umb-node-preview__action umb-node-preview__action--red" title="Remove" ng-click="remove($index)"><localize key="general_remove">Remove</localize></a>
+										</div>
+									</div>
+								</div>
+								<a class="umb-node-preview-add"
+									 href
+									 ng-click="openPreValueEditor()"
+									 prevent-default>
+									<localize key="general_add">Add</localize>
+								</a>
+							</ng-form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-if="setting.type === 'dropdown'" class="control-group umb-control-group">
+		<div class="umb-el-wrap">
+			<div class="controls" id="text-setting-multiple">
+				<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+					<div disable-tabindex="preview" class="ng-isolate-scope">
+						<div class="ng-scope">
+							<label class="checkbox umb-form-check umb-form-check--checkbox">
+								<input type="checkbox"
+											 name="setting.multiple"
+											 ng-model="setting.multiple"
+											 ng-checked="setting.multiple"
+											 ng-change="settingChanged()"
+											 class="umb-form-check__input" />
+								<div class="umb-form-check__state umb-form-check__state" aria-hidden="true">
+									<div class="umb-form-check__check">
+										<i class="umb-form-check__icon icon-check"></i>
+									</div>
+								</div>
+								<span class="umb-form-check__text"><localize key="bento_allowMultipleSelection">Allow mulitple selection</localize>?</span>
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

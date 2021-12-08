@@ -1,0 +1,60 @@
+﻿<div>
+	<umb-load-indicator ng-if="updating"></umb-load-indicator>
+	<div class="bento-picker-button-wrapper" ng-if="!hasId(id) && !hasContentData(contentData)">
+
+		<div ng-if="!hasElements() && !hasLibrary()">
+			<localize key="bento_noItemTypes">No area elements or content types have been configured</localize>
+		</div>
+
+		<div class="bento-picker-button" ng-click="create(true)" ng-if="hasElements()">
+			<i class="icon icon-pushpin"></i>
+			<div class="help-text"><localize key="bento_createElement">Add Content</localize></div>
+		</div>
+
+		<div class="bento-picker-button" ng-click="create(false)" ng-if="hasLibrary()">
+			<i class="icon icon-page-add"></i>
+			<div class="help-text"><localize key="bento_createNew">Create new library item</localize></div>
+		</div>
+		<div class="bento-picker-button" ng-click="useExisting()" ng-if="hasLibrary()">
+			<i class="icon icon-books"></i>
+			<div class="help-text"><localize key="bento_useExisting">Use existing from library item</localize></div>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
+	<div class="bento-item-preview"  ng-if="hasId(id) || hasContentData(contentData)">
+		
+		<div class="backend-block" ng-click="open()">
+
+			<div class="backend-content">
+				<umb-load-indicator ng-if="updating"></umb-load-indicator>
+				<div class="bento">
+					<bento-block-preview preview-html="{{getView(this)}}" use-css="{{config.useCssFile}}" stylesheet="{{config.cssFilePath}}" use-backoffice-js="{{config.usePreviewJs}}" user-code="{{config.jsUserCode}}"></bento-block-preview>
+				</div>
+			</div>
+
+		</div>
+		<div  class="bento-item-preview-meta">
+			<div ng-if="!embedded">
+				<i class="icon icon-books"></i>
+
+				<a href ng-click="convert(id)" ng-if="adminOnly  && allowedElementTypes.length > 0"><i class="icon icon-pushpin"></i></a>
+
+			</div>
+			<div>
+				<umb-badge size="xs" color="{{status.color}}">
+					{{status.label}}
+				</umb-badge>
+			</div>
+
+			<div ng-if="!embedded">
+				Type: {{contentTypeName}}
+			</div>
+
+			<div ng-if="!embedded">
+				id: {{id}}
+			</div>
+
+		</div>
+	</div>
+</div>                                                                                                                                                    

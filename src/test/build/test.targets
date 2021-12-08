@@ -1,0 +1,27 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <testContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\test\**\*.*</testContentFilesPath>
+    </PropertyGroup>
+
+    <Target Name="CopytestAssets" BeforeTargets="Build">
+        <ItemGroup>
+            <testContentFiles Include="$(testContentFilesPath)" />
+        </ItemGroup>
+        <Message Text="Copying test files: $(testContentFilesPath) - #@(testContentFiles->Count()) files"  Importance="high" />
+        <Copy
+            SourceFiles="@(testContentFiles)"
+            DestinationFiles="@(testContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\test\%(RecursiveDir)%(Filename)%(Extension)')"
+            SkipUnchangedFiles="true" />
+
+    </Target>
+
+    <Target Name="CleartestAssets" BeforeTargets="Clean">
+        <ItemGroup>
+            <testDir Include="$(MSBuildProjectDirectory)\App_Plugins\test\" />
+        </ItemGroup>
+        <Message Text="Clear old test data"  Importance="high" />
+        <RemoveDir Directories="@(testDir)"  />
+    </Target>
+
+</Project>
