@@ -19,8 +19,8 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "f8182c767d817788")]
-[assembly:System.Reflection.AssemblyVersion("0.0.0.6")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "fbeabe6ecf8b12c2")]
+[assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedModels
 {
@@ -186,13 +186,6 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
-
-		///<summary>
-		/// Bento Item Test
-		///</summary>
-		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
-		[ImplementPropertyType("bentoItemTest")]
-		public IPublishedElement BentoItemTest => this.Value<IPublishedElement>("bentoItemTest");
 
 		///<summary>
 		/// Content Stack
@@ -964,6 +957,13 @@ namespace Umbraco.Web.PublishedModels
 		{ }
 
 		// properties
+
+		///<summary>
+		/// yrdy
+		///</summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Umbraco.ModelsBuilder", "8.1.0")]
+		[ImplementPropertyType("yrdy")]
+		public IPublishedElement Yrdy => this.Value<IPublishedElement>("yrdy");
 	}
 
 	/// <summary>Folder</summary>

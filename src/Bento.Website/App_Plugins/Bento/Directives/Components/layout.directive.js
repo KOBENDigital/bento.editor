@@ -1,253 +1,264 @@
 ﻿(function () {
-	'use strict';
-
-	function bentoLayoutDirective(notificationsService, $routeParams, $sce, $http, localizationService, overlayService) {
-		var directive = {
-			restrict: 'E',
-			templateUrl: '/App_Plugins/Bento/Views/Components/bento-layout.html',
-			scope: {
-				name: '=',
-				alias: '=',
-				layout: '=',
-				icon: '=',
-				areas: '=',
-				allowsort: '=',
-				config: '=',
-				updating: '=',
-				index: '=',
-				settings: '=',
-				culture: '='
-			},
-
-			controller: function ($scope, $element) {
-
-				$scope.initLayout = initLayout;
-				$scope.toggleDeleteConfirm = toggleDeleteConfirm;
-				$scope.remove = remove;
-				$scope.updateLayoutStyle = updateLayoutStyle;
-				$scope.sorting = false;
-				$scope.setSort = setSort;
-				$scope.firstSort = true;
-
-				$scope.allowSort = Boolean(Number($scope.layout.allowSort));
-
-				if ($scope.allowSort) {
-					$scope.sortOptions = {
-						handle: '.bento-layout-item-title',
-						stop: function (e, ui) {
-							$scope.itemUpdating = true;
-
-							ui.item.parent().find('.drop').removeClass('drop');
-
-							angular.forEach($scope.areas, function (area, $index) {
-
-								area.alias = $scope.layout.areas[$index].alias;
+    'use strict';
 
-							});
+    function bentoLayoutDirective(notificationsService, $routeParams, $sce, $http, localizationService, overlayService, clipboardService) {
+        var directive = {
+            restrict: 'E',
+            templateUrl: '/App_Plugins/Bento/Views/Components/bento-layout.html',
+            scope: {
+                name: '=',
+                alias: '=',
+                layout: '=',
+                icon: '=',
+                areas: '=',
+                allowsort: '=',
+                config: '=',
+                updating: '=',
+                index: '=',
+                settings: '=',
+                culture: '='
+            },
 
-							$scope.itemUpdating = true;
+            controller: function ($scope, $element) {
 
-							$scope.setSort(false);
-						},
-						change: function (e, ui) {
-							$(ui.helper).parent().find('.drop').removeClass('drop');
+                $scope.initLayout = initLayout;
+                $scope.toggleDeleteConfirm = toggleDeleteConfirm;
+                $scope.remove = remove;
+                $scope.updateLayoutStyle = updateLayoutStyle;
+                $scope.sorting = false;
+                $scope.setSort = setSort;
+                $scope.firstSort = true;
+                $scope.copyArea = copyArea;
 
+                $scope.allowSort = Boolean(Number($scope.layout.allowSort));
 
-							var helper = $(ui.helper).parent().find('.ui-sortable-helper');
-							var placeholder = $(ui.helper).parent().find('.ui-sortable-placeholder');
-							var lastIndex = $(ui.helper).parent().children().length-1;
+                if ($scope.allowSort) {
+                    $scope.sortOptions = {
+                        handle: '.bento-layout-item-title',
+                        stop: function (e, ui) {
+                            $scope.itemUpdating = true;
 
+                            ui.item.parent().find('.drop').removeClass('drop');
 
+                            angular.forEach($scope.areas, function (area, $index) {
 
+                                area.alias = $scope.layout.areas[$index].alias;
 
-							if (placeholder.index() === 0 || placeholder.index() === 1 && placeholder.next().index() === lastIndex) {
+                            });
 
+                            $scope.itemUpdating = true;
 
-								if (helper.index() < placeholder.index()) {
-									placeholder.prev().addClass('drop');
-								} else {
-									placeholder.next().addClass('drop');
-								}
+                            $scope.setSort(false);
+                        },
+                        change: function (e, ui) {
+                            $(ui.helper).parent().find('.drop').removeClass('drop');
 
-								
-							}
-							else if (placeholder.index() === 1 && helper.index() === 0 || placeholder.next().index() === -1 || placeholder.next().index() === lastIndex && helper.index() !== lastIndex) {
 
-									placeholder.prev().addClass('drop');
-								
-							} else {
-
-
-									placeholder.next().addClass('drop');
-							}
-							
-							
-							
-						},
-						update: function (e, ui) {
-							ui.item.parent().find('.drop').removeClass('drop');
-						}
-						,
-						'ui-floating': true,
-						start: function (e, ui) {
-							$(ui.helper).parent().find('.drop').removeClass('drop');
-							if ($scope.firstSort) {  // Call a refresh on ui-sortable on drag of first element.
-								$(ui.helper).parent().sortable("refreshPositions");
-								$scope.firstSort = false;
-							}
-						}
-					};
-				} else {
-					$scope.sortOptions = {
-						disabled: true
-					};
-				}
-				
+                            var helper = $(ui.helper).parent().find('.ui-sortable-helper');
+                            var placeholder = $(ui.helper).parent().find('.ui-sortable-placeholder');
+                            var lastIndex = $(ui.helper).parent().children().length - 1;
 
-				function setSort(sort) {
-					$scope.sorting = sort;
-				}
-				
-				function updateLayoutStyle() {
-					if ($scope.config.useCssFile && $scope.config.useBlockSettingsCss && $scope.config.cssFilePath) {
-						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedStyler';
 
-						let data = {
-							guid: guid(),
-							contentTypeAlias: $scope.settings.contentTypeAlias,
-							dataJson: JSON.stringify($scope.settings),
-							culture: typeof($scope.culture) !== 'undefined' ? $scope.culture : null
-						};
 
-						$http.post(url, data).then(function (response) {
 
-							$scope.getStyler = function () {
-								return $sce.trustAsHtml(response.data);
-							};
+                            if (placeholder.index() === 0 || placeholder.index() === 1 && placeholder.next().index() === lastIndex) {
 
-						}).catch(function (error) {
-							console.log(error);
 
-						}).finally(function () {
-							//$scope.updating = false;
-						});
-					}
-				}
+                                if (helper.index() < placeholder.index()) {
+                                    placeholder.prev().addClass('drop');
+                                } else {
+                                    placeholder.next().addClass('drop');
+                                }
 
 
+                            }
+                            else if (placeholder.index() === 1 && helper.index() === 0 || placeholder.next().index() === -1 || placeholder.next().index() === lastIndex && helper.index() !== lastIndex) {
 
+                                placeholder.prev().addClass('drop');
 
+                            } else {
 
-				function initLayout() {
 
-				
+                                placeholder.next().addClass('drop');
+                            }
 
-					$scope.layoutStyle = '';
 
 
-					//setup the columns configuration
-					$scope.layoutStyle += 'grid-template-columns: ';
-					$scope.layoutStyle += $scope.layout.columns.join(' ') + ";";
-						
+                        },
+                        update: function (e, ui) {
+                            ui.item.parent().find('.drop').removeClass('drop');
+                        }
+                        ,
+                        'ui-floating': true,
+                        start: function (e, ui) {
+                            $(ui.helper).parent().find('.drop').removeClass('drop');
+                            if ($scope.firstSort) {  // Call a refresh on ui-sortable on drag of first element.
+                                $(ui.helper).parent().sortable("refreshPositions");
+                                $scope.firstSort = false;
+                            }
+                        }
+                    };
+                } else {
+                    $scope.sortOptions = {
+                        disabled: true
+                    };
+                }
 
-					$scope.areaStyles = [];
-					
 
-					for (var i = 0; i < $scope.layout.areas.length; i++) {
-						var area = $scope.layout.areas[i];
+                function setSort(sort) {
+                    $scope.sorting = sort;
+                }
 
-						var style = "grid-column: " + area.column + ";";
-						style += " ";
-						style += "grid-row: " + area.row + ";";
+                function updateLayoutStyle() {
+                    if ($scope.config.useCssFile && $scope.config.useBlockSettingsCss && $scope.config.cssFilePath) {
+                        let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedStyler';
 
-						$scope.areaStyles.push(style);
-					}
-				}
+                        let data = {
+                            guid: guid(),
+                            contentTypeAlias: $scope.settings.contentTypeAlias,
+                            dataJson: JSON.stringify($scope.settings),
+                            culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
+                        };
 
-				function toggleDeleteConfirm(index) {
+                        $http.post(url, data).then(function (response) {
 
-					localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
-						const overlay = {
-							title: data[1],
-							content: data[0],
-							closeButtonLabel: data[2],
-							submitButtonLabel: data[3],
-							submitButtonStyle: "danger",
-							close: function () {
-								overlayService.close();
-							},
-							submit: function () {
-								remove(index);
-								overlayService.close();
-							}
-						};
+                            $scope.getStyler = function () {
+                                return $sce.trustAsHtml(response.data);
+                            };
 
-						overlayService.open(overlay);
-					});
+                        }).catch(function (error) {
+                            console.log(error);
 
+                        }).finally(function () {
+                            //$scope.updating = false;
+                        });
+                    }
+                }
 
 
-				}
 
-				function remove(index) {
-					//set the item back to blank
-					$scope.areas[index].id = undefined;
-					$scope.areas[index].key = undefined;
-					$scope.areas[index].contentNode = undefined;
-					$scope.areas[index].contentData = undefined;
+                function initLayout() {
 
-					//needs translation
-					$scope.areas[index].name = "...";
-					$scope.areas[index].icon = "icon-brick";
-					$scope.areas[index].deleteConfirmVisible = false;
+                    $scope.layoutStyle = '';
 
-					$scope.updating = true;
-				}
 
+                    //setup the columns configuration
+                    $scope.layoutStyle += 'grid-template-columns: ';
+                    $scope.layoutStyle += $scope.layout.columns.join(' ') + ";";
 
-				function guid() {
-					function s4() {
-						return Math.floor((1 + Math.random()) * 0x10000)
-							.toString(16)
-							.substring(1);
-					}
-					return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-						s4() + '-' + s4() + s4() + s4();
-				}
 
+                    $scope.areaStyles = [];
 
-				initLayout();
-				updateLayoutStyle();
 
+                    for (var i = 0; i < $scope.layout.areas.length; i++) {
+                        var area = $scope.layout.areas[i];
 
-				$scope.$watch('areas', function (newValue, oldValue) {
+                        var style = "grid-column: " + area.column + ";";
+                        style += " ";
+                        style += "grid-row: " + area.row + ";";
 
-					$scope.updating = true;
+                        $scope.areaStyles.push(style);
+                    }
+                }
 
-				}, true);
 
-				$scope.$watch('layout', function (newValue, oldValue) {
+                function copyArea(index) {
+                    var copy = angular.copy($scope.areas[index]);
+                    console.log(copy);
+                    clipboardService.copy('BentoItem',
+                        copy.contentData.alias,
+                        copy,
+                        copy.name,
+                        copy.icon,
+                        copy.key);
+                }
 
-					//reinit layout
-					$scope.initLayout();
-					$scope.updating = true;
+                
 
-				}, true);
+                function toggleDeleteConfirm(index) {
 
+                    localizationService.localizeMany(["content_nestedContentDeleteItem", "general_delete", "general_cancel", "contentTypeEditor_yesDelete"]).then(function (data) {
+                        const overlay = {
+                            title: data[1],
+                            content: data[0],
+                            closeButtonLabel: data[2],
+                            submitButtonLabel: data[3],
+                            submitButtonStyle: "danger",
+                            close: function () {
+                                overlayService.close();
+                            },
+                            submit: function () {
+                                remove(index);
+                                overlayService.close();
+                            }
+                        };
 
-				$scope.$watch('settings', function (newValue, oldValue) {
+                        overlayService.open(overlay);
+                    });
 
-						$scope.updateLayoutStyle();
 
-				}, true);
 
+                }
 
+                function remove(index) {
+                    //set the item back to blank
+                    $scope.areas[index].id = undefined;
+                    $scope.areas[index].key = undefined;
+                    $scope.areas[index].contentNode = undefined;
+                    $scope.areas[index].contentData = undefined;
 
-			}
-		};
+                    //needs translation
+                    $scope.areas[index].name = "...";
+                    $scope.areas[index].icon = "icon-brick";
+                    $scope.areas[index].deleteConfirmVisible = false;
 
-		return directive;
-	}
+                    $scope.updating = true;
+                }
 
-	angular.module('umbraco.directives').directive('bentoLayout', bentoLayoutDirective);
+
+                function guid() {
+                    function s4() {
+                        return Math.floor((1 + Math.random()) * 0x10000)
+                            .toString(16)
+                            .substring(1);
+                    }
+                    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+                        s4() + '-' + s4() + s4() + s4();
+                }
+
+
+                initLayout();
+                updateLayoutStyle();
+
+
+                $scope.$watch('areas', function (newValue, oldValue) {
+
+                    $scope.updating = true;
+
+                }, true);
+
+                $scope.$watch('layout', function (newValue, oldValue) {
+
+                    //reinit layout
+                    $scope.initLayout();
+                    $scope.updating = true;
+
+                }, true);
+
+
+                $scope.$watch('settings', function (newValue, oldValue) {
+
+                    $scope.updateLayoutStyle();
+
+                }, true);
+
+
+
+            }
+        };
+
+        return directive;
+    }
+
+    angular.module('umbraco.directives').directive('bentoLayout', bentoLayoutDirective);
 })();

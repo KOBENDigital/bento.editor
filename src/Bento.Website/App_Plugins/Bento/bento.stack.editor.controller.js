@@ -3,7 +3,7 @@
 
 	function bentoStackEditorController($scope, $sce, editorService, notificationsService, contentResource, assetsService, localizationService, overlayService) {
 
-		
+
 
 		var vm = this;
 		vm.culture = $scope.model.culture;
@@ -22,7 +22,7 @@
 
 		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
 			assetsService.loadJs($scope.model.config.jsFilePath, $scope).then(function () {
-				
+
 			});
 		}
 
@@ -50,58 +50,6 @@
 		if ($scope.model.value || !_.isEmpty($scope.model.value)) {
 
 			var layouts = getAvailableLayouts();
-
-			/////////////////////////////////////////////////////////////////////
-			// KOBEN BENTO MIGRATION.  SHOULD BE REMOVED BEFORE PUBLIC RELEASE //
-
-
-
-
-			if (!$scope.model.value[0].alias) {
-
-				var arrayOfLayouts = [];
-
-				angular.forEach($scope.model.value, function (val, key) {
-					let item = {};
-					item.settings = val.settings;
-					item.alias = layouts[0].alias;
-					let area = {};
-					area.id = val.id;
-					area.key = undefined; //we dont have one again until we save.
-					area.alias = layouts[0].areas[0].alias;
-					item.areas = [];
-					item.areas.push(area);
-					arrayOfLayouts.push(item);
-				});
-
-				$scope.model.value = arrayOfLayouts;
-
-			}
-
-			if ($scope.model.value[0].settings instanceof String) {
-
-
-				angular.forEach($scope.model.value, function (val, key) {
-
-					var oldSettings = JSON.parse(val.settings);
-
-					var settings = {};
-
-					settings.contentTypeAlias = $scope.model.config.layoutSettingsDoctypeAlias;
-					settings.key = guid();
-
-					val.settings = settings;
-
-				});
-
-			}
-
-
-
-
-			// END OF KOBEN MIGRATION                                          //
-			/////////////////////////////////////////////////////////////////////
-
 
 			vm.layouts = _.map($scope.model.value,
 				function (item) {
@@ -132,49 +80,52 @@
 				});
 		}
 
-		$scope.$watch('vm.itemUpdating',
-			function (newValue, oldValue) {
+		var unsubscribe = $scope.$on("bentoStackSyncVal", function (ev, args) {
+			$scope.model.value = [];
 
-				if (newValue) {
-					vm.itemUpdating = false;
-					$scope.model.value = [];
-					
-					angular.forEach(vm.layouts,
-						function (val, key) {
-							var layout = {
-								alias: val.alias,
-								settings: val.settings
+			angular.forEach(vm.layouts,
+				function (val, key) {
+					var layout = {
+						alias: val.alias,
+						settings: val.settings
+					};
+
+					layout.areas = _.map(val.areas,
+						function (area) {
+							return {
+								id: area.id,
+								key: area.key,
+								name: area.name,
+								alias: area.alias,
+								contentData: area.contentData
 							};
+						}
+					);
 
-							layout.areas = _.map(val.areas,
-								function (area) {
-									return {
-										id: area.id,
-										key: area.key,
-										name: area.name,
-										alias: area.alias,
-										contentData: area.contentData
-									};
-								}
-							);
+					if (val.areas.length === 1) {
+						val.name = val.areas[0].name;
+						val.icon = val.areas[0].icon;
+					}
 
-							if (val.areas.length === 1) {
-								val.name = val.areas[0].name;
-								val.icon = val.areas[0].icon;
-							}
-
-							$scope.model.value.push(layout);
-						});
-				}
-			});
-
-		$scope.$watch('model.value', function (newVal, oldVal) {
-
-			if (!angular.equals(newVal,oldVal)) {
-				$scope.propertyForm.$setDirty();
-			}
-
+					$scope.model.value.push(layout);
+				});
+			$scope.propertyForm.$setDirty();
 		});
+
+		$scope.$on('$destroy', function () {
+			unsubscribe();
+		});
+
+		//$scope.$watch('model.value', function (newVal, oldVal) {
+
+		//	if (!angular.equals(newVal, oldVal)) {
+		//		$scope.propertyForm.$setDirty();
+		//	}
+
+		//});
+
+
+
 
 		function createEmptyArea(area) {
 			var emptyArea = {};
@@ -226,7 +177,7 @@
 
 		function remove(index) {
 			vm.layouts.splice(index, 1);
-			vm.itemUpdating = true;
+			$scope.$broadcast("bentoStackSyncVal");
 		}
 
 		function getAvailableLayouts() {
@@ -329,7 +280,7 @@
 				vm.layouts.splice(index, 0, item);
 			}
 
-			vm.itemUpdating = true;
+			$scope.$broadcast("bentoStackSyncVal");
 		}
 
 		function buildSettingsData(node) {
@@ -381,7 +332,7 @@
 					var value = buildSettingsData(model.node);
 					layout.settings = value; // this is what we will save
 
-					vm.itemUpdating = true;
+					$scope.$broadcast("bentoStackSyncVal");
 					editorService.close();
 
 				},
@@ -401,7 +352,7 @@
 		vm.sortOptions = {
 			handle: '> .bento-stack-item .bento-stack-item-handle',
 			stop: function (e, ui) {
-				vm.itemUpdating = true;
+				$scope.$broadcast("bentoStackSyncVal");
 			},
 			'ui-floating': true,
 			start: function (e, ui) {
