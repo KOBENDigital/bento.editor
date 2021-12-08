@@ -98,7 +98,7 @@
 						config: $scope.config,
 						size: 'medium',
 						area: $scope.area,
-						submit: function (model) {
+						submit: (model) => {
 
 
 							if (model.embed) {
@@ -116,14 +116,16 @@
 
 							$scope.item.id = $scope.contentNode.id;
 							$scope.item.key = $scope.contentNode.key;
+							$scope.item.index = $scope.index;
 
 							initBlock();
+							console.log($scope.key);
 							$scope.$emit("bentoSyncVal", $scope.item);
 							editorService.close();
 
 
 						},
-						close: function (model) {
+						close: () => {
 							editorService.close();
 						}
 					};
@@ -142,7 +144,7 @@
 						view: '/App_Plugins/Bento/bento.convert.html',
 						itemid: id,
 						config: $scope.config,
-						submit: function (model) {
+						submit: (model) => {
 
 
 							var value = buildEmbeddedContentData(model.node);
@@ -153,11 +155,12 @@
 
 							$scope.item.id = $scope.contentNode.id;
 							$scope.item.key = $scope.contentNode.key;
+							$scope.item.index = $scope.index;
 
 							$scope.$emit("bentoSyncVal", $scope.item);
 
 						},
-						close: function (model) {
+						close: () => {
 							editorService.close();
 						}
 					};
@@ -181,7 +184,7 @@
 							documentTypeAlias: $scope.item.contentData.contentTypeAlias,
 							documentTypeName: $scope.item.contentData.name,
 							view: '/App_Plugins/Bento/bento.edit.html',
-							submit: function (model) {
+							submit: (model) => {
 
 
 								var value = buildEmbeddedContentData(model.node);
@@ -191,13 +194,14 @@
 								$scope.contentNode = model.node;
 								$scope.item.id = $scope.contentNode.id; // this is going to be 0
 								$scope.item.key = $scope.contentNode.key;
-
+								$scope.item.index = $scope.index;
+								console.log($scope.key);
 								$scope.$emit("bentoSyncVal", $scope.item);
 
 								editorService.close();
 
 							},
-							close: function (model) {
+							close: () => {
 								editorService.close();
 							}
 						};
@@ -211,16 +215,17 @@
 							allowSaveAndClose: true,
 							allowPublishAndClose: true,
 
-							submit: function (model) {
+							submit: (model) => {
 
 								$scope.contentNode = model.contentNode;
 								$scope.item.key = $scope.contentNode.key;
 								$scope.item.id = $scope.contentNode.id;
+								$scope.item.index = $scope.index;
 
 								$scope.$emit("bentoSyncVal", $scope.item);
 								editorService.close();
 							},
-							close: function (model) {
+							close: () => {
 								editorService.close();
 							}
 						};
@@ -246,19 +251,20 @@
 								startNodeId: libraryFolderId,
 								filterCssClass: 'not-allowed not-published',
 								filter: $scope.allowedContentTypes,
-								submit: function (model) {
+								submit: (model) => {
 									//todo: do we need to be passing the whole node around? i reckon the id'd be enough...										
 
 									$scope.contentNode = model.selection[0];
 
 									$scope.item.id = $scope.contentNode.id;
 									$scope.item.key = $scope.contentNode.key;
+									$scope.item.index = $scope.index;
 
 									$scope.$emit("bentoSyncVal", $scope.item);
 									editorService.close();
 
 								},
-								close: function () {
+								close: () => {
 									editorService.close();
 								}
 							};
@@ -300,6 +306,7 @@
 					$scope.content = ent;
 					$scope.item.id = ent.id;
 					$scope.item.key = ent.key;
+					$scope.item.index = $scope.index;
 
 					$scope.contentTypeName = ent.contentTypeName;
 					$scope.contentTypeAlias = ent.contentTypeAlias;
@@ -367,84 +374,76 @@
 
 					if (!$scope.item) {
 						$scope.item = {};
+						if ($scope.contentData) {
+							$scope.item = {
+								id: $scope.id,
+								key: $scope.key,
+								index: $scope.index,
+								contentData: $scope.contentData,
+								icon: $scope.icon,
+								contentNode: $scope.contentNode
+							};
+						}
 					}
-
-					if ($scope.contentData) {
-						$scope.item = {
-							id: $scope.id,
-							key: $scope.key,
-							contentData: $scope.contentData,
-							icon: $scope.icon,
-							contentNode: $scope.contentNode
-						};
-					}
-
-
 
 					// deal with the embeded block
-					if ($scope.item) {
+					if ($scope.item && parseInt($scope.item.id) === 0) {
 
-						if ($scope.item && parseInt($scope.item.id) === 0) {
+						$scope.embedded = true;
+						setWrapperEmbedded($scope.item.contentData);
 
-							$scope.embedded = true;
-							setWrapperEmbedded($scope.item.contentData);
-
-							let data = {
-								guid: $scope.key,
-								contentTypeAlias: $scope.contentTypeAlias,
-								dataJson: JSON.stringify($scope.item.contentData),
-								culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
-							};
+						let data = {
+							guid: $scope.item.key,
+							contentTypeAlias: $scope.contentTypeAlias,
+							dataJson: JSON.stringify($scope.item.contentData),
+							culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
+						};
 
 
-							let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedContent';
+						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedContent';
 
-							$http.post(url, data).then(function (response) {
+						$http.post(url, data).then(function (response) {
 
-								var html = response.data;
+							var html = response.data;
 
-								$scope.$broadcast("bentoSyncPreview", html);
-
-
-							}).catch(function (error) {
-								console.log(error);
-
-							}).finally(function () {
-
-							});
-
-							setWatch();
-
-							// else we want to load an existing one
-						} else if ($scope.item.id !== undefined) {
+							$scope.$broadcast("bentoSyncPreview", html);
 
 
+						}).catch(function (error) {
+							console.log(error);
 
-							$scope.embedded = false;
-							contentResource.getById($scope.item.id).then(setWrapper);
+						}).finally(function () {
 
-							//mvc view
-							let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.id;
-							if (typeof ($scope.culture) !== 'undefined') {
-								url += '&culture=' + $scope.culture;
-							}
+						});
 
-							$http.get(url).then(function (response) {
+						setWatch();
 
-								var html = response.data;
+						// else we want to load an existing one
+					} else if ($scope.item.id !== undefined) {
 
-								$scope.$broadcast("bentoSyncPreview", html);
+						$scope.embedded = false;
+						contentResource.getById($scope.item.id).then(setWrapper);
 
-
-							}).catch(function (error) {
-								console.log(error);
-
-							}).finally(function () {
-
-							});
-							setWatch();
+						//mvc view
+						let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.item.id;
+						if (typeof ($scope.culture) !== 'undefined') {
+							url += '&culture=' + $scope.culture;
 						}
 
+						$http.get(url).then(function (response) {
+
+							var html = response.data;
+
+							$scope.$broadcast("bentoSyncPreview", html);
+
+
+						}).catch(function (error) {
+							console.log(error);
+
+						}).finally(function () {
+
+						});
+						setWatch();
 					}
 				}
 
@@ -489,8 +488,20 @@
 					initBlock();
 				});
 
+
+				var unsubscribeClear = $scope.$on("bentoClearVal", function (ev, args) {
+					if (args == $scope.index) {
+						$scope.item = undefined;
+						$scope.contentData = undefined;
+						initBlock();
+					}
+
+					
+				});
+
 				$scope.$on('$destroy', function () {
 					unsubscribe();
+					unsubscribeClear();
 				});
 
 				this.$onInit = function () {

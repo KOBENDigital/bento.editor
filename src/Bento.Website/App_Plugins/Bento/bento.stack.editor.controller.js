@@ -36,17 +36,6 @@
 
 		$scope.model.hideLabel = $scope.model.config.hideLabel;
 
-
-		function guid() {
-			function s4() {
-				return Math.floor((1 + Math.random()) * 0x10000)
-					.toString(16)
-					.substring(1);
-			}
-			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-				s4() + '-' + s4() + s4() + s4();
-		}
-
 		if ($scope.model.value || !_.isEmpty($scope.model.value)) {
 
 			var layouts = getAvailableLayouts();
@@ -79,53 +68,6 @@
 					return item;
 				});
 		}
-
-		var unsubscribe = $scope.$on("bentoStackSyncVal", function (ev, args) {
-			$scope.model.value = [];
-
-			angular.forEach(vm.layouts,
-				function (val, key) {
-					var layout = {
-						alias: val.alias,
-						settings: val.settings
-					};
-
-					layout.areas = _.map(val.areas,
-						function (area) {
-							return {
-								id: area.id,
-								key: area.key,
-								name: area.name,
-								alias: area.alias,
-								contentData: area.contentData
-							};
-						}
-					);
-
-					if (val.areas.length === 1) {
-						val.name = val.areas[0].name;
-						val.icon = val.areas[0].icon;
-					}
-
-					$scope.model.value.push(layout);
-				});
-			$scope.propertyForm.$setDirty();
-		});
-
-		$scope.$on('$destroy', function () {
-			unsubscribe();
-		});
-
-		//$scope.$watch('model.value', function (newVal, oldVal) {
-
-		//	if (!angular.equals(newVal, oldVal)) {
-		//		$scope.propertyForm.$setDirty();
-		//	}
-
-		//});
-
-
-
 
 		function createEmptyArea(area) {
 			var emptyArea = {};
@@ -161,10 +103,8 @@
 					closeButtonLabel: data[2],
 					submitButtonLabel: data[3],
 					submitButtonStyle: "danger",
-					close: function () {
-						overlayService.close();
-					},
-					submit: function () {
+					close: () => overlayService.close(),
+					submit: () => {
 						remove(index);
 						overlayService.close();
 					}
@@ -177,12 +117,11 @@
 
 		function remove(index) {
 			vm.layouts.splice(index, 1);
-			$scope.$broadcast("bentoStackSyncVal");
+			updateSavedValue();
 		}
 
 		function getAvailableLayouts() {
 			var availableLayouts;
-
 			if (typeof $scope.model.config.layouts !== "undefined" &&
 				$scope.model.config.layouts !== null &&
 				$scope.model.config.layouts.length >= 2) {
@@ -216,7 +155,7 @@
 				availableLayouts: availableLayouts,
 				blockLayout: item, //todo this should be set as saved layout if present
 				size: "small",
-				submit: function (model) {
+				submit: (model) =>  {
 					if (model === undefined || model === null) {
 						notificationsService.error("No Layout has been selected for '" + item.name + "'",
 							"Please make sure you have selected one of the available layouts");
@@ -232,7 +171,7 @@
 						"Don't forget to publish to save your updates!");
 
 				},
-				close: function () {
+				close: () => {
 					editorService.close();
 				}
 			};
@@ -270,22 +209,13 @@
 				item.areas.splice(reduction);
 			}
 
-			//set the item name and icon to the first areas item if there is only one area in the layout
-			if (layout.areas.length === 1) {
-				item.name = item.areas[0].name;
-				item.icon = item.areas[0].icon;
-			}
-
 			if (index !== undefined) {
 				vm.layouts.splice(index, 0, item);
 			}
-
-			$scope.$broadcast("bentoStackSyncVal");
+			updateSavedValue();
 		}
 
 		function buildSettingsData(node) {
-
-
 			var value = {
 				contentTypeAlias: node.contentTypeAlias,
 				key: node.key
@@ -303,13 +233,11 @@
 					}
 				}
 			}
-
 			return value;
 		}
 
 
 		function openSettings(layout) {
-
 			var layoutSettings = {};
 			if (typeof layout.settings !== "undefined" &&
 				layout.settings !== null) {
@@ -326,8 +254,7 @@
 				documentTypeAlias: layout.layout.layoutSettings,//$scope.model.config.layoutSettingsDoctypeAlias,
 				documentTypeName: 'Layout Settings',
 				view: '/App_Plugins/Bento/bento.edit.html',
-				submit: function (model) {
-
+				submit: (model) => {
 
 					var value = buildSettingsData(model.node);
 					layout.settings = value; // this is what we will save
@@ -336,13 +263,11 @@
 					editorService.close();
 
 				},
-				close: function (model) {
+				close: () => {
 					editorService.close();
 				}
 			};
-
 			editorService.open(options);
-
 		}
 
 		function setSort() {
@@ -352,7 +277,7 @@
 		vm.sortOptions = {
 			handle: '> .bento-stack-item .bento-stack-item-handle',
 			stop: function (e, ui) {
-				$scope.$broadcast("bentoStackSyncVal");
+				updateSavedValue();
 			},
 			'ui-floating': true,
 			start: function (e, ui) {
@@ -362,6 +287,44 @@
 				}
 			}
 		};
+
+		function updateSavedValue() {
+			//clear the value
+			$scope.model.value = [];
+
+			angular.forEach(vm.layouts,
+				function (val, key) {
+					var layout = {
+						alias: val.alias,
+						settings: val.settings
+					};
+
+					layout.areas = _.map(val.areas,
+						function (area) {
+							return {
+								id: area.id,
+								key: area.key,
+								name: area.name,
+								alias: area.alias,
+								contentData: area.contentData
+							};
+						}
+					);
+
+					$scope.model.value.push(layout);
+				});
+			$scope.propertyForm.$setDirty();
+		}
+
+		var unsubscribe = $scope.$on("bentoSyncStack", function (ev, args) {
+			vm.layouts[args.index].areas = args.areas;
+			updateSavedValue();
+
+		});
+
+		$scope.$on('$destroy', function () {
+			unsubscribe();
+		});
 	}
 
 	angular.module('umbraco').controller('bento.stack.editor.controller', bentoStackEditorController);
