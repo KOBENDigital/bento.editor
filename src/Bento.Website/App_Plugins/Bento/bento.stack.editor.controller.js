@@ -20,6 +20,7 @@
 		vm.setLayout = setLayout;
 		vm.getAvailableLayouts = getAvailableLayouts;
 
+
 		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
 			assetsService.loadJs($scope.model.config.jsFilePath, $scope).then(function () {
 
@@ -281,6 +282,7 @@
 			},
 			'ui-floating': true,
 			start: function (e, ui) {
+
 				if (vm.firstSort) {  // Call a refresh on ui-sortable on drag of first element.
 					$(ui.helper).parent().sortable("refreshPositions");
 					vm.firstSort = false;

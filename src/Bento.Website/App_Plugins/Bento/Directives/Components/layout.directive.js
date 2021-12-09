@@ -13,7 +13,6 @@
         areas: '=',
         allowsort: '=',
         config: '=',
-        updating: '=',
         index: '=',
         settings: '=',
         culture: '=',
@@ -121,7 +120,7 @@
               console.log(error);
 
             }).finally(function () {
-              //$scope.updating = false;
+
             });
           }
         }
@@ -249,7 +248,6 @@
 
         $scope.$watch('layout', function (newValue, oldValue) {
           $scope.initLayout();
-          $scope.updating = true;
         }, true);
 
 

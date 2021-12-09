@@ -8,8 +8,6 @@
 		vm.close = close;
 		vm.submit = submit;
 		vm.convert = convert;
-		vm.libraryFolderId = 0;
-		vm.itemTypeFolderId = 0;
 		vm.doctypes = [];
 		vm.clickItem = clickItem;
 		vm.selectedTypeAlias = '';
@@ -18,7 +16,7 @@
 
 		function init() {
 
-			bentoResource.getAllowedElementTypes($scope.model.config.allowedElementAliases)
+			bentoResource.getAllowedElementTypes($scope.model.config)
 			.then(function (ent) {
 				return vm.doctypes = ent;
 			});

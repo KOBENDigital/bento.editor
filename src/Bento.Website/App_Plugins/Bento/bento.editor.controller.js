@@ -31,7 +31,6 @@
 
 		vm.remove = remove;
 		vm.toggleDeleteConfirm = toggleDeleteConfirm;
-		vm.updating = false;
 		vm.deleteConfirmVisible = false;
 
 

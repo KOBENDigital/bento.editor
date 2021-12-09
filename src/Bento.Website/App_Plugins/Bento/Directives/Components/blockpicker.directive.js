@@ -15,7 +15,6 @@
 				icon: '=',
 				config: '=',
 				area: '=',
-				updating: '=',
 				culture: '=',
 				item: '=?',
 				index: '=?'
@@ -34,6 +33,7 @@
 				$scope.hasElements = hasElements;
 				$scope.hasLibrary = hasLibrary;
 				$scope.adminOnly = false;
+				$scope.updating = false;
 
 				$scope.allowedContentTypes = "";
 				$scope.allowedElementTypes = "";
@@ -119,7 +119,6 @@
 							$scope.item.index = $scope.index;
 
 							initBlock();
-							console.log($scope.key);
 							$scope.$emit("bentoSyncVal", $scope.item);
 							editorService.close();
 
@@ -143,7 +142,7 @@
 						title: 'Convert',
 						view: '/App_Plugins/Bento/bento.convert.html',
 						itemid: id,
-						config: $scope.config,
+						config: $scope.allowedElementTypes,
 						submit: (model) => {
 
 
@@ -195,7 +194,6 @@
 								$scope.item.id = $scope.contentNode.id; // this is going to be 0
 								$scope.item.key = $scope.contentNode.key;
 								$scope.item.index = $scope.index;
-								console.log($scope.key);
 								$scope.$emit("bentoSyncVal", $scope.item);
 
 								editorService.close();
@@ -373,16 +371,15 @@
 				function initBlock() {
 
 					if (!$scope.item) {
-						$scope.item = {};
+						$scope.item = {
+							id: $scope.id,
+							key: $scope.key,
+							index: $scope.index,
+						};
 						if ($scope.contentData) {
-							$scope.item = {
-								id: $scope.id,
-								key: $scope.key,
-								index: $scope.index,
-								contentData: $scope.contentData,
-								icon: $scope.icon,
-								contentNode: $scope.contentNode
-							};
+							$scope.item.contentData = $scope.contentData;
+							$scope.item.icon = $scope.icon;
+							$scope.item.contentNode = $scope.contentNode;
 						}
 					}
 
@@ -399,9 +396,8 @@
 							culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
 						};
 
-
-						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedContent';
-
+						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedContent?contentid=' + $routeParams.id;
+						$scope.updating = true;
 						$http.post(url, data).then(function (response) {
 
 							var html = response.data;
@@ -413,7 +409,7 @@
 							console.log(error);
 
 						}).finally(function () {
-
+							$scope.updating = false;
 						});
 
 						setWatch();
@@ -425,10 +421,13 @@
 						contentResource.getById($scope.item.id).then(setWrapper);
 
 						//mvc view
-						let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.item.id;
+						let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.item.id + '&contentid=' + $routeParams.id;
+
 						if (typeof ($scope.culture) !== 'undefined') {
 							url += '&culture=' + $scope.culture;
 						}
+
+						$scope.updating = true;
 
 						$http.get(url).then(function (response) {
 
@@ -441,7 +440,7 @@
 							console.log(error);
 
 						}).finally(function () {
-
+							$scope.updating = false;
 						});
 						setWatch();
 					}
@@ -496,7 +495,7 @@
 						initBlock();
 					}
 
-					
+
 				});
 
 				$scope.$on('$destroy', function () {

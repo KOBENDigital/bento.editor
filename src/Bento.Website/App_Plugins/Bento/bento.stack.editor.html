@@ -39,8 +39,8 @@
 					</div>
 				</div>
 
-				<div class="bento-stack-item-content" ng-hide="vm.sorting">
-					<bento-layout ng-if="layout.layout !== undefined" updating="vm.itemUpdating" alias="layout.alias" areas="layout.areas" layout="layout.layout" icon="layout.icon" name="layout.name" culture="vm.culture" config="model.config" settings="layout.settings" index="$index"></bento-layout>
+				<div class="bento-stack-item-content" ng-class="{sorting : vm.sorting}">
+					<bento-layout ng-if="layout.layout !== undefined" alias="layout.alias" areas="layout.areas" layout="layout.layout" icon="layout.icon" name="layout.name" culture="vm.culture" config="model.config" settings="layout.settings" index="$index"></bento-layout>
 					<div class="bento-picker-button-wrapper" ng-if="layout.layout === undefined">To recover any content that was in the old removed layout, exchange for another layout.  Data may be lost if there are less areas in the new layout.</div>
 				</div>
 			</div>
