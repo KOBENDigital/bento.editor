@@ -1,43 +1,78 @@
 ﻿using Bento.Core.ContentApps;
 using Bento.Core.Controllers;
-using Bento.Core.Events;
-using Bento.Core.Routing;
+using Bento.Core.NotificationHandlers;
 using Bento.Core.Services;
 using Bento.Core.Services.Interfaces;
-using Umbraco.Core;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Web;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
+using Pluralize.NET;
+using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.Configuration.Models;
+using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Web.Common.ApplicationBuilder;
+using Umbraco.Extensions;
 
 namespace Bento.Core.Composers
 {
-	public class BentoComposer : IUserComposer
+	public class BentoComposer : IComposer
 	{
-		public void Compose(Composition composition)
+		public void Compose(IUmbracoBuilder builder)
 		{
 			//routing
-			composition.Components().Append<CustomRoutes>();
-
-			//umbraco events
-			composition.Components().Append<ContentServiceEvents>();
-			composition.Components().Append<ContentTypeServiceEvents>();
-			
-			//services
-			composition.Register<IPagingHelper, PagingHelper>();
-			composition.Register<IPluralizationServiceWrapper, PluralizationServiceWrapper>();
-			composition.Register<IEmbeddedContentService, EmbeddedContentService>();
-			composition.Register(f => Current.AppCaches.RuntimeCache);
-
-			//controllers
-			composition.Register(f =>
+			var globalSettings = new GlobalSettings();
+			builder.Services.Configure<UmbracoPipelineOptions>(options =>
 			{
-				var s = f.GetInstance<IEmbeddedContentService>();
-				var v = f.GetInstance<IVariationContextAccessor>();
-				return new BentoApiController(s,v);
-			}, Lifetime.Request);
+				//options.AddFilter(new UmbracoPipelineFilter(nameof(BentoApiController))
+				//{
+				//	Endpoints = app => app.UseEndpoints(endpoints =>
+				//	{
+				//		endpoints.MapControllerRoute(
+				//			"Bento Api Controller",
+				//			globalSettings.UmbracoPath + "/backoffice/Api/Bento/{action}/{id}",
+				//			new { Controller = "BentoApi", Action = "Index" });
+				//	})
+				//});
+				options.AddFilter(new UmbracoPipelineFilter(nameof(BentoApiController))
+				{
+					Endpoints = app => app.UseEndpoints(endpoints =>
+					{
+						endpoints.MapControllerRoute(
+							"Bento Backoffice Previews Controller",
+							"/BentoApi/{action}/{id?}",
+							new { Controller = "BentoApi", Action = "Index" });
+					})
+				});
+			});
+
+			//3rd party libraries
+			builder.Services.AddUnique<Pluralize.NET.IPluralize, Pluralize.NET.Pluralizer>();
+
+			//umbraco notifications
+			builder.AddNotificationHandler<ContentMovingToRecycleBinNotification, ContentMovingToRecycleBinNotifications>();
+			builder.AddNotificationHandler<ContentSavedNotification, ContentSavedNotifications>();
+			builder.AddNotificationHandler<ContentTypeSavedNotification, ContentTypeServiceNotifications>();
+
+			//services
+			builder.Services.AddUnique<IPagingHelper, PagingHelper>();
+			builder.Services.AddUnique<IPluralizationServiceWrapper, PluralizationServiceWrapper>();
+			builder.Services.AddUnique<IEmbeddedContentService, EmbeddedContentService>();
+			//builder.Services.AddUnique(f => Current.AppCaches.RuntimeCache);
+
+			//todo: i can't work out why we're doing this?
+			//controllers
+			//builder.Register(f =>
+			//{
+			//	var s = f.GetInstance<IEmbeddedContentService>();
+			//	var v = f.GetInstance<IVariationContextAccessor>();
+			//	return new BentoApiController(s,v);
+			//}, Lifetime.Request);
 
 			//content apps
-			composition.ContentApps().Append<RelationshipManager>();
+			builder.ContentApps().Append<RelationshipManager>();
 		}
 	}
 }

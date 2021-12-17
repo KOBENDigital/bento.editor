@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Bento.Core.JsonConverters;
-using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace Bento.Core.Models
 {

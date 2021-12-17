@@ -17,7 +17,7 @@ namespace Bento.Core.Services.Interfaces
 		string Pluralize(string culture, string word);
 
 		string Singularize(CultureInfo cultureInfo, string word);
-		
-		string Singularize(string culture,string word);
+
+		string Singularize(string culture, string word);
 	}
 }

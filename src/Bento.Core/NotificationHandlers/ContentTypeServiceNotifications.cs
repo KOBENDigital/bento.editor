@@ -1,48 +1,53 @@
-﻿using System.Collections.Generic;
+﻿//todo: the files are being created in the wrong place! they end up in:
+//Bento.Website\wwwroot\Views\Partials\Bento\RichTextBentoElement.cshtml
+//but we need them in:
+//Bento.Website\Views\Partials\Bento\RichTextBentoElement.cshtml
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web.Mvc;
 using Bento.Core.Constants;
 using Bento.Core.DataEditors;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Events;
-using Umbraco.Core.IO;
-using Umbraco.Core.Models;
-using Umbraco.Core.Services;
-using Umbraco.Core.Services.Implement;
+using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.IO;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.Services;
 using BentoItemDataEditor = Bento.Core.Constants.BentoItemDataEditor;
 using File = System.IO.File;
 
-namespace Bento.Core.Events
+namespace Bento.Core.NotificationHandlers
 {
-	public class ContentTypeServiceEvents : IComponent
+	public class ContentTypeServiceNotifications : INotificationHandler<ContentTypeSavedNotification>
 	{
-		private static readonly IDataTypeService
-			DataTypeService = DependencyResolver.Current.GetService<IDataTypeService>();
+		//todo: not 100% sure why we're no just using standard di here?
+		//private static readonly IDataTypeService DataTypeService = DependencyResolver.Current.GetService<IDataTypeService>();
+		private readonly IDataTypeService DataTypeService;
+		//private static readonly IIOHelper IOHelper = DependencyResolver.Current.GetService<IIOHelper>();
+		private readonly IIOHelper IOHelper;
 
-		public void Initialize()
+		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IIOHelper ioHelper)
 		{
-			ContentTypeService.Saved += ContentService_Saved;
+			DataTypeService = dataTypeService;
+			IOHelper = ioHelper;
 		}
 
-		public void Terminate() { }
-
-		private static void ContentService_Saved(IContentTypeService contentTypeService, SaveEventArgs<IContentType> e)
+		public void Handle(ContentTypeSavedNotification notification)
 		{
-			foreach (IContentType content in e.SavedEntities)
+			foreach (var content in notification.SavedEntities)
 			{
 				List<string> itemDoctypeCompositionAliases = new List<string>();
 
 				IEnumerable<IDataType> bentoItemDataTypes = DataTypeService.GetByEditorAlias(BentoItemDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoItemDataTypes
-				                                       .Select(dataType => (BentoItemConfiguration)dataType.Configuration)
-				                                       .Select(config => config.ItemDoctypeCompositionAlias));
+					.Select(dataType => (BentoItemConfiguration) dataType.Configuration)
+					.Select(config => config.ItemDoctypeCompositionAlias));
 
 				IEnumerable<IDataType> bentoStackDataTypes = DataTypeService.GetByEditorAlias(BentoStackDataEditor.EditorAlias);
+
 				itemDoctypeCompositionAliases
-					.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
-					                             .Select(config => config.ItemDoctypeCompositionAlias));
+					.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration) dataType.Configuration)
+						.Select(config => config.ItemDoctypeCompositionAlias));
 
 				IEnumerable<string> compositionAliases = content.ContentTypeComposition.Select(x => x.Alias);
 
@@ -64,14 +69,13 @@ namespace Bento.Core.Events
 				if (!Directory.Exists(IOHelper.MapPath("~\\Views\\Partials\\Bento")))
 				{
 					Directory.CreateDirectory(IOHelper.MapPath("~\\Views\\Partials\\Bento"));
-					
+
 				}
 
 				if (!Directory.Exists(IOHelper.MapPath("~\\Views\\Partials\\Bento\\Layouts")))
 				{
 					Directory.CreateDirectory(IOHelper.MapPath("~\\Views\\Partials\\Bento\\Layouts"));
 				}
-
 
 				if (!File.Exists(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
 				{
@@ -90,27 +94,23 @@ namespace Bento.Core.Events
 					backOfficeView.Append(view);
 					backOfficeView.AppendLine("<div class=\"card hero\">");
 					backOfficeView.AppendLine("\t<div class=\"card-content\">");
-					backOfficeView.AppendLine(
-						$"\t\t<div class=\"title\">Backoffice Bento view for '{content.Name}' (alias: {content.Alias})</div>");
-					backOfficeView.AppendLine(
-						$"\t\t<div class=\"sub-title\">To edit, please open the file at: ~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml</div>");
+					backOfficeView.AppendLine($"\t\t<div class=\"title\">Backoffice Bento view for '{content.Name}' (alias: {content.Alias})</div>");
+					backOfficeView.AppendLine($"\t\t<div class=\"sub-title\">To edit, please open the file at: ~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml</div>");
 					backOfficeView.AppendLine("\t</div>");
 					backOfficeView.AppendLine("</div>");
 
-					File.WriteAllText(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"),
-					                  backOfficeView.ToString());
+					File.WriteAllText(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"), backOfficeView.ToString());
 
 					backofficeViewMessage = $"'~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml'";
 				}
 
 				if (!string.IsNullOrWhiteSpace(websiteViewMessage) || !string.IsNullOrWhiteSpace(backofficeViewMessage))
 				{
-					//todo: spent an hour trying to get this to work...
-					//from what i can gather online, this has never been implemented...
-					//bit of a shame as the user has no idea that the views have been created?!
-					e.Messages.Add(new EventMessage("Bento setup",
-					                                $"Bento view(s) created ({websiteViewMessage}{(string.IsNullOrWhiteSpace(backofficeViewMessage) ? string.Empty : " and ")}{backofficeViewMessage}).",
-					                                EventMessageType.Info));
+					notification.Messages.Add(
+						new EventMessage(
+							"Bento setup", $"Bento view(s) created ({websiteViewMessage}{(string.IsNullOrWhiteSpace(backofficeViewMessage) ? string.Empty : " and ")}{backofficeViewMessage}).",
+							EventMessageType.Info)
+						);
 				}
 			}
 		}

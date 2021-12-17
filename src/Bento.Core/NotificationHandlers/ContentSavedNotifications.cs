@@ -1,84 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web.Mvc;
 using Bento.Core.Constants;
 using Bento.Core.DataEditors;
 using Bento.Core.JsonConverters;
 using Bento.Core.Models;
 using Newtonsoft.Json;
-using Umbraco.Core.Composing;
-using Umbraco.Core.Configuration.Grid;
-using Umbraco.Core.Events;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.Services;
-using Umbraco.Core.Services.Implement;
+using Umbraco.Cms.Core.Events;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.Services;
 using BentoItemDataEditor = Bento.Core.Constants.BentoItemDataEditor;
 
-namespace Bento.Core.Events
+namespace Bento.Core.NotificationHandlers
 {
-	public class ContentServiceEvents : IComponent
+	public class ContentSavedNotifications : INotificationHandler<ContentSavedNotification>
 	{
-		private static readonly IContentTypeBaseServiceProvider ContentTypeService =
-			DependencyResolver.Current.GetService<IContentTypeBaseServiceProvider>();
+		//todo: not 100% sure why we're no just using standard di here?
+		//private static readonly IContentTypeBaseServiceProvider ContentTypeService = DependencyResolver.Current.GetService<IContentTypeBaseServiceProvider>();
+		private readonly IContentTypeBaseServiceProvider ContentTypeService;
+		//private static readonly IRelationService RelationService = DependencyResolver.Current.GetService<IRelationService>();
+		private readonly IRelationService RelationService;
+		//private static readonly IDataTypeService DataTypeService = DependencyResolver.Current.GetService<IDataTypeService>();
+		private readonly IDataTypeService DataTypeService;
+		//private static readonly IContentService ContentService = DependencyResolver.Current.GetService<IContentService>();
+		private readonly IContentService ContentService;
 
-		private static readonly IRelationService
-			RelationService = DependencyResolver.Current.GetService<IRelationService>();
-
-		private static readonly IDataTypeService
-			DataTypeService = DependencyResolver.Current.GetService<IDataTypeService>();
-
-		private static readonly IGridConfig GridConfig = DependencyResolver.Current.GetService<IGridConfig>();
-
-		public void Initialize()
+		public ContentSavedNotifications(IContentTypeBaseServiceProvider contentTypeService, IRelationService relationService, IDataTypeService dataTypeService, IContentService contentService)
 		{
-			ContentService.Saved += ContentService_Saved;
-			ContentService.Trashing += ContentService_Trashing;
+			ContentTypeService = contentTypeService;
+			RelationService = relationService;
+			DataTypeService = dataTypeService;
+			ContentService = contentService;
 		}
 
-		public void Terminate() { }
-
-		private static void ContentService_Trashing(IContentService sender, MoveEventArgs<IContent> moveEventArgs)
+		public void Handle(ContentSavedNotification notification)
 		{
-			foreach (MoveEventInfo<IContent> trashingEntity in moveEventArgs.MoveInfoCollection)
-			{
-				List<IRelation> relations = RelationService.GetByChildId(trashingEntity.Entity.Id).ToList();
-
-				if (relations.Any() == false)
-				{
-					continue;
-				}
-
-				IEnumerable<IRelationType> relationsTypes = RelationService
-				                                            .GetAllRelationTypes(
-					                                            relations.Select(x => x.RelationTypeId).ToArray())
-				                                            .Where(x => x.Alias == RelationTypes.BentoItemsAlias);
-
-				if (!relationsTypes.Any())
-				{
-					continue;
-				}
-
-				moveEventArgs.CancelOperation(new EventMessage("Bento setup",
-				                                               $"This content is used in the following places: {string.Join(", ", relations.Select(x => sender.GetById(x.ParentId).Name))} (delete failed)",
-				                                               EventMessageType.Error));
-				break;
-			}
-		}
-
-		private static void ContentService_Saved(IContentService contentService, ContentSavedEventArgs e)
-		{
-			foreach (IContent content in e.SavedEntities)
+			foreach (var content in notification.SavedEntities)
 			{
 				List<string> editors = new List<string>
 				{
-					Umbraco.Core.Constants.PropertyEditors.Aliases.Grid,
+					Umbraco.Cms.Core.Constants.PropertyEditors.Aliases.Grid,
 					BentoItemDataEditor.EditorAlias,
 					BentoStackDataEditor.EditorAlias
 				};
 
-				foreach (Property contentProperty in content.Properties.Where(x => editors.Contains(x.PropertyType.PropertyEditorAlias)))
+				foreach (IProperty contentProperty in content.Properties.Where(x => editors.Contains(x.PropertyType.PropertyEditorAlias)))
 				{
 					IDataType editor = DataTypeService.GetDataType(contentProperty.PropertyType.DataTypeId);
 
@@ -123,7 +89,7 @@ namespace Bento.Core.Events
 								continue;
 							}
 
-							var bentoContent = contentService.GetById(area.Id);
+							var bentoContent = ContentService.GetById(area.Id);
 
 							if (bentoContent == null)
 							{
@@ -132,7 +98,7 @@ namespace Bento.Core.Events
 
 							BentoItemConfiguration config = (BentoItemConfiguration)editor.Configuration;
 
-							ProcessRelationship(contentService, bentoContent, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
+							ProcessRelationship(bentoContent, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
 						}
 					}
 					else
@@ -154,7 +120,7 @@ namespace Bento.Core.Events
 							IEnumerable<StackItem> items = JsonConvert.DeserializeObject<IEnumerable<StackItem>>(valueString, new StackItemConverter());
 
 							var itemList = items.Where(x => x.Areas != null && x.Areas.Any())
-								.SelectMany(stackItem => stackItem.Areas.Where(x => x.Id > 0), (stackItem, x) => contentService.GetById(x.Id))
+								.SelectMany(stackItem => stackItem.Areas.Where(x => x.Id > 0), (stackItem, x) => ContentService.GetById(x.Id))
 								.Where(bentoContent => bentoContent != null)
 								.Distinct();
 
@@ -162,7 +128,7 @@ namespace Bento.Core.Events
 
 							foreach (IContent item in itemList)
 							{
-								ProcessRelationship(contentService, item, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
+								ProcessRelationship(item, content, bentoBlocksRelationType, config.ItemDoctypeCompositionAlias);
 							}
 						}
 					}
@@ -170,11 +136,8 @@ namespace Bento.Core.Events
 			}
 		}
 
-		private static void ProcessRelationship(IContentService contentService, IContent block, IContent content,
-		                                        IRelationType bentoBlocksRelationType, string blockDoctypeCompositionAlias)
+		private void ProcessRelationship(IContent block, IContent content, IRelationType bentoBlocksRelationType, string blockDoctypeCompositionAlias)
 		{
-			//check that the control is a block i.e. it's composed of the block type composition doctype
-			//IContent block = contentService.GetById(controlValueId);
 			if (block == null)
 			{
 				return;

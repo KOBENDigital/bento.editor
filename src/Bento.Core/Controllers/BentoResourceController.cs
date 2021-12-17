@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
-using Umbraco.Core;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.Services;
-using Umbraco.Web.Editors;
-using Umbraco.Web.Models.ContentEditing;
+using Umbraco.Cms.Core.Mapping;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.ContentEditing;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Cms.Web.BackOffice.Controllers;
 
 namespace Bento.Core.Controllers
 {
@@ -19,21 +18,25 @@ namespace Bento.Core.Controllers
 		private readonly IContentTypeService _contentTypeService;
 		private readonly IPagingHelper _pagingHelper;
 		private readonly IPluralizationServiceWrapper _pluralizationServiceWrapper;
+		private readonly IRelationService _relationService;
+		private readonly IUmbracoMapper _mapper;
+		private readonly IUserService _userService;
 		private readonly IVariationContextAccessor _variationContextAccessor;
 
-		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IVariationContextAccessor variationContextAccessor)
+		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IRelationService relationService, IUmbracoMapper mapper, IUserService userService, IVariationContextAccessor variationContextAccessor)
 		{
 			_contentService = contentService;
 			_contentTypeService = contentTypeService;
 			_pagingHelper = pagingHelper;
 			_pluralizationServiceWrapper = pluralizationServiceWrapper;
+			_relationService = relationService;
+			_mapper = mapper;
+			_userService = userService;
 			_variationContextAccessor = variationContextAccessor;
 		}
 
 		public int GetLibraryFolderId(int contentId, string libraryFolderDoctypeAlias)
 		{
-	
-
 			IContent libraryFolder = null;
 
 			if (contentId >= 0)
@@ -112,7 +115,7 @@ namespace Bento.Core.Controllers
 
 			if (itemTypeFolder == null)
 			{
-				itemTypeFolder = _contentService.CreateContent(itemTypeFolderDoctypeName, libraryFolder.GetUdi(), itemTypeFolderDoctypeAlias);
+				itemTypeFolder = _contentService.Create(itemTypeFolderDoctypeName, libraryFolder.Key, itemTypeFolderDoctypeAlias);
 
 				var publish = _contentService.SaveAndPublish(itemTypeFolder);
 				if (publish.Result != PublishResultType.SuccessPublish)
@@ -126,7 +129,6 @@ namespace Bento.Core.Controllers
 
 		public IEnumerable<ContentTypeBasic> GetAllowedContentTypes(string allowedDoctypeAliases = "")
 		{
-
 			if (string.IsNullOrWhiteSpace(allowedDoctypeAliases))
 			{
 				return Enumerable.Empty<ContentTypeBasic>();
@@ -134,7 +136,7 @@ namespace Bento.Core.Controllers
 
 			var allowedTypesArray = allowedDoctypeAliases.Split(',');
 
-			var types = Services.ContentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
+			var types = _contentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
 
 			if (types.Any() == false)
 			{
@@ -142,14 +144,13 @@ namespace Bento.Core.Controllers
 			}
 
 			//todo: can we map this to a much simpler object? i think we only need the id and the name?
-			var basics = types.Where(type => type.IsElement == false).Select(Mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
+			var basics = types.Where(type => type.IsElement == false).Select(_mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
 
 			return basics;
 		}
 
 		public IEnumerable<ContentTypeBasic> GetAllowedElementTypes(string allowedElementAliases = "")
 		{
-
 			if (string.IsNullOrWhiteSpace(allowedElementAliases))
 			{
 				return Enumerable.Empty<ContentTypeBasic>();
@@ -157,7 +158,7 @@ namespace Bento.Core.Controllers
 
 			var allowedTypesArray = allowedElementAliases.Split(',');
 
-			var types = Services.ContentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
+			var types = _contentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
 
 			if (types.Any() == false)
 			{
@@ -165,22 +166,21 @@ namespace Bento.Core.Controllers
 			}
 
 			//todo: can we map this to a much simpler object? i think we only need the id and the name?
-			var basics = types.Where(type => type.IsElement == true).Select(Mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
+			var basics = types.Where(type => type.IsElement).Select(_mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
 
 			return basics;
 		}
 
-
 		public Dictionary<string, List<RelationItem>> GetRelationsByChildId(int childId)
 		{
-			var relations = Services.RelationService.GetByChildId(childId).ToArray();
+			var relations = _relationService.GetByChildId(childId).ToArray();
 
 			if (relations.Any() == false)
 			{
 				return null;
 			}
 
-			var relationsTypes = Services.RelationService.GetAllRelationTypes(relations.Select(x => x.RelationTypeId).ToArray()).OrderBy(x => x.Name);
+			var relationsTypes = _relationService.GetAllRelationTypes(relations.Select(x => x.RelationTypeId).ToArray()).OrderBy(x => x.Name);
 
 			var result = new Dictionary<string, List<RelationItem>>();
 
@@ -190,8 +190,8 @@ namespace Bento.Core.Controllers
 
 				foreach (var relation in relations)
 				{
-					var parent = Services.ContentService.GetById(relation.ParentId);
-					var creatorId = Services.UserService.GetProfileById(parent.CreatorId);
+					var parent = _contentService.GetById(relation.ParentId);
+					var creatorId = _userService.GetProfileById(parent.CreatorId);
 
 					items.Add(new RelationItem
 					{
