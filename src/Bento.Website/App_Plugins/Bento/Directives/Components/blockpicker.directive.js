@@ -382,7 +382,7 @@
 						};
 
 
-						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedContent';
+						let url = '/BentoApi/LoadEmbeddedContent';
 
 						$http.post(url, data).then(function (response) {
 
@@ -409,7 +409,7 @@
 						contentResource.getById($scope.id).then(setWrapper);
 
 						//mvc view
-						let url = '/umbraco/backoffice/Api/Bento/LoadLibraryContent?id=' + $scope.id;
+						let url = '/BentoApi/LoadLibraryContent?id=' + $scope.id;
 						if (typeof ($scope.culture) !== 'undefined') {
 							url += '&culture=' + $scope.culture;
 						}
