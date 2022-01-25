@@ -110,7 +110,7 @@
 				
 				function updateLayoutStyle() {
 					if ($scope.config.useCssFile && $scope.config.useBlockSettingsCss && $scope.config.cssFilePath) {
-						let url = '/umbraco/backoffice/Api/Bento/LoadEmbeddedStyler';
+						let url = '/BentoApi/LoadEmbeddedStyler';
 
 						let data = {
 							guid: guid(),
