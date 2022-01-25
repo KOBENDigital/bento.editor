@@ -1,0 +1,9 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@Html.Partial("BentoItem", Model.BentoItem)
+
+@Html.Partial("~/Views/Partials/BentoStack.cshtml", Model.BentoStack)

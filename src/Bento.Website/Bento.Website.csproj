@@ -1,50 +1,132 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="9.0.0-rc001" />
-        <PackageReference Include="Umbraco.Cms.SqlCe" Version="9.0.0-rc001" />
+      <Content Include="App_Plugins\BentoRelationshipManager\relationshipmanager.html" />
+      <Content Include="App_Plugins\Bento\bento-layouts-schema.json" />
+      <Content Include="App_Plugins\Bento\bento-settings-schema.json" />
+      <Content Include="App_Plugins\Bento\bento.convert.html" />
+      <Content Include="App_Plugins\Bento\bento.convert.map.html" />
+      <Content Include="App_Plugins\Bento\bento.create.html" />
+      <Content Include="App_Plugins\Bento\bento.edit.html" />
+      <Content Include="App_Plugins\Bento\bento.editor.html" />
+      <Content Include="App_Plugins\Bento\bento.grid.editor.html" />
+      <Content Include="App_Plugins\Bento\bento.layouts.editor.html" />
+      <Content Include="App_Plugins\Bento\bento.stack.editor.html" />
+      <Content Include="App_Plugins\Bento\bento.stack.settings.editor.html" />
+      <Content Include="App_Plugins\Bento\Css\bento.css" />
+      <Content Include="App_Plugins\Bento\Css\bento.min.css" />
+      <Content Include="App_Plugins\Bento\Css\bento.previews.css" />
+      <Content Include="App_Plugins\Bento\Css\bento.previews.min.css" />
+      <Content Include="App_Plugins\Bento\Lang\en-US.xml" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bento.credits.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentolayout.edit.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentolayout.editor.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentolayoutarea.edit.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentoprevalue.edit.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentosetting.edit.html" />
+      <Content Include="App_Plugins\Bento\PreValueEditors\bentosettings.editor.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-block-doc-type-grid.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-block-picker.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-layout-preview.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-layout.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-setting-edit.html" />
+      <Content Include="App_Plugins\Bento\Views\Components\bento-setting.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\contenttypepicker.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\jscodeeditor.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\prevalue-umb-editor.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlecontenttypepicker.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlecssfilepicker.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlejsfilepicker.html" />
+      <Content Include="App_Plugins\Bento\Views\PreValueEditors\singlerequiredcontenttypepicker.html" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="App_Plugins\BentoRelationshipManager\package.manifest" />
+      <None Include="App_Plugins\BentoRelationshipManager\relationshipmanager.controller.js" />
+      <None Include="App_Plugins\Bento\bento.convert.controller.js" />
+      <None Include="App_Plugins\Bento\bento.convert.map.controller.js" />
+      <None Include="App_Plugins\Bento\bento.create.controller.js" />
+      <None Include="App_Plugins\Bento\bento.edit.controller.js" />
+      <None Include="App_Plugins\Bento\bento.editor.controller.js" />
+      <None Include="App_Plugins\Bento\bento.grid.editor.controller.js" />
+      <None Include="App_Plugins\Bento\bento.layouts.editor.controller.js" />
+      <None Include="App_Plugins\Bento\bento.stack.editor.controller.js" />
+      <None Include="App_Plugins\Bento\bento.stack.settings.editor.controller.js" />
+      <None Include="App_Plugins\Bento\Css\bento.doctypepicker.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.item.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.layout.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.picker.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.previews.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.scss" />
+      <None Include="App_Plugins\Bento\Css\bento.stack.scss" />
+      <None Include="App_Plugins\Bento\Directives\Components\bentoblockpreview.component.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\bentoblocksettingspreview.component.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\blockdoctypegrid.directive.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\blockpicker.directive.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\layout.directive.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\layout.preview.directive.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\setting.directive.js" />
+      <None Include="App_Plugins\Bento\Directives\Components\setting.edit.directive.js" />
+      <None Include="App_Plugins\Bento\package.manifest" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bento.credits.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentolayout.edit.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentolayout.editor.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentolayoutarea.edit.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentoprevalue.edit.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentosetting.edit.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\bentosettings.editor.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\contenttypepicker.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\jscodeeditor.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\prevalueUmbEditor.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\singlecontenttypepicker.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\singlecssfilepicker.controller.js" />
+      <None Include="App_Plugins\Bento\PreValueEditors\singlejsfilepicker.controller.js" />
+      <None Include="App_Plugins\Bento\Resources\bento.resource.js" />
+      <None Include="App_Plugins\Bento\Resources\bento.setting.factory.js" />
+      <None Include="Views\Partials\Bento\Layouts\Default.cshtml" />
+      <None Include="wwwroot\assets\001-sushi.svg" />
+      <None Include="wwwroot\assets\002-sushi.svg" />
+      <None Include="wwwroot\assets\003-sushi.svg" />
+      <None Include="wwwroot\assets\004-sushi.svg" />
+      <None Include="wwwroot\assets\005-sushi.svg" />
+      <None Include="wwwroot\assets\bento.svg" />
+      <None Include="wwwroot\css\colours.scss" />
+      <None Include="wwwroot\css\layouts.scss" />
+      <None Include="wwwroot\css\mixins.scss" />
+      <None Include="wwwroot\css\rte.css" />
+      <None Include="wwwroot\css\site.css" />
+      <None Include="wwwroot\css\site.min.css" />
+      <None Include="wwwroot\css\site.scss" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Umbraco.Cms" Version="9.2.0" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="9.2.0" />
+        <PackageReference Include="Umbraco.Cms.SqlCe" Version="9.2.0" />
         <PackageReference Include="Umbraco.SqlServerCE" Version="4.0.0.1" />
     </ItemGroup>
 
+    <!-- Force windows to use ICU. Otherwise Windows 10 2019H1+ will do it, but older windows 10 and most if not all winodws servers will run NLS -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+        <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
+        <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
+    </ItemGroup>
 
-    <ItemGroup>
-        <Compile Remove="umbraco\Data\**" />
-        <Compile Remove="umbraco\logs\**" />
-        <Compile Remove="umbraco\MediaCache\**" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Remove="umbraco\Data\**" />
-        <EmbeddedResource Remove="umbraco\logs\**" />
-        <EmbeddedResource Remove="umbraco\MediaCache\**" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Remove="umbraco\Data\**" />
-        <None Remove="umbraco\logs\**" />
-        <None Remove="umbraco\MediaCache\**" />
-        <None Include="config\**\*.*">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </None>
-        <None Include="umbraco\**\*.*">
-            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <Content Remove="umbraco\Data\**" />
-        <Content Remove="umbraco\logs\**" />
-        <Content Remove="umbraco\MediaCache\**" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="App_Plugins\" />
-    </ItemGroup>
+
+
+    <PropertyGroup>
+        <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+    </PropertyGroup>
 
     <!-- Set this to true if ModelsBuilder mode is not InMemoryAuto-->
     <PropertyGroup>
         <RazorCompileOnBuild>false</RazorCompileOnBuild>
         <RazorCompileOnPublish>false</RazorCompileOnPublish>
     </PropertyGroup>
+
 </Project>

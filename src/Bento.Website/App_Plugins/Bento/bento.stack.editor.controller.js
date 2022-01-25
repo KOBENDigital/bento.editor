@@ -21,9 +21,8 @@
 		vm.getAvailableLayouts = getAvailableLayouts;
 
 		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
-			assetsService.loadJs($scope.model.config.jsFilePath, $scope).then(function () {
-				
-			});
+			//todo: we're replacing the 'wwwroot' that gets appended in v9/core... not ideal, we're looking into getting the tree picker to start in the wwwroot https://our.umbraco.com/forum/using-umbraco-and-getting-started//108099-is-it-possible-to-start-the-editor-service-file-picker-in-the-wwwroot
+			assetsService.loadJs($scope.model.config.jsFilePath.replace('/wwwroot', ''), $scope).then(function () { });
 		}
 
 		if ($scope.model.config.useCssFile && $scope.model.config.fontCssUrls && $scope.model.config.fontCssUrls !== null && $scope.model.config.fontCssUrls !== '') {
@@ -57,44 +56,44 @@
 
 
 
-			if (!$scope.model.value[0].alias) {
+			//if (!$scope.model.value[0].alias) {
 
-				var arrayOfLayouts = [];
+			//	var arrayOfLayouts = [];
 
-				angular.forEach($scope.model.value, function (val, key) {
-					let item = {};
-					item.settings = val.settings;
-					item.alias = layouts[0].alias;
-					let area = {};
-					area.id = val.id;
-					area.key = undefined; //we dont have one again until we save.
-					area.alias = layouts[0].areas[0].alias;
-					item.areas = [];
-					item.areas.push(area);
-					arrayOfLayouts.push(item);
-				});
+			//	angular.forEach($scope.model.value, function (val, key) {
+			//		let item = {};
+			//		item.settings = val.settings;
+			//		item.alias = layouts[0].alias;
+			//		let area = {};
+			//		area.id = val.id;
+			//		area.key = undefined; //we dont have one again until we save.
+			//		area.alias = layouts[0].areas[0].alias;
+			//		item.areas = [];
+			//		item.areas.push(area);
+			//		arrayOfLayouts.push(item);
+			//	});
 
-				$scope.model.value = arrayOfLayouts;
+			//	$scope.model.value = arrayOfLayouts;
 
-			}
+			//}
 
-			if ($scope.model.value[0].settings instanceof String) {
+			//if ($scope.model.value[0].settings instanceof String) {
 
 
-				angular.forEach($scope.model.value, function (val, key) {
+			//	angular.forEach($scope.model.value, function (val, key) {
 
-					var oldSettings = JSON.parse(val.settings);
+			//		var oldSettings = JSON.parse(val.settings);
 
-					var settings = {};
+			//		var settings = {};
 
-					settings.contentTypeAlias = $scope.model.config.layoutSettingsDoctypeAlias;
-					settings.key = guid();
+			//		settings.contentTypeAlias = $scope.model.config.layoutSettingsDoctypeAlias;
+			//		settings.key = guid();
 
-					val.settings = settings;
+			//		val.settings = settings;
 
-				});
+			//	});
 
-			}
+			//}
 
 
 
@@ -263,7 +262,7 @@
 			var options = {
 				view: "/App_Plugins/Bento/bento.layouts.editor.html",
 				availableLayouts: availableLayouts,
-				blockLayout: item, //todo this should be set as saved layout if present
+				blockLayout: item, //todo: this should be set as saved layout if present
 				size: "small",
 				submit: function (model) {
 					if (model === undefined || model === null) {

@@ -58,7 +58,6 @@
 		<key alias="generalSettings">General Settings</key>
 		<key alias="areaSettings">Area Settings</key>
 		<key alias="allowedItems">Allowed items</key>
-
 		<key alias="allowSorting">Allow Sorting?</key>
 		<key alias="sortingEnabled">Sorting Enabled</key>
 		<key alias="sortingEnabledWarning">While sorting is enabled you cannot set restrictions on allowed item types at the area level.</key>

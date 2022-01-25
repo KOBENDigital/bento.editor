@@ -6,21 +6,26 @@ using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Extensions;
 
 namespace Bento.Core.ValueConverters
 {
 	public class BentoItemValueConverter : IPropertyValueConverter
 	{
 		private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+		private readonly IEmbeddedContentService _embeddedContentService;
 
-		public BentoItemValueConverter(IPublishedSnapshotAccessor publishedSnapshotAccessor)
+		public BentoItemValueConverter(IPublishedSnapshotAccessor publishedSnapshotAccessor, IEmbeddedContentService embeddedContentService)
 		{
 			_publishedSnapshotAccessor = publishedSnapshotAccessor;
+			_embeddedContentService = embeddedContentService;
 		}
 
 		public bool IsConverter(IPublishedPropertyType propertyType)
 		{
-			return BentoItemDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+			var verdict = BentoItemDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+
+			return verdict;
 		}
 
 		public bool? IsValue(object value, PropertyValueLevel level)
@@ -47,37 +52,33 @@ namespace Bento.Core.ValueConverters
 				return null;
 			}
 
+			var publishedContentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
+
 			try
 			{
 				var area = JsonConvert.DeserializeObject<Area>(interString);
-				
-				//had to move to this because someone broke DI for propertyValueConverts between 8.2 and 8.5
-				var embeddedContentService = Umbraco.Web.Composing.Current.Factory.GetInstance<IEmbeddedContentService>();
-
-
 
 				IPublishedElement content = null;
 				if (area.Key != Guid.Empty && area.ContentData == null)
 				{
-					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Key);
+					content = publishedContentCache.GetById(area.Key);
 				}
 				else if (area.Id != 0 && area.ContentData == null)
 				{
-					content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Id);
+					content = publishedContentCache.GetById(area.Id);
 				}
 				else if (area.ContentData != null)
 				{
 					// we need to convert the embedded item;
-					content = embeddedContentService.ConvertValueToContent(area.Key.ToString(), (string)area.ContentData["contentTypeAlias"], area.ContentData);
+					content = _embeddedContentService.ConvertValueToContent(area.Key.ToString(), (string)area.ContentData["contentTypeAlias"], area.ContentData);
 				}
 
 				return content;
-
-			} catch(Exception e)
+			}
+			catch (Exception e)
 			{
-
 				// this is to catch legacy bento setups
-				var content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(Int32.Parse(interString));
+				var content = publishedContentCache.GetById(Int32.Parse(interString));
 
 				return content;
 			}

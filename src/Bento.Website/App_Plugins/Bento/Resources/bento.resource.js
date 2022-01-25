@@ -33,8 +33,6 @@
 			);
 		},
 
-		
-
 		getRelationsByChildId: function (childId) {
 			return umbRequestHelper.resourcePromise(
 				$http.get("/Umbraco/backoffice/Api/BentoResource/GetRelationsByChildId/", { params: { childId: childId } }),

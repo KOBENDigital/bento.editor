@@ -1,54 +1,53 @@
-﻿using System;
+﻿//todo: we need to figure out a way to lock this controller down?
+using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.Controllers;
+using Umbraco.Extensions;
 
 namespace Bento.Core.Controllers
 {
-	public class BentoApiController : UmbracoAuthorizedController
+	public class BentoApiController : UmbracoPageController, IVirtualPageController
 	{
-		private readonly IEmbeddedContentService _EmbeddedContentService;
+		private readonly IEmbeddedContentService _embeddedContentService;
+		private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 		private readonly IVariationContextAccessor _variationContextAccessor;
 		private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
-		public BentoApiController(IEmbeddedContentService embeddedContentService, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor)
+		public BentoApiController(ILogger<UmbracoPageController> logger, ICompositeViewEngine compositeViewEngine, IEmbeddedContentService embeddedContentService, IPublishedSnapshotAccessor publishedSnapshotAccessor, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine)
 		{
+			_embeddedContentService = embeddedContentService;
+			_publishedSnapshotAccessor = publishedSnapshotAccessor;
 			_variationContextAccessor = variationContextAccessor;
-			_EmbeddedContentService = embeddedContentService ?? throw new ArgumentNullException(nameof(embeddedContentService));
 			_umbracoContextAccessor = umbracoContextAccessor;
-			
 		}
 
 		[HttpGet]
-		public ActionResult LoadLibraryContent(int id, string culture)
+		public IActionResult LoadLibraryContent(int id, string culture)
 		{
 			if (!string.IsNullOrEmpty(culture))
 			{
 				_variationContextAccessor.VariationContext = new VariationContext(culture);
 			}
 
-			var ctx = _umbracoContextAccessor.UmbracoContext;
-			var model = ctx.Content.GetById(true, id); //Umbraco.Content(id) ?? UmbracoContext.Content.GetById(true, id);
+			var publishedContentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
+			var model = publishedContentCache.GetById(true, id);
 
 			return View($"~/Views/Partials/Bento/{model.ContentType.Alias}BackOffice.cshtml", model);
 		}
 
-
 		[HttpPost]
-		public ActionResult LoadEmbeddedContent([FromBody]LoadEmbeddedContentRequest data)
+		public IActionResult LoadEmbeddedContent([FromBody] LoadEmbeddedContentRequest data)
 		{
-			if (data == null)
-			{
-				return null;
-			}
-
 			return BentoViewResult(data, $"~/Views/Partials/Bento/{data.ContentTypeAlias}BackOffice.cshtml");
-			
 		}
-
 
 		/// <summary>
 		/// used to load the styler for the back office
@@ -56,22 +55,19 @@ namespace Bento.Core.Controllers
 		/// <param name="data"></param>
 		/// <returns></returns>
 		[HttpPost]
-		public ActionResult LoadEmbeddedStyler([FromBody]LoadEmbeddedContentRequest data)
+		public IActionResult LoadEmbeddedStyler([FromBody] LoadEmbeddedContentRequest data)
 		{
-			if (data == null)
-			{
-				return null;
-			}
-
-			if (data == null)
-			{
-				return null;
-			}
-
-			return BentoViewResult(data, $"~/Views/Partials/Bento/Stylers/{data.ContentTypeAlias}.cshtml");
+			return data == null ? null : BentoViewResult(data, $"~/Views/Partials/Bento/Stylers/{data.ContentTypeAlias}.cshtml");
 		}
 
-		private ActionResult BentoViewResult(LoadEmbeddedContentRequest data, string viewPath)
+		public IPublishedContent FindContent(ActionExecutingContext actionExecutingContext)
+		{
+			//todo: this isn't ideal... but the controller needs to find a piece of content otherwise it won't find a route
+			var context = _umbracoContextAccessor.GetRequiredUmbracoContext();
+			return context.Content.GetAtRoot().FirstOrDefault();
+		}
+
+		private IActionResult BentoViewResult(LoadEmbeddedContentRequest data, string viewPath)
 		{
 			if (!string.IsNullOrEmpty(data.Culture))
 			{
@@ -93,10 +89,9 @@ namespace Bento.Core.Controllers
 				return null;
 			}
 
-			IPublishedElement content = _EmbeddedContentService.ConvertValueToContent(data.Guid, data.ContentTypeAlias, data.DataJson);
+			var content = _embeddedContentService.ConvertValueToContent(data.Guid, data.ContentTypeAlias, data.DataJson);
 
 			return View(viewPath, content);
-
 		}
 	}
 }

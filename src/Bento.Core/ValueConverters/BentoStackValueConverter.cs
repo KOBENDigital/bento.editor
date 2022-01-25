@@ -8,21 +8,26 @@ using Newtonsoft.Json;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PropertyEditors;
 using Umbraco.Cms.Core.PublishedCache;
+using Umbraco.Extensions;
 
 namespace Bento.Core.ValueConverters
 {
 	public class BentoStackValueConverter : IPropertyValueConverter
 	{
 		private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
+		private readonly IEmbeddedContentService _embeddedContentService;
 
-		public BentoStackValueConverter(IPublishedSnapshotAccessor publishedSnapshotAccessor)
+		public BentoStackValueConverter(IPublishedSnapshotAccessor publishedSnapshotAccessor, IEmbeddedContentService embeddedContentService)
 		{
 			_publishedSnapshotAccessor = publishedSnapshotAccessor;
+			_embeddedContentService = embeddedContentService;
 		}
 
 		public bool IsConverter(IPublishedPropertyType propertyType)
 		{
-			return BentoStackDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+			var verdict = BentoStackDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+
+			return verdict;
 		}
 
 		public bool? IsValue(object value, PropertyValueLevel level)
@@ -49,42 +54,47 @@ namespace Bento.Core.ValueConverters
 				return null;
 			}
 
-			var items = new List<StackItem>();
+			IEnumerable<StackItem> items = null;
 			try
 			{
-				items = JsonConvert.DeserializeObject<IEnumerable<StackItem>>(interString).ToList();
+				items = JsonConvert.DeserializeObject<IEnumerable<StackItem>>(interString);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-				
+				//ignored
+			}
+
+			if (items == null)
+			{
+				return null;
 			}
 
 			var convertedItems = new List<StackItem>();
 
-			//had to move to this because someone broke DI for propertyValueConverts between 8.2 and 8.5
-			var embeddedContentService = Umbraco.Cms.Web.Composing.Current.Factory.GetInstance<IEmbeddedContentService>();
+			var publishedContentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
 
 			foreach (var item in items)
 			{
 				if (item.SettingsData != null && item.SettingsData.Any())
 				{
-					item.Settings = embeddedContentService.ConvertValueToContent(item.SettingsData["key"].ToString(), (string)item.SettingsData["contentTypeAlias"], item.SettingsData);
+					item.Settings = _embeddedContentService.ConvertValueToContent(item.SettingsData["key"].ToString(), (string)item.SettingsData["contentTypeAlias"], item.SettingsData);
 				}
 
 				foreach (var area in item.Areas.Where(x => x.Id != 0 || x.Key != Guid.Empty))
 				{
-
 					IPublishedElement content = null;
-					if(area.Key != Guid.Empty && area.ContentData == null)
+					if (area.Key != Guid.Empty && area.ContentData == null)
 					{
-						content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Key);
-					} else if(area.Id != 0 && area.ContentData == null)
+						content = publishedContentCache.GetById(area.Id);
+					}
+					else if (area.Id != 0 && area.ContentData == null)
 					{
-						content = _publishedSnapshotAccessor.PublishedSnapshot.Content.GetById(area.Id);
-					} else if(area.ContentData != null)
+						content = publishedContentCache.GetById(area.Id);
+					}
+					else if (area.ContentData != null)
 					{
 						// we need to convert the embedded item;
-						content = embeddedContentService.ConvertValueToContent(area.Key.ToString(), (string)area.ContentData["contentTypeAlias"], area.ContentData);
+						content = _embeddedContentService.ConvertValueToContent(area.Key.ToString(), (string)area.ContentData["contentTypeAlias"], area.ContentData);
 					}
 
 					if (content == null)

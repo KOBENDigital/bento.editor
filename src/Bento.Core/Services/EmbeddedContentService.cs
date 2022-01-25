@@ -1,37 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Bento.Core.Extensions;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Umbraco.Core;
-using Umbraco.Core.Cache;
-using Umbraco.Core.Logging;
-using Umbraco.Core.Models;
-using Umbraco.Core.Models.Editors;
-using Umbraco.Core.Models.PublishedContent;
-using Umbraco.Core.Services;
-using Umbraco.Web.Composing;
+using Umbraco.Cms.Core.Cache;
+using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Models.Editors;
+using Umbraco.Cms.Core.Models.PublishedContent;
+using Umbraco.Cms.Core.Scoping;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
 
 namespace Bento.Core.Services
 {
 	public class EmbeddedContentService : IEmbeddedContentService
 	{
+		private readonly IAppPolicyCache _runtimeCache;
 		private readonly IContentTypeService _contentTypeService;
 		private readonly IDataTypeService _dataTypeService;
-		private readonly IAppPolicyCache _runtimeCache;
+		private readonly ILogger<EmbeddedContentService> _logger;
+		private readonly IPublishedContentTypeFactory _publishedContentTypeFactory;
 		private readonly IPublishedModelFactory _publishedModelFactory;
-		private readonly ILogger _logger;
+		private readonly IScopeProvider _scopeProvider;
 
-		public EmbeddedContentService(IContentTypeService contentTypeService, IDataTypeService dataTypeService, IAppPolicyCache runtimeCache, IPublishedModelFactory publishedModelFactory, ILogger logger)
+		public EmbeddedContentService(IAppPolicyCache runtimeCache, IContentTypeService contentTypeService, IDataTypeService dataTypeService, ILogger<EmbeddedContentService> logger, IPublishedContentTypeFactory publishedContentTypeFactory, IPublishedModelFactory publishedModelFactory, IScopeProvider scopeProvider)
 		{
+			_runtimeCache = runtimeCache;
 			_contentTypeService = contentTypeService;
 			_dataTypeService = dataTypeService;
-			_runtimeCache = runtimeCache;
-			_publishedModelFactory = publishedModelFactory;
 			_logger = logger;
+			_publishedContentTypeFactory = publishedContentTypeFactory;
+			_publishedModelFactory = publishedModelFactory;
+			_scopeProvider = scopeProvider;
 		}
 
 		public IPublishedElement ConvertValueToContent(string guid, string contentTypeAlias, string dataJson)
@@ -96,7 +99,7 @@ namespace Bento.Core.Services
 				}
 				catch (Exception ex)
 				{
-					_logger.Error(typeof(EmbeddedContentService), ex, "[Bento] Error creating Property object.");
+					_logger.LogError(ex, "[Bento] Error creating Property object.");
 				}
 
 				if (prop2 == null)
@@ -104,7 +107,7 @@ namespace Bento.Core.Services
 					continue;
 				}
 
-				var newValue2 = propValueEditor.ConvertDbToString(propType2, newValue, _dataTypeService);
+				var newValue2 = propValueEditor.ConvertDbToString(propType2, newValue);
 
 				properties.Add(new DetachedPublishedProperty(propType, newValue2));
 			}
@@ -149,7 +152,7 @@ namespace Bento.Core.Services
 					contentTypeAlias),
 				() => new ContentTypeContainer
 				{
-					PublishedContentType = new PublishedContentType(_contentTypeService.Get(contentTypeAlias), Current.PublishedContentTypeFactory),
+					PublishedContentType = new PublishedContentType(_contentTypeService.Get(contentTypeAlias), _publishedContentTypeFactory),
 					ContentType = _contentTypeService.Get(contentTypeAlias)
 				});
 		}
@@ -158,7 +161,18 @@ namespace Bento.Core.Services
 		{
 			return _runtimeCache.GetCacheItem(
 				string.Concat("Bento.Core.Services.EmbeddedContentService.GetContentTypeAliasByGuid_", contentTypeGuid),
-				() => _contentTypeService.GetAliasByGuid(contentTypeGuid));
+				() => GetAliasByGuid(contentTypeGuid));
+		}
+
+		private string GetAliasByGuid(Guid id)
+		{
+			return _runtimeCache.Get(string.Concat("Bento.Core.Extensions.ContentTypeServiceExtensions.GetAliasById_", id), () =>
+			{
+				using var scope = _scopeProvider.CreateScope(autoComplete: true);
+				return scope.Database.ExecuteScalar<string>(
+					"SELECT [cmsContentType].[alias] FROM [cmsContentType] INNER JOIN [umbracoNode] ON [cmsContentType].[nodeId] = [umbracoNode].[id] WHERE [umbracoNode].[uniqueID] = @0",
+					id);
+			})?.ToString();
 		}
 	}
 }
