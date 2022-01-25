@@ -87,9 +87,6 @@
       <None Include="App_Plugins\Bento\PreValueEditors\singlejsfilepicker.controller.js" />
       <None Include="App_Plugins\Bento\Resources\bento.resource.js" />
       <None Include="App_Plugins\Bento\Resources\bento.setting.factory.js" />
-      <None Include="umbraco\Data\Umbraco.mdf" />
-      <None Include="umbraco\Data\Umbraco.sdf" />
-      <None Include="umbraco\Data\Umbraco_log.ldf" />
       <None Include="Views\Partials\Bento\Layouts\Default.cshtml" />
       <None Include="wwwroot\assets\001-sushi.svg" />
       <None Include="wwwroot\assets\002-sushi.svg" />
@@ -101,9 +98,10 @@
       <None Include="wwwroot\css\layouts.scss" />
       <None Include="wwwroot\css\mixins.scss" />
       <None Include="wwwroot\css\rte.css" />
-      <None Include="wwwroot\css\site.css" />
-      <None Include="wwwroot\css\site.min.css" />
-      <None Include="wwwroot\css\site.scss" />
+      <None Include="wwwroot\css\site.scss">
+        <Generator>SassTranspiler</Generator>
+        <LastGenOutput>site.css</LastGenOutput>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -118,6 +116,13 @@
         <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
         <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
         <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Update="wwwroot\css\site.css">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>site.scss</DependentUpon>
+      </Content>
     </ItemGroup>
 
 

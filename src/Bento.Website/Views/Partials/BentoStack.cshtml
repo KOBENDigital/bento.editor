@@ -1,16 +1,12 @@
 ﻿@inherits UmbracoViewPage<IEnumerable<Bento.Core.Models.StackItem>>
-
 @foreach (var item in Model)
 {
-
 	var settings = item.Settings as Umbraco.Cms.Web.Common.PublishedModels.BentoLayoutSettings;
-
 
 	Guid id = Guid.Empty;
 	string classString = null;
 	string styleString = null;
 	string gridGap = null;
-
 
 	var classList = new List<string>();
 	var styleList = new List<string>();
@@ -20,7 +16,7 @@
 		id = settings.Key;
 		if (!string.IsNullOrEmpty(settings.BottomMargin))
 		{
-			classList.Add($"mb-{settings.BottomMargin}");
+			classList.Add($"mb-{settings.BottomMargin.ToLower()}");
 		}
 
 		//if (!string.IsNullOrEmpty(settings.TopMargin))
@@ -63,10 +59,10 @@
 		//	}
 		//}
 
-		//if (settings.HasValue("gridGap"))
-		//{
-		//	gridGap = $"grid-gap-{settings.GridGap}";
-		//}
+		if (settings.HasValue("gridGap"))
+		{
+			gridGap = $"grid-gap-{settings.GridGap.ToLower()}";
+		}
 	}
 
 	if (classList.Any())
@@ -78,7 +74,6 @@
 	{
 		styleString = string.Join(" ", styleList);
 	}
-
 	<section id="s-@id" class="@classString">
 		<div class="@item.Alias @gridGap section-inner">
 			@Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
