@@ -26,7 +26,7 @@ namespace Bento.Core.DataEditors
 			_jsonSerializer = jsonSerializer;
 		}
 
-		public string Alias => Bento.Core.Constants.BentoStackDataEditor.EditorName;
+		public string Alias => Bento.Core.Constants.BentoStackDataEditor.EditorAlias;
 
 		public EditorType Type => EditorType.PropertyValue;
 

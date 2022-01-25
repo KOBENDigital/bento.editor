@@ -87,12 +87,29 @@
       <None Include="App_Plugins\Bento\PreValueEditors\singlejsfilepicker.controller.js" />
       <None Include="App_Plugins\Bento\Resources\bento.resource.js" />
       <None Include="App_Plugins\Bento\Resources\bento.setting.factory.js" />
-      <None Include="Views\Partials\Bento\Layouts\DefaultLayout.cshtml" />
+      <None Include="umbraco\Data\Umbraco.mdf" />
+      <None Include="umbraco\Data\Umbraco.sdf" />
+      <None Include="umbraco\Data\Umbraco_log.ldf" />
+      <None Include="Views\Partials\Bento\Layouts\Default.cshtml" />
+      <None Include="wwwroot\assets\001-sushi.svg" />
+      <None Include="wwwroot\assets\002-sushi.svg" />
+      <None Include="wwwroot\assets\003-sushi.svg" />
+      <None Include="wwwroot\assets\004-sushi.svg" />
+      <None Include="wwwroot\assets\005-sushi.svg" />
+      <None Include="wwwroot\assets\bento.svg" />
+      <None Include="wwwroot\css\colours.scss" />
+      <None Include="wwwroot\css\layouts.scss" />
+      <None Include="wwwroot\css\mixins.scss" />
+      <None Include="wwwroot\css\rte.css" />
+      <None Include="wwwroot\css\site.css" />
+      <None Include="wwwroot\css\site.min.css" />
+      <None Include="wwwroot\css\site.scss" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms" Version="9.1.2" />
-        <PackageReference Include="Umbraco.Cms.SqlCe" Version="9.1.2" />
+        <PackageReference Include="Umbraco.Cms" Version="9.2.0" />
+        <PackageReference Include="Umbraco.Cms.Core" Version="9.2.0" />
+        <PackageReference Include="Umbraco.Cms.SqlCe" Version="9.2.0" />
         <PackageReference Include="Umbraco.SqlServerCE" Version="4.0.0.1" />
     </ItemGroup>
 

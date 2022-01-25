@@ -25,7 +25,9 @@ namespace Bento.Core.ValueConverters
 
 		public bool IsConverter(IPublishedPropertyType propertyType)
 		{
-			return BentoStackDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+			var verdict = BentoStackDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+
+			return verdict;
 		}
 
 		public bool? IsValue(object value, PropertyValueLevel level)

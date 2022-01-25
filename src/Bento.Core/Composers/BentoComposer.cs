@@ -4,15 +4,10 @@ using Bento.Core.NotificationHandlers;
 using Bento.Core.Services;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
-using Pluralize.NET;
 using Umbraco.Cms.Core.Composing;
-using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Notifications;
-using Umbraco.Cms.Core.Web;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
 using Umbraco.Extensions;
 
@@ -23,7 +18,7 @@ namespace Bento.Core.Composers
 		public void Compose(IUmbracoBuilder builder)
 		{
 			//routing
-			var globalSettings = new GlobalSettings();
+			//var globalSettings = new GlobalSettings();
 			builder.Services.Configure<UmbracoPipelineOptions>(options =>
 			{
 				//options.AddFilter(new UmbracoPipelineFilter(nameof(BentoApiController))
@@ -43,7 +38,7 @@ namespace Bento.Core.Composers
 						endpoints.MapControllerRoute(
 							"Bento Backoffice Previews Controller",
 							"/BentoApi/{action}/{id?}",
-							new { Controller = "BentoApi", Action = "Index" });
+							new { Controller = "BentoApi", Action = "Index" }); //todo: should we have a default route? i guess if we can work out how to lock down the controller, then no?
 					})
 				});
 			});
@@ -60,9 +55,8 @@ namespace Bento.Core.Composers
 			builder.Services.AddUnique<IPagingHelper, PagingHelper>();
 			builder.Services.AddUnique<IPluralizationServiceWrapper, PluralizationServiceWrapper>();
 			builder.Services.AddUnique<IEmbeddedContentService, EmbeddedContentService>();
-			//builder.Services.AddUnique(f => Current.AppCaches.RuntimeCache);
 
-			//todo: i can't work out why we're doing this?
+			//todo: i can't work out why we're doing this? it was from umbraco 8 and the thinking is it might have something to do with variants and multilingual setup?
 			//controllers
 			//builder.Register(f =>
 			//{

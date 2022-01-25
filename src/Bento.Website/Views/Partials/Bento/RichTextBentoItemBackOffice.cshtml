@@ -1,0 +1,15 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedElement>
+<div class="card hero">
+	<div class="card-content">
+		<div class="title">Backoffice Bento view for 'Rich Text Bento Element' (alias: richTextBentoElement)</div>
+		<div class="sub-title">To edit, please open the file at: ~/Views/Partials/Bento/RichTextBentoElementBackOffice.cshtml</div>
+		<p><strong>Properties</strong></p>
+		@foreach (var x in Model.Properties)
+		{
+			<p>
+				@(x.Alias):<br />
+				@(Html.Raw(x.GetValue()))
+			</p>
+		}
+	</div>
+</div>

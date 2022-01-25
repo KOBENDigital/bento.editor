@@ -1,16 +1,13 @@
-﻿//todo: the files are being created in the wrong place! they end up in:
-//Bento.Website\wwwroot\Views\Partials\Bento\RichTextBentoElement.cshtml
-//but we need them in:
-//Bento.Website\Views\Partials\Bento\RichTextBentoElement.cshtml
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Bento.Core.Constants;
 using Bento.Core.DataEditors;
+using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.IO;
-using Umbraco.Cms.Core.Models;
+using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Core.Services;
 using BentoItemDataEditor = Bento.Core.Constants.BentoItemDataEditor;
@@ -20,98 +17,120 @@ namespace Bento.Core.NotificationHandlers
 {
 	public class ContentTypeServiceNotifications : INotificationHandler<ContentTypeSavedNotification>
 	{
-		//todo: not 100% sure why we're no just using standard di here?
-		//private static readonly IDataTypeService DataTypeService = DependencyResolver.Current.GetService<IDataTypeService>();
-		private readonly IDataTypeService DataTypeService;
-		//private static readonly IIOHelper IOHelper = DependencyResolver.Current.GetService<IIOHelper>();
-		private readonly IIOHelper IOHelper;
+		private readonly IDataTypeService _dataTypeService;
+		private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly ILogger<ContentTypeServiceNotifications> _logger;
 
-		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IIOHelper ioHelper)
+		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IHostingEnvironment hostingEnvironment, ILogger<ContentTypeServiceNotifications> logger )
 		{
-			DataTypeService = dataTypeService;
-			IOHelper = ioHelper;
+			_dataTypeService = dataTypeService;
+			_hostingEnvironment = hostingEnvironment;
+			_logger = logger;
 		}
 
 		public void Handle(ContentTypeSavedNotification notification)
 		{
-			foreach (var content in notification.SavedEntities)
+			try
 			{
-				List<string> itemDoctypeCompositionAliases = new List<string>();
+				var itemDoctypeCompositionAliases = new List<string>();
 
-				IEnumerable<IDataType> bentoItemDataTypes = DataTypeService.GetByEditorAlias(BentoItemDataEditor.EditorAlias);
+				var bentoItemDataTypes = _dataTypeService.GetByEditorAlias(BentoItemDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoItemDataTypes
-					.Select(dataType => (BentoItemConfiguration) dataType.Configuration)
+					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
 					.Select(config => config.ItemDoctypeCompositionAlias));
 
-				IEnumerable<IDataType> bentoStackDataTypes = DataTypeService.GetByEditorAlias(BentoStackDataEditor.EditorAlias);
+				var bentoStackDataTypes = _dataTypeService.GetByEditorAlias(BentoStackDataEditor.EditorAlias);
+				itemDoctypeCompositionAliases.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
+					.Select(config => config.ItemDoctypeCompositionAlias));
 
-				itemDoctypeCompositionAliases
-					.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration) dataType.Configuration)
-						.Select(config => config.ItemDoctypeCompositionAlias));
-
-				IEnumerable<string> compositionAliases = content.ContentTypeComposition.Select(x => x.Alias);
-
-				IEnumerable<string> result = compositionAliases.Where(x => itemDoctypeCompositionAliases.Any(y => y == x));
-
-				if (!result.Any())
+				foreach (var content in notification.SavedEntities)
 				{
-					continue;
-				}
+					try
+					{
+						var compositionAliases = content.ContentTypeComposition.Select(x => x.Alias);
 
-				string websiteViewMessage = string.Empty;
-				string backofficeViewMessage = string.Empty;
+						var result = compositionAliases.Where(x => itemDoctypeCompositionAliases.Any(y => y == x));
 
-				StringBuilder view = new StringBuilder();
-				view.AppendLine("@inherits Umbraco.Web.Mvc.UmbracoViewPage<IPublishedElement>");
+						if (!result.Any())
+						{
+							continue;
+						}
 
-				string contentAlias = content.Alias.First().ToString().ToUpper() + content.Alias.Substring(1);
+						var websiteViewMessage = string.Empty;
+						var backofficeViewMessage = string.Empty;
 
-				if (!Directory.Exists(IOHelper.MapPath("~\\Views\\Partials\\Bento")))
-				{
-					Directory.CreateDirectory(IOHelper.MapPath("~\\Views\\Partials\\Bento"));
+						var view = new StringBuilder();
+						view.AppendLine("@Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedElement>");
 
-				}
+						var contentAlias = content.Alias.First().ToString().ToUpper() + content.Alias.Substring(1);
 
-				if (!Directory.Exists(IOHelper.MapPath("~\\Views\\Partials\\Bento\\Layouts")))
-				{
-					Directory.CreateDirectory(IOHelper.MapPath("~\\Views\\Partials\\Bento\\Layouts"));
-				}
+						if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento")))
+						{
+							Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento"));
+						}
 
-				if (!File.Exists(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
-				{
-					StringBuilder websiteView = new StringBuilder();
-					websiteView.Append(view);
-					websiteView.AppendLine($"<p>View for Bento doctype '{content.Name}' (alias: {content.Alias})</p>");
+						if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts")))
+						{
+							Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts"));
+						}
 
-					File.WriteAllText(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}.cshtml"), websiteView.ToString());
+						if (!File.Exists(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
+						{
+							var websiteView = new StringBuilder();
+							websiteView.Append(view);
+							websiteView.AppendLine($"<p>View for Bento doctype '{content.Name}' (alias: {content.Alias})</p>");
 
-					websiteViewMessage = $"'~/Views/Bento/{contentAlias}.cshtml'";
-				}
+							File.WriteAllText(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml"), websiteView.ToString());
 
-				if (!File.Exists(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml")))
-				{
-					StringBuilder backOfficeView = new StringBuilder();
-					backOfficeView.Append(view);
-					backOfficeView.AppendLine("<div class=\"card hero\">");
-					backOfficeView.AppendLine("\t<div class=\"card-content\">");
-					backOfficeView.AppendLine($"\t\t<div class=\"title\">Backoffice Bento view for '{content.Name}' (alias: {content.Alias})</div>");
-					backOfficeView.AppendLine($"\t\t<div class=\"sub-title\">To edit, please open the file at: ~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml</div>");
-					backOfficeView.AppendLine("\t</div>");
-					backOfficeView.AppendLine("</div>");
+							websiteViewMessage = $"'~/Views/Bento/{contentAlias}.cshtml'";
+						}
 
-					File.WriteAllText(IOHelper.MapPath($"~\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"), backOfficeView.ToString());
+						if (!File.Exists(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml")))
+						{
+							var backOfficeView = new StringBuilder();
+							backOfficeView.Append(view);
+							backOfficeView.AppendLine("<div class=\"card hero\">");
+							backOfficeView.AppendLine("\t<div class=\"card-content\">");
+							backOfficeView.AppendLine($"\t\t<div class=\"title\">Backoffice Bento view for '{content.Name}' (alias: {content.Alias})</div>");
+							backOfficeView.AppendLine($"\t\t<div class=\"sub-title\">To edit, please open the file at: ~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml</div>");
+							backOfficeView.AppendLine("\t</div>");
+							backOfficeView.AppendLine("</div>");
 
-					backofficeViewMessage = $"'~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml'";
-				}
+							File.WriteAllText(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"), backOfficeView.ToString());
 
-				if (!string.IsNullOrWhiteSpace(websiteViewMessage) || !string.IsNullOrWhiteSpace(backofficeViewMessage))
-				{
-					notification.Messages.Add(
-						new EventMessage(
-							"Bento setup", $"Bento view(s) created ({websiteViewMessage}{(string.IsNullOrWhiteSpace(backofficeViewMessage) ? string.Empty : " and ")}{backofficeViewMessage}).",
-							EventMessageType.Info)
+							backofficeViewMessage = $"'~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml'";
+						}
+
+						if (!string.IsNullOrWhiteSpace(websiteViewMessage) || !string.IsNullOrWhiteSpace(backofficeViewMessage))
+						{
+							notification.Messages.Add(
+								new EventMessage(
+									"Bento setup", $"Bento view(s) created ({websiteViewMessage}{(string.IsNullOrWhiteSpace(backofficeViewMessage) ? string.Empty : " and ")}{backofficeViewMessage}).",
+									EventMessageType.Info)
+							);
+						}
+					}
+					catch (Exception ex)
+					{
+						_logger.LogWarning(ex, "Error creating the Bento views");
+
+						notification.Messages.Add(
+							new EventMessage(
+								"Bento setup", "Error creating the Bento views. Please see the log for more info.",
+								EventMessageType.Warning)
 						);
+					}
 				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogWarning(ex, "Error getting Bento data types");
+
+				notification.Messages.Add(
+					new EventMessage(
+						"Bento setup", "Error getting Bento data types. Please see the log for more info.",
+						EventMessageType.Warning)
+				);
 			}
 		}
 	}

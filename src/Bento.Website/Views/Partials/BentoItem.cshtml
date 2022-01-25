@@ -1,0 +1,31 @@
+﻿@using Serilog
+@using Umbraco.Cms.Core.Web
+@model IPublishedElement
+@{
+	try
+	{
+		var controllerItems = new List<string> {};
+
+		if (controllerItems.Contains(Model.ContentType.Alias))
+		{
+			@*@Html.Action("index", $"{Model.ContentType.Alias}Surface", new { content = Model })*@
+		}
+		else
+		{
+			@Html.Partial($"~/Views/partials/Bento/{Model.ContentType.Alias}.cshtml", Model)
+		}
+	}
+	catch (Exception ex)
+	{
+		//var umbracoContextAccessor = IUmbracoContextAccessor;
+		//var publishedRequest = Umbraco.Cms.Web.Composing.Current.UmbracoContext.PublishedRequest;
+		//if (publishedRequest == null)
+		//{
+		//	Log.Error(ex, "Error rendering Bento Item view for {Alias}", Model.ContentType.Alias);
+		//}
+		//else
+		//{
+		//	Log.Error(ex, "Error rendering Bento Item view for {Alias} in content ID {Id}", Model.ContentType.Alias, publishedRequest.PublishedContent.Id);
+		//}
+	}
+}

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
-using Umbraco.Cms.Core.Mapping;
 using Umbraco.Cms.Core.Models;
-using Umbraco.Cms.Core.Models.ContentEditing;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.BackOffice.Controllers;
@@ -19,18 +17,16 @@ namespace Bento.Core.Controllers
 		private readonly IPagingHelper _pagingHelper;
 		private readonly IPluralizationServiceWrapper _pluralizationServiceWrapper;
 		private readonly IRelationService _relationService;
-		private readonly IUmbracoMapper _mapper;
 		private readonly IUserService _userService;
 		private readonly IVariationContextAccessor _variationContextAccessor;
 
-		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IRelationService relationService, IUmbracoMapper mapper, IUserService userService, IVariationContextAccessor variationContextAccessor)
+		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IRelationService relationService, IUserService userService, IVariationContextAccessor variationContextAccessor)
 		{
 			_contentService = contentService;
 			_contentTypeService = contentTypeService;
 			_pagingHelper = pagingHelper;
 			_pluralizationServiceWrapper = pluralizationServiceWrapper;
 			_relationService = relationService;
-			_mapper = mapper;
 			_userService = userService;
 			_variationContextAccessor = variationContextAccessor;
 		}
@@ -127,48 +123,14 @@ namespace Bento.Core.Controllers
 			return itemTypeFolder.Id;
 		}
 
-		public IEnumerable<ContentTypeBasic> GetAllowedContentTypes(string allowedDoctypeAliases = "")
+		public IEnumerable<AllowedContentType> GetAllowedContentTypes(string allowedDoctypeAliases = "")
 		{
-			if (string.IsNullOrWhiteSpace(allowedDoctypeAliases))
-			{
-				return Enumerable.Empty<ContentTypeBasic>();
-			}
-
-			var allowedTypesArray = allowedDoctypeAliases.Split(',');
-
-			var types = _contentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
-
-			if (types.Any() == false)
-			{
-				return Enumerable.Empty<ContentTypeBasic>();
-			}
-
-			//todo: can we map this to a much simpler object? i think we only need the id and the name?
-			var basics = types.Where(type => type.IsElement == false).Select(_mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
-
-			return basics;
+			return GetAllowedTypes(allowedDoctypeAliases);
 		}
 
-		public IEnumerable<ContentTypeBasic> GetAllowedElementTypes(string allowedElementAliases = "")
+		public IEnumerable<AllowedContentType> GetAllowedElementTypes(string allowedElementAliases = "")
 		{
-			if (string.IsNullOrWhiteSpace(allowedElementAliases))
-			{
-				return Enumerable.Empty<ContentTypeBasic>();
-			}
-
-			var allowedTypesArray = allowedElementAliases.Split(',');
-
-			var types = _contentTypeService.GetAll().Where(x => allowedTypesArray.Contains(x.Alias)).ToList();
-
-			if (types.Any() == false)
-			{
-				return Enumerable.Empty<ContentTypeBasic>();
-			}
-
-			//todo: can we map this to a much simpler object? i think we only need the id and the name?
-			var basics = types.Where(type => type.IsElement).Select(_mapper.Map<IContentType, ContentTypeBasic>).OrderBy(x => x.Alias).ToList();
-
-			return basics;
+			return GetAllowedTypes(allowedElementAliases);
 		}
 
 		public Dictionary<string, List<RelationItem>> GetRelationsByChildId(int childId)
@@ -209,6 +171,18 @@ namespace Bento.Core.Controllers
 			}
 
 			return result;
+		}
+
+		private IEnumerable<AllowedContentType> GetAllowedTypes(string allowedAliases = "")
+		{
+			if (string.IsNullOrWhiteSpace(allowedAliases))
+			{
+				return Enumerable.Empty<AllowedContentType>();
+			}
+
+			var types = _contentTypeService.GetAll().Where(x => allowedAliases.Split(',').Contains(x.Alias)).ToList();
+
+			return types.Any() ? types.Select(x => new AllowedContentType { Alias = x.Alias, Name = x.Name, Description = x.Description }) : Enumerable.Empty<AllowedContentType>();
 		}
 	}
 }

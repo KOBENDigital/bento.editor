@@ -23,7 +23,9 @@ namespace Bento.Core.ValueConverters
 
 		public bool IsConverter(IPublishedPropertyType propertyType)
 		{
-			return BentoItemDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+			var verdict = BentoItemDataEditor.EditorAlias.Equals(propertyType.EditorAlias);
+
+			return verdict;
 		}
 
 		public bool? IsValue(object value, PropertyValueLevel level)
@@ -72,11 +74,9 @@ namespace Bento.Core.ValueConverters
 				}
 
 				return content;
-
 			}
 			catch (Exception e)
 			{
-				//todo: do we thing we can remove this now?
 				// this is to catch legacy bento setups
 				var content = publishedContentCache.GetById(Int32.Parse(interString));
 

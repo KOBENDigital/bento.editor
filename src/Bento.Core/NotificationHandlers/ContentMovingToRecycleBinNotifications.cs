@@ -10,30 +10,27 @@ namespace Bento.Core.NotificationHandlers
 {
 	public class ContentMovingToRecycleBinNotifications : INotificationHandler<ContentMovingToRecycleBinNotification>
 	{
-		//todo: not 100% sure why we're no just using standard di here?
-		//private static readonly IContentService ContentService = DependencyResolver.Current.GetService<IContentService>();
-		private readonly IContentService ContentService;
-		//private static readonly IRelationService RelationService = DependencyResolver.Current.GetService<IRelationService>();
-		private readonly IRelationService RelationService;
+		private readonly IContentService _contentService;
+		private readonly IRelationService _relationService;
 
 		public ContentMovingToRecycleBinNotifications(IContentService contentService, IRelationService relationService)
 		{
-			ContentService = contentService;
-			RelationService = relationService;
+			_contentService = contentService;
+			_relationService = relationService;
 		}
 
 		public void Handle(ContentMovingToRecycleBinNotification notification)
 		{
 			foreach (var trashingEntity in notification.MoveInfoCollection)
 			{
-				List<IRelation> relations = RelationService.GetByChildId(trashingEntity.Entity.Id).ToList();
+				List<IRelation> relations = _relationService.GetByChildId(trashingEntity.Entity.Id).ToList();
 
 				if (relations.Any() == false)
 				{
 					continue;
 				}
 
-				IEnumerable<IRelationType> relationsTypes = RelationService
+				IEnumerable<IRelationType> relationsTypes = _relationService
 					.GetAllRelationTypes(
 						relations.Select(x => x.RelationTypeId).ToArray())
 					.Where(x => x.Alias == RelationTypes.BentoItemsAlias);
@@ -45,7 +42,7 @@ namespace Bento.Core.NotificationHandlers
 
 				notification.CancelOperation(
 					new EventMessage("Bento setup",
-						$"This content is used in the following places: {string.Join(", ", relations.Select(x => ContentService.GetById(x.ParentId).Name))} (delete failed)",
+						$"This content is used in the following places: {string.Join(", ", relations.Select(x => _contentService.GetById(x.ParentId).Name))} (delete failed)",
 						EventMessageType.Error));
 
 				break;

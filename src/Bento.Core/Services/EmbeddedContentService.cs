@@ -18,7 +18,6 @@ namespace Bento.Core.Services
 {
 	public class EmbeddedContentService : IEmbeddedContentService
 	{
-		//private readonly IAppCache _appCache;
 		private readonly IAppPolicyCache _runtimeCache;
 		private readonly IContentTypeService _contentTypeService;
 		private readonly IDataTypeService _dataTypeService;
@@ -29,7 +28,6 @@ namespace Bento.Core.Services
 
 		public EmbeddedContentService(IAppPolicyCache runtimeCache, IContentTypeService contentTypeService, IDataTypeService dataTypeService, ILogger<EmbeddedContentService> logger, IPublishedContentTypeFactory publishedContentTypeFactory, IPublishedModelFactory publishedModelFactory, IScopeProvider scopeProvider)
 		{
-			//_appCache = appCache;
 			_runtimeCache = runtimeCache;
 			_contentTypeService = contentTypeService;
 			_dataTypeService = dataTypeService;
@@ -159,14 +157,6 @@ namespace Bento.Core.Services
 				});
 		}
 
-		//todo: check the 'ContentTypeServiceExtensions' file - still not 100% sure why we're extending the IContentTypeService with another extension method when it's only used here?
-		//private string GetContentTypeAliasByGuid(Guid contentTypeGuid)
-		//{
-		//	return _runtimeCache.GetCacheItem(
-		//		string.Concat("Bento.Core.Services.EmbeddedContentService.GetContentTypeAliasByGuid_", contentTypeGuid),
-		//		() => _contentTypeService.GetAliasByGuid(_appCache, _scopeProvider, contentTypeGuid));
-		//}
-
 		private string GetContentTypeAliasByGuid(Guid contentTypeGuid)
 		{
 			return _runtimeCache.GetCacheItem(
@@ -176,11 +166,6 @@ namespace Bento.Core.Services
 
 		private string GetAliasByGuid(Guid id)
 		{
-			//using var scope = _scopeProvider.CreateScope(autoComplete: true);
-			//return scope.Database.ExecuteScalar<string>(
-			//	"SELECT [cmsContentType].[alias] FROM [cmsContentType] INNER JOIN [umbracoNode] ON [cmsContentType].[nodeId] = [umbracoNode].[id] WHERE [umbracoNode].[uniqueID] = @0",
-			//	id);
-
 			return _runtimeCache.Get(string.Concat("Bento.Core.Extensions.ContentTypeServiceExtensions.GetAliasById_", id), () =>
 			{
 				using var scope = _scopeProvider.CreateScope(autoComplete: true);

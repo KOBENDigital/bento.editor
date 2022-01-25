@@ -1,4 +1,5 @@
 ﻿//todo: we need to figure out a way to lock this controller down?
+using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,22 +20,15 @@ namespace Bento.Core.Controllers
 		private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 		private readonly IVariationContextAccessor _variationContextAccessor;
 		private readonly IUmbracoContextAccessor _umbracoContextAccessor;
-		private readonly IPublishedValueFallback _publishedValueFallback;
 
-		public BentoApiController(ILogger<UmbracoPageController> logger, ICompositeViewEngine compositeViewEngine, IEmbeddedContentService embeddedContentService, IPublishedSnapshotAccessor publishedSnapshotAccessor, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor, IPublishedValueFallback publishedValueFallback) : base(logger, compositeViewEngine)
+		public BentoApiController(ILogger<UmbracoPageController> logger, ICompositeViewEngine compositeViewEngine, IEmbeddedContentService embeddedContentService, IPublishedSnapshotAccessor publishedSnapshotAccessor, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine)
 		{
 			_embeddedContentService = embeddedContentService;
 			_publishedSnapshotAccessor = publishedSnapshotAccessor;
 			_variationContextAccessor = variationContextAccessor;
 			_umbracoContextAccessor = umbracoContextAccessor;
-			_publishedValueFallback = publishedValueFallback;
 		}
 
-		//[IsBackOffice]
-		//[UmbracoUserTimeoutFilter]
-		//[Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
-		//[DisableBrowserCache]
-		//[UmbracoRequireHttps]
 		[HttpGet]
 		public IActionResult LoadLibraryContent(int id, string culture)
 		{
@@ -68,9 +62,9 @@ namespace Bento.Core.Controllers
 
 		public IPublishedContent FindContent(ActionExecutingContext actionExecutingContext)
 		{
-			//todo: we just need to figure out how to make this return a valid bit of content, as long as it's not null this controller works
+			//todo: this isn't ideal... but the controller needs to find a piece of content otherwise it won't find a route
 			var context = _umbracoContextAccessor.GetRequiredUmbracoContext();
-			return context.Content.GetById(1067);
+			return context.Content.GetAtRoot().FirstOrDefault();
 		}
 
 		private IActionResult BentoViewResult(LoadEmbeddedContentRequest data, string viewPath)

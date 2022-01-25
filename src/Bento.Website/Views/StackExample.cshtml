@@ -1,0 +1,9 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.StackExample>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+@Html.Raw(Model.BentoStack)
+@Html.Partial("BentoStack", Model.BentoStack)

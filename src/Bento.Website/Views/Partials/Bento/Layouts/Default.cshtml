@@ -1,0 +1,23 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Bento.Core.Models.StackItem>
+
+@foreach (var area in Model.Areas.Where(x => x.Content != null))
+{
+	var classList = new List<string>();
+	var classString = string.Empty;
+
+	//if (area.Content is Umbraco.Cms.Web.Common.PublishedModels.IBentoItemSettings)
+	//{
+	//	if (area.Content.HasProperty("verticalAlignment") && !string.IsNullOrEmpty(area.Content.Value<string>("verticalAlignment")) && area.Content.Value<string>("verticalAlignment") != "top")
+	//	{
+	//		classList.Add($"v-{area.Content.Value<string>("verticalAlignment")}");
+	//	}
+
+	//	if (classList.Any())
+	//	{
+	//		classString = string.Join(" ", classList);
+	//	}
+	//}
+<div class="@Model.Alias-@area.Alias @classString">
+	@Html.Partial("BentoItem", area.Content)
+</div>
+}

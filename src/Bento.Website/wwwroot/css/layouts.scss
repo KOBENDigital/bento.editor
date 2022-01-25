@@ -1,0 +1,83 @@
+﻿.twoColumns {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: "first second";
+	grid-gap:1em;
+
+	@media screen and (max-width:$tablet) {
+		grid-template-columns: 1fr;
+		grid-template-areas: "second" "first";
+	}
+
+	&-first {
+		grid-area: first;
+	}
+
+	&-second {
+		grid-area: second;
+	}
+}
+
+
+.threeColumnLayout {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-areas: "first second third";
+	grid-gap: 1em;
+
+	@media screen and (max-width:$tablet) {
+		grid-template-columns: 1fr;
+		grid-template-areas: "first" "second" "third";
+	}
+
+	&-col1 {
+		position: relative;
+		grid-area: first;
+		height: 100%;
+	}
+
+	&-col2 {
+		position: relative;
+		grid-area: second;
+		height: 100%;
+	}
+
+	&-col3 {
+		position: relative;
+		grid-area: third;
+		height: 100%;
+	}
+}
+
+.grid-gap {
+	&-0 {
+		grid-gap: 0;
+	}
+
+	&-1 {
+		grid-gap: 1em;
+	}
+
+	&-2 {
+		grid-gap: 2em;
+	}
+
+	&-3 {
+		grid-gap: 3em;
+	}
+
+}
+
+.attribution{
+
+	font-size:.8em;
+	text-align:center;
+	max-width:800px;
+	margin:2em auto;
+	color:#ececec;
+
+	a{
+		color:#ebebeb;
+	}
+}
+
