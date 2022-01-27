@@ -1,7 +1,7 @@
-﻿//todo: we need to figure out a way to lock this controller down?
-using System.Linq;
+﻿using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
@@ -9,11 +9,21 @@ using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.PublishedCache;
 using Umbraco.Cms.Core.Web;
+using Umbraco.Cms.Web.BackOffice.Filters;
+using Umbraco.Cms.Web.Common.Attributes;
+using Umbraco.Cms.Web.Common.Authorization;
 using Umbraco.Cms.Web.Common.Controllers;
+using Umbraco.Cms.Web.Common.Filters;
 using Umbraco.Extensions;
 
 namespace Bento.Core.Controllers
 {
+	[IsBackOffice]
+	[UmbracoUserTimeoutFilter]
+	[Authorize(Policy = AuthorizationPolicies.BackOfficeAccess)]
+	[DisableBrowserCache]
+	[UmbracoRequireHttps]
+	[MiddlewareFilter(typeof(UnhandledExceptionLoggerFilter))]
 	public class BentoApiController : UmbracoPageController, IVirtualPageController
 	{
 		private readonly IEmbeddedContentService _embeddedContentService;
@@ -49,11 +59,6 @@ namespace Bento.Core.Controllers
 			return BentoViewResult(data, $"~/Views/Partials/Bento/{data.ContentTypeAlias}BackOffice.cshtml");
 		}
 
-		/// <summary>
-		/// used to load the styler for the back office
-		/// </summary>
-		/// <param name="data"></param>
-		/// <returns></returns>
 		[HttpPost]
 		public IActionResult LoadEmbeddedStyler([FromBody] LoadEmbeddedContentRequest data)
 		{
