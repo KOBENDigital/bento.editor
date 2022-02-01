@@ -57,9 +57,12 @@ dotnet restore ..
 
 dotnet pack ..\Bento.Core\Bento.Core.csproj --no-restore -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$fullVersion
 
+#after installing the package, this version results in the 'App_Plugins/Bento' folder being included in the project and a 'Bento.Editor.dll' in the bin
+#when you uninstall, the 'App_Plugins/Bento' folder is removed from the project and disk
 dotnet pack ..\Bento.Editor\Bento.Editor.csproj --no-restore -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$fullVersion
 
-#.\nuget pack "Bento.Editor\Bento.Editor.nuspec" -version $fullVersion -OutputDirectory $outFolder
+#this results in the 'App_Plugins/Bento' folder being copied but included in the project but there is no 'Bento.Editor.dll' in the bin
+#.\nuget pack "..\Bento.Editor\Bento.Editor.nuspec" -version $fullVersion -OutputDirectory $outFolder
 
 if ($pushToLocalNugetFeed) {
     #""; "##### Publishing to local nuget feed"; "----------------------------------" ; ""
@@ -67,6 +70,3 @@ if ($pushToLocalNugetFeed) {
 }
 
 Write-Host "Bento Packaged : $fullVersion"
-
-#Remove-Item ".\last-build-*" 
-#Out-File -FilePath ".\last-build-$fullVersion.txt" -InputObject $fullVersion
