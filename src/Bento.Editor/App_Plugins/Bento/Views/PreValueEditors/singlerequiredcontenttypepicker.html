@@ -1,0 +1,38 @@
+<div ng-controller="Bento.PrevalueEditors.SingleContentTypePickerController as vm" class="umb-property-editor umb-contenttypepicker">
+	
+	<div>
+		<ng-form name="prevalueRequiredFieldForm">
+
+			<input name="requiredfield" type="hidden" class="umb-property-editor umb-textstring"
+			       ng-model="model.value"
+			       required/>
+
+			<umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+			<div ng-show="!vm.loading">
+				<umb-node-preview ng-repeat="contentType in vm.contentTypes"
+				                  class="mt1"
+				                  icon="contentType.icon"
+				                  name="contentType.name"
+				                  allow-remove="true"
+				                  allow-edit="false"
+				                  on-remove="vm.remove(contentType)">
+				</umb-node-preview>
+
+				<a class="umb-node-preview-add"
+				   href=""
+				   ng-click="vm.add()"
+				   ng-if="!vm.hasValue"
+				   prevent-default>
+					<localize key="general_add">Add</localize>
+				</a>
+			</div>
+
+			<span ng-messages="prevalueRequiredFieldForm.requiredfield.$error" show-validation-on-submit>
+				<span class="help-inline" ng-message="required">Required</span>
+			</span>
+
+		</ng-form>    
+	</div>
+
+</div>

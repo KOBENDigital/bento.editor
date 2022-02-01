@@ -1,0 +1,59 @@
+﻿{
+	"gridEditors": [
+		{
+			"name": "Bento Item",
+			"alias": "bentoGridItem",
+			"view": "/App_Plugins/Bento/bento.grid.editor.html",
+			"render": "/Views/Bento/BentoGrid.cshtml",
+			"icon": "icon-firewall",
+			"config": {
+				"libraryFolderDoctypeAlias": "bentoLibraryFolder",
+				"itemTypeFolderDoctypeAlias": "bentoItemTypeFolder",
+				"itemDoctypeCompositionAlias": "bentoItemComposition",
+				"layoutSettingsDoctypeAlias": "bentoLayoutSettings",
+				"allowedDoctypeAliases": "",
+				"disallowedDoctypeAliases": ""
+			}
+		}
+	],
+	"javascript": [
+		"/App_Plugins/Bento/bento.create.controller.js",
+		"/App_Plugins/Bento/bento.convert.controller.js",
+		"/App_Plugins/Bento/bento.convert.map.controller.js",
+		"/App_Plugins/Bento/bento.edit.controller.js",
+		"/App_Plugins/Bento/bento.grid.editor.controller.js",
+		"/App_Plugins/Bento/bento.editor.controller.js",
+		"/App_Plugins/Bento/bento.stack.editor.controller.js",
+		"/App_Plugins/Bento/bento.stack.settings.editor.controller.js",
+		"/App_Plugins/Bento/bento.layouts.editor.controller.js",
+		"/App_Plugins/Bento/directives/components/layout.directive.js",
+		"/App_Plugins/Bento/directives/components/layout.preview.directive.js",
+		"/App_Plugins/Bento/directives/components/setting.directive.js",
+		"/App_Plugins/Bento/directives/components/setting.edit.directive.js",
+		"/App_Plugins/Bento/directives/components/blockdoctypegrid.directive.js",
+		"/App_Plugins/Bento/directives/components/blockpicker.directive.js",
+		"/App_Plugins/Bento/directives/components/bentoblockpreview.component.js",
+		"/App_Plugins/Bento/directives/components/bentoblocksettingspreview.component.js",
+		"/App_Plugins/Bento/resources/bento.resource.js",
+		"/App_Plugins/Bento/resources/bento.setting.factory.js",
+		"/App_Plugins/Bento/PreValueEditors/prevalueumbeditor.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/contenttypepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/singlecontenttypepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentolayout.editor.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentosettings.editor.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentolayout.edit.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentolayoutarea.edit.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentosetting.edit.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bentoprevalue.edit.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bento.credits.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/singlecssfilepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/singlejsfilepicker.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/jscodeeditor.controller.js"
+
+
+	],
+	"css": [
+		"/App_Plugins/Bento/css/Bento.css",
+		"/App_Plugins/Bento/css/Bento.previews.css"
+	]
+}

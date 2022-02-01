@@ -1,0 +1,30 @@
+﻿<div ng-controller="bento.layout.editor.controller as vm" class="umb-property-editor umb-contentpicker">
+
+	<ng-form name="multiUrlPickerForm">
+		<div ui-sortable="vm.sortableOptions" ng-model="vm.renderModel">
+			<div class="umb-node-preview" ng-repeat="layout in vm.renderModel">
+				<i class="umb-node-preview__icon icon-layout"></i>
+				<div class="umb-node-preview__content">
+					<div class="umb-node-preview__name" ng-attr-title="{{layout.alias}}">{{layout.name}}</div>
+					<div style="max-width: 250px;">
+						<bento-layout-preview layout="layout" show-markers="false" ng-click="vm.openLayoutEditor(layout, $index)"></bento-layout-preview>
+					</div>
+				</div>
+				<div class="umb-node-preview__actions">
+					<a class="umb-node-preview__action umb-node-preview__action--red" title="Edit" ng-click="vm.openLayoutEditor(layout, $index)">
+						<localize key="general_edit">Edit</localize>
+					</a>
+					<a class="umb-node-preview__action umb-node-preview__action--red" title="Remove" ng-click="vm.remove($index)">
+						<localize key="general_remove">Remove</localize>
+					</a>
+				</div>
+			</div>
+		</div>
+		<a class="umb-node-preview-add"
+		   href
+		   ng-click="vm.openLayoutEditor()"
+		   prevent-default>
+			<localize key="general_add">Add</localize>
+		</a>
+	</ng-form>
+</div>

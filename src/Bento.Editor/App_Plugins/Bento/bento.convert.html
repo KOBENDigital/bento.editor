@@ -1,0 +1,41 @@
+﻿<div ng-controller="bento.convert.controller as vm">
+
+	<umb-editor-view>
+
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_selectItemType">Select an Item Type</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<umb-editor-container>
+			<umb-box>
+				<umb-box-content>
+					<bento-block-doc-type-grid content="vm.doctypes" on-click="vm.clickItem"></bento-block-doc-type-grid>
+				</umb-box-content>
+			</umb-box>
+		</umb-editor-container>
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+										button-style="link"
+										label-key="general_close"
+										shortcut="esc"
+										action="vm.close()">
+				</umb-button>
+				<umb-button type="button"
+										disabled="!vm.selectedTypeAlias"
+										button-style="action"
+										label-key="general_next"
+										action="vm.submit(model)">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+
+	</umb-editor-view>
+
+</div>

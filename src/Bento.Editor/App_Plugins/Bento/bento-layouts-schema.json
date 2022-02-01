@@ -1,0 +1,59 @@
+﻿[
+	{
+		"name": "string - required - user friendly",
+		"alias": "string - required - camel cased unique name",
+		"columns": [
+			"string - required - css grid fraction, eg 1fr:  https://css-tricks.com/introduction-fr-css-unit/"
+		],
+		"areas": [
+			{
+				"name": "string - required - camel cased unique name",
+				"column": "string - required - a css grid line based value that indicates the number of columns this area",
+				"row": "string - required - the number of row this area occupies in the grid"
+			}
+		]
+	}
+]
+
+
+[
+	{
+		"id": 1234,
+		"settings": {}
+		"abVersions": {
+
+		},
+		variations {
+
+		}
+	},
+	{
+		"layoutAlias": "testLayout",
+		"items": [],
+		"settings": {}
+
+	}
+
+]
+
+[
+	{
+		"settings": "{}",
+		"layoutAlias": "testLayout",
+			"items": [
+				{
+					"id": 1188,
+					"areaAlias": "left"
+				},
+				{
+					"id": 1174,
+					"areaAlias": "center"
+
+				},
+				{
+					"id": 1174,
+					"areaAlias": "right"
+				}
+			]
+		}
+]

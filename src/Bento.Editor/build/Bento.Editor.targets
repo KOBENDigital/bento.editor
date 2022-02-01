@@ -1,0 +1,56 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<BentoEditorContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Bento\**\*.*</BentoEditorContentFilesPath>
+	</PropertyGroup>
+
+	<Target Name="CopyBentoEditorAssets" BeforeTargets="Build">
+		<ItemGroup>
+			<BentoEditorContentFiles Include="$(BentoEditorContentFilesPath)" />
+		</ItemGroup>
+		<Message Text="Copying Bento files: $(BentoEditorContentFilesPath) - #@(BentoEditorContentFiles->Count()) files"  Importance="high" />
+		<Copy
+			SourceFiles="@(BentoEditorContentFiles)"
+			DestinationFiles="@(BentoEditorContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Bento\%(RecursiveDir)%(Filename)%(Extension)')"
+			SkipUnchangedFiles="true" />
+
+	</Target>
+
+	<Target Name="ClearBentoEditorAssets" BeforeTargets="Clean">
+		<ItemGroup>
+			<BentoEditorDir Include="$(MSBuildProjectDirectory)\App_Plugins\Bento\" />
+		</ItemGroup>
+		<Message Text="Clear old Bento data"  Importance="high" />
+		<RemoveDir Directories="@(BentoEditorDir)"  />
+	</Target>
+
+</Project>
+
+<!--<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<BentoEditorPluginFolder>App_Plugins\Bento</BentoEditorPluginFolder>
+		<BentoEditorContentFilesPath>$(MSBuildThisFileDirectory)..\content\$(BentoEditorPluginFolder)\**\*.*</BentoEditorContentFilesPath>
+	</PropertyGroup>
+
+	<Target Name="CopyBentoEditorAssets" BeforeTargets="Build">
+		<ItemGroup>
+			<BentoEditorContentFiles Include="$(BentoEditorContentFilesPath)" />
+		</ItemGroup>
+		<Message Text="Copying Bento.Editor files: $(BentoEditorContentFilesPath) - #@(BentoEditorContentFiles->Count()) files" Importance="high" />
+		<Warning Text="No Bento.Editor package files found in $(BentoEditorContentFiles)" Condition="@(BentoEditorContentFilesPath->Count()) == 0" />
+		<Copy
+			SourceFiles="@(BentoEditorContentFiles)"
+			DestinationFiles="@(BentoEditorContentFiles->'$(MSBuildProjectDirectory)\$(BentoEditorPluginFolder)\%(RecursiveDir)%(Filename)%(Extension)')"
+			SkipUnchangedFiles="true" />
+	</Target>
+
+	<Target Name="ClearBentoEditorAssets" BeforeTargets="Clean">
+		<ItemGroup>
+			<BentoEditorDir Include="$(MSBuildProjectDirectory)\$(BentoEditorPluginFolder)\" />
+		</ItemGroup>
+		<Message Text="Clear old Bento.Editor data"  Importance="high" />
+		<RemoveDir Directories="@(BentoEditorDir)"  />
+	</Target>
+
+</Project>-->

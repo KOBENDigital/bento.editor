@@ -1,0 +1,43 @@
+﻿<div ng-controller="bento.stack.settings.editor.controller as vm">
+	<umb-editor-view>
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_layoutSettings">Layout Settings</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+		<umb-editor-container>
+			<umb-box>
+				<umb-box-content>
+					<div ng-show="vm.errors.length > 0" class="alert alert-error property-error ng-binding ng-isolate-scope ng-hide">
+						<ul>
+							<li ng-repeat="error in vm.errors">{{error}}</li>
+						</ul>
+					</div>
+					<bento-setting ng-repeat="setting in vm.settings" setting="setting"></bento-setting>
+				</umb-box-content>
+			</umb-box>
+		</umb-editor-container>
+
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+				            button-style="link"
+				            label-key="general_close"
+				            shortcut="esc"
+				            action="vm.close()">
+				</umb-button>
+				<umb-button type="button"
+				            button-style="action"
+				            label-key="general_submit"
+				            action="vm.submit()">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+
+	</umb-editor-view>
+
+</div>

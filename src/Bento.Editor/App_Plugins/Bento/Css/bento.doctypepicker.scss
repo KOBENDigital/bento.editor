@@ -1,0 +1,142 @@
+﻿.bento-block-doc-type-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-template-rows: auto;
+	grid-gap: 15px;
+
+	&__item {
+		background: #fff;
+		flex: 0 1 200px;
+		cursor: pointer;
+		position: relative;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
+		border-radius: 3px;
+
+		.selected, &:hover:before {
+			content: "";
+			position: absolute;
+			z-index: 2;
+			top: -2px;
+			left: -2px;
+			right: -2px;
+			bottom: -2px;
+			border: 2px solid #f5c1bc;
+			border-radius: 5px;
+			box-shadow: 0 0 4px 0 #e86f63, inset 0 0 2px 0 #e86f63;
+			pointer-events: none
+		}
+
+		&hover {
+			.bento-block-doc-type-grid__action:not(.-selected) {
+				opacity: 1;
+				-webkit-animation: fadeIn;
+				animation: fadeIn;
+				-webkit-animation-duration: .2s;
+				animation-duration: .2s;
+				-webkit-animation-timing-function: ease-in-out;
+				animation-timing-function: ease-in-out
+			}
+		}
+
+		&:hover:before {
+			opacity: .33;
+		}
+
+		.-selected:hover:before {
+			opacity: .75
+		}
+
+		&-name {
+			font-weight: 700;
+			margin-bottom: 15px;
+			line-height: 1.4em;
+			display: inline-flex;
+			color: #1b264f;
+
+			.-light {
+				color: #817f85
+			}
+
+			&:focus,
+			&:hover {
+				text-decoration: none;
+				color: #2152a3
+			}
+		}
+	}
+
+	&__icon,
+	&__icon[class*=" icon-"],
+	&__icon[class^=icon-] {
+		font-size: 20px;
+		margin-right: 5px
+	}
+
+	&__icon-container {
+		height: 75px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__content {
+		box-sizing: border-box;
+		padding: 15px
+	}
+
+	&__details {
+		&-list {
+			list-style: none;
+			margin-bottom: 0;
+			margin-left: 0;
+			font-size: 12px;
+
+			.-light {
+				color: #817f85
+			}
+
+			-label {
+				font-weight: 700;
+				display: inline-block
+			}
+
+			-value {
+				display: inline-block;
+				word-break: break-word
+			}
+		}
+	}
+
+	&__checkmark {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		border: 2px solid #fff;
+		width: 26px;
+		height: 26px;
+		background: #2bc37c;
+		border-radius: 50px;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		cursor: pointer
+	}
+
+	&__no-items {
+		font-size: 16px;
+		font-weight: 700;
+		color: #d8d7d9;
+		padding-top: 50px;
+		padding-bottom: 50px
+	}
+}
+
+
+
+

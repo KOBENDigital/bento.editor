@@ -1,0 +1,60 @@
+﻿<div ng-controller="bento.convert.map.controller as vm">
+
+	<umb-editor-view>
+
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_mapitems">Map properties</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<umb-editor-container>
+			<umb-box>
+				<umb-box-content>
+
+					<table class="table">
+						<thead>
+							<tr><th><localize key="bento_mapitems_old">New property</localize></th><th><localize key="bento_mapitems_new">Old property</localize></th></tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="property in vm.map">
+								<td>
+									{{property.new}}
+								</td>
+								<td>
+									<select ng-options="item for item in vm.options" ng-model="property.old"></select>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</umb-box-content>
+			</umb-box>
+		</umb-editor-container>
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+										button-style="link"
+										label-key="general_close"
+										shortcut="esc"
+										action="vm.close()">
+				</umb-button>
+				<umb-button type="button"
+										button-style="action"
+										label-key="bento_convert"
+										action="vm.submit(model)">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+
+	</umb-editor-view>
+	<umb-overlay ng-if="vm.convertOverlay.show"
+							 model="vm.convertOverlay"
+							 position="right">
+	</umb-overlay>
+</div>
