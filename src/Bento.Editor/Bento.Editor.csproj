@@ -27,4 +27,8 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="App_Plugins\Bento\line-ending-test.js" />
+	</ItemGroup>
+
 </Project>

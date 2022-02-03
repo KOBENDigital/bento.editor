@@ -7,13 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bento.Website", "Bento.Webs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bento.Core", "Bento.Core\Bento.Core.csproj", "{20006C22-5E83-43CC-8423-93AED8C5821A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{0C6A4BF7-F01A-4CAA-A88D-A8DFC91322A5}"
-	ProjectSection(SolutionItems) = preProject
-		build-package.ps1 = build-package.ps1
-		Directory.Build.props = Directory.Build.props
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bento.Editor", "Bento.Editor\Bento.Editor.csproj", "{20E1AB4A-93DA-4F63-A3CF-964F97407496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bento.Editor", "Bento.Editor\Bento.Editor.csproj", "{20E1AB4A-93DA-4F63-A3CF-964F97407496}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6F0952B6-7FE1-459B-A900-5E149640077B}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		gulpfile.js = gulpfile.js
+		package.json = package.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

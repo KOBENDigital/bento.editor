@@ -1,0 +1,9 @@
+{
+  "name": "bento",
+  "version": "1.0.0",
+  "description": "Copies files from the 'Bento.Editor/App_Plugins/' project to the 'Bento.Website/App_Plugins/' project",
+  "main": "gulp.js",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
