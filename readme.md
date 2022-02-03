@@ -21,6 +21,16 @@ The Umbraco login details:
 username: admin@admin.com
 password: bentobentobento
 
+### Frontend Build
+
+The `src\gulpfile.js` file has a simple watch function that copies files from the `Bento.Editor/App_Plugins/` project to the `Bento.Website/App_Plugins/` project when a file in the `Bento.Editor/App_Plugins/` path is saved.
+
+To run the gulp task ensure you have [gulp installed](https://gulpjs.com/docs/en/getting-started/quick-start/), open a command line, navigate to the `src\` folder in the location you've checked the repo out to, type `gulp` and hit return.
+
+### Nuget Package Build
+
+Use the `src\BuildPackage\build-package.ps1` powershell script to build the nuget packages. This is also set up to output the generated packages to a local package source `C:\Temp\packages` for testing.
+
 
 ## :bento: Install
 
