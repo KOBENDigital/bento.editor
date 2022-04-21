@@ -32,8 +32,9 @@
 					</div>
 					<div class="bento-stack-item-tools">
 						<div style="position:relative;">
+							<a href="" ng-click="vm.copyLayout($index)"><i class="umb-control-tool-icon icon-documents"></i></a>
 							<a href="" ng-click="vm.toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
-							<a href="" ng-click="vm.openLayouts(layout)" ng-if="vm.getAvailableLayouts().length > 1"><i class="umb-control-tool-icon icon-layout"></i></a>
+							<a href="" ng-click="vm.openLayouts(layout,true)" ng-if="vm.getAvailableLayouts().length > 1"><i class="umb-control-tool-icon icon-layout"></i></a>
 							<a href="" ng-click="vm.openSettings(layout)" ng-if="layout.layout.layoutSettings !== ''"><i class="umb-control-tool-icon icon-settings"></i></a>
 						</div>
 					</div>

@@ -63,7 +63,6 @@
 
 				function buildEmbeddedContentData(node) {
 
-
 					var value = {
 						name: node.contentTypeName,
 						contentTypeAlias: node.contentTypeAlias,
@@ -87,10 +86,8 @@
 				}
 
 				function create(embed) {
+
 					var options;
-
-
-
 					options = {
 						title: 'Bento block',
 						view: '/App_Plugins/Bento/bento.create.html',
@@ -100,16 +97,10 @@
 						area: $scope.area,
 						submit: (model) => {
 
-
 							if (model.embed) {
-
-
-
 								var value = buildEmbeddedContentData(model.node);
-
 								$scope.item.contentData = value; // this is what we will save
 								$scope.contentNode = model.node;
-
 							} else {
 								$scope.contentNode = model.contentNode;
 							}
@@ -122,10 +113,11 @@
 							$scope.$emit("bentoSyncVal", $scope.item);
 							editorService.close();
 
-
 						},
 						close: () => {
+
 							editorService.close();
+
 						}
 					};
 
@@ -135,9 +127,6 @@
 
 				function convert(id) {
 					var options;
-
-
-
 					options = {
 						title: 'Convert',
 						view: '/App_Plugins/Bento/bento.convert.html',
@@ -145,13 +134,10 @@
 						config: $scope.allowedElementTypes,
 						submit: (model) => {
 
-
 							var value = buildEmbeddedContentData(model.node);
 
 							$scope.item.contentData = value; // this is what we will save
 							$scope.contentNode = model.node;
-
-
 							$scope.item.id = $scope.contentNode.id;
 							$scope.item.key = $scope.contentNode.key;
 							$scope.item.index = $scope.index;
@@ -160,7 +146,9 @@
 
 						},
 						close: () => {
+
 							editorService.close();
+
 						}
 					};
 
@@ -384,7 +372,7 @@
 					}
 
 					// deal with the embeded block
-					if ($scope.item && parseInt($scope.item.id) === 0) {
+					if ($scope.item && parseInt($scope.item.id) === 0 && $scope.item.contentData) {
 
 						$scope.embedded = true;
 						setWrapperEmbedded($scope.item.contentData);
@@ -415,7 +403,7 @@
 						setWatch();
 
 						// else we want to load an existing one
-					} else if ($scope.item.id !== undefined) {
+					} else if ($scope.item.id !== undefined && $scope.item.id > 0) {
 
 						$scope.embedded = false;
 						contentResource.getById($scope.item.id).then(setWrapper);
@@ -492,6 +480,8 @@
 					if (args == $scope.index) {
 						$scope.item = undefined;
 						$scope.contentData = undefined;
+						$scope.id = undefined;
+						$scope.key = undefined;
 						initBlock();
 					}
 

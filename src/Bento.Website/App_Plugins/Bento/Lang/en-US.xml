@@ -58,6 +58,11 @@
 		<key alias="generalSettings">General Settings</key>
 		<key alias="areaSettings">Area Settings</key>
 		<key alias="allowedItems">Allowed items</key>
+		<key alias="nameyourcopy">Name your copy</key>
+		<key alias="copyitem">copy item</key>
+		<key alias="clearclipboarddescription">Are you sure you want to clear the clipboard?</key>
+		<key alias="clearclipboard">Clear clipboard</key>
+		<key alias="yesclear">Yes clear it</key>
 
 		<key alias="allowSorting">Allow Sorting?</key>
 		<key alias="sortingEnabled">Sorting Enabled</key>

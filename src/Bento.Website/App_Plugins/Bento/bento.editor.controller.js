@@ -70,18 +70,18 @@
 
 		}
 
-		var pasteFromClipboard = function (data) {
-			vm.item = JSON.parse(data);
-			$scope.model.value = vm.item;
-			$scope.$broadcast("bentoSyncVal", vm.item);
-			
-		}
-
 		var copyItem = function () {
 
 			clipboardService.copy(clipboardService.TYPES.RAW, $scope.umbProperty.property.dataTypeKey, $scope.model.value, `${$scope.umbProperty.property.alias} from ${editorState.current.variants[0].name}`, "icon-indent", vm.item.key);
 			updatePropertyActionStates();
 
+		}
+
+		var pasteFromClipboard = function (data) {
+			vm.item = JSON.parse(data);
+			$scope.model.value = vm.item;
+			$scope.$broadcast("bentoSyncVal", vm.item);
+			
 		}
 
 		var pasteItem = function () {

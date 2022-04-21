@@ -412,6 +412,8 @@
     <Content Include="App_Plugins\Bento\bento.editor.html" />
     <Content Include="App_Plugins\Bento\bento.grid.editor.controller.js" />
     <Content Include="App_Plugins\Bento\bento.grid.editor.html" />
+    <Content Include="App_Plugins\Bento\bento.copy.controller.js" />
+    <Content Include="App_Plugins\Bento\bento.copy.editor.html" />
     <Content Include="App_Plugins\Bento\bento.layouts.editor.html" />
     <Content Include="App_Plugins\Bento\bento.layouts.editor.controller.js" />
     <Content Include="App_Plugins\Bento\bento.stack.editor.controller.js" />
@@ -581,6 +583,7 @@
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3-Fluid.cshtml" />
     <Content Include="Views\Partials\BlockList\Default.cshtml" />
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

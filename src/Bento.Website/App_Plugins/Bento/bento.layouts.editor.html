@@ -10,8 +10,11 @@
 			</div>
 		</div>
 		<umb-editor-container>
+
 			<umb-box>
 				<umb-box-content>
+					<p><strong>Available layouts</strong></p>
+					<hr />
 					<div ng-show="vm.errors.length > 0" class="alert alert-error property-error ng-binding ng-isolate-scope ng-hide">
 						<ul>
 							<li ng-repeat="error in vm.errors">{{error}}</li>
@@ -39,6 +42,39 @@
 					</div>
 				</umb-box-content>
 			</umb-box>
+
+
+			<umb-box ng-show="vm.clipboard.length > 0">
+				<umb-box-content>
+					<div style="display:flex; justify-content:space-between">
+						<p><strong>Paste from clipboard</strong></p>
+						<div ng-click="vm.toggleClearClipboardConfirm()" style="cursor:pointer"><i class="umb-control-tool-icon icon-trash"></i></div>
+					</div>
+					<hr />
+					<div class="control-group umb-control-group" ng-repeat="clip in vm.clipboard track by clip.unique">
+						<div class="umb-el-wrap">
+							<label class="control-label ng-binding" for="{{layout.alias}}" ng-attr-title="{{layout.alias}}" title="{{layout.name}}">
+								{{clip.label}}
+							</label>
+							<div class="controls" id="{{clip.unique}}">
+								<div class="umb-property-editor db g-isolate-scope" ng-class="{'umb-property-editor--preview': preview}" model="layout" preview="false">
+									<div disable-tabindex="preview" class="ng-isolate-scope">
+										<div class="ng-scope">
+											<div class="bento-layout-preview">
+												<div class="bento-layout-wrapper" style="{{vm.getLayoutStyle(clip.data.layout)}}" ng-click="vm.clipboardSelected(clip)">
+													<div ng-repeat="area in clip.data.layout.areas" class="bento-layout-item" style="{{vm.getAreaStyles(area)}} min-height: 50px;"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+			</umb-box>
+
+
 		</umb-editor-container>
 		<umb-editor-footer>
 			<umb-editor-footer-content-right>
