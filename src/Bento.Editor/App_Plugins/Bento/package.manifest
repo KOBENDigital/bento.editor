@@ -24,6 +24,7 @@
 		"/App_Plugins/Bento/bento.grid.editor.controller.js",
 		"/App_Plugins/Bento/bento.editor.controller.js",
 		"/App_Plugins/Bento/bento.stack.editor.controller.js",
+		"/App_Plugins/Bento/bento.copy.controller.js",
 		"/App_Plugins/Bento/bento.stack.settings.editor.controller.js",
 		"/App_Plugins/Bento/bento.layouts.editor.controller.js",
 		"/App_Plugins/Bento/directives/components/layout.directive.js",
@@ -49,8 +50,6 @@
 		"/App_Plugins/Bento/PreValueEditors/singlecssfilepicker.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/singlejsfilepicker.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/jscodeeditor.controller.js"
-
-
 	],
 	"css": [
 		"/App_Plugins/Bento/css/Bento.css",

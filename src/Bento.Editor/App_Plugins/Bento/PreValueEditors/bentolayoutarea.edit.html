@@ -10,8 +10,6 @@
 			</div>
 		</div>
 		<umb-editor-container>
-
-
 			<umb-box>
 				<umb-box-header title-key="bento_areaSettings"></umb-box-header>
 				<umb-box-content>
@@ -82,11 +80,9 @@
 							</div>
 						</div>
 					</div>
-
 				</umb-box-content>
 			</umb-box>
 			<umb-box ng-if="!vm.allowSort">
-
 				<umb-box-header title-key="bento_allowedItems"></umb-box-header>
 				<umb-box-content>
 					<div class="control-group umb-control-group">
@@ -112,7 +108,6 @@
 							<small class="control-description"><localize key="bento_areaContentTypesDescription">Optional. Select the content types the editor is allowed to create in or pick from the library. Requires library to be configured</localize></small>
 						</div>
 						<div class="controls">
-
 							<div>
 								<prevalue-umb-editor model="vm.area.allowedContentTypes"></prevalue-umb-editor>
 							</div>
@@ -124,11 +119,10 @@
 				<umb-box-header title-key="bento_sortingEnabled"></umb-box-header>
 				<umb-box-content>
 					<div class="bento-warning">
-						<localize key="bento_sortingEnabledWarning">While sorting is enabled you cannot set restrictions on Element or Content types at the Area level.</localize>
+						<localize accesskey="bento_sortingEnabledWarning">While sorting is enabled you cannot set restrictions on Element or Content types at the Area level.</localize>
 					</div>
 				</umb-box-content>
 			</umb-box>
-
 		</umb-editor-container>
 
 		<umb-editor-footer>

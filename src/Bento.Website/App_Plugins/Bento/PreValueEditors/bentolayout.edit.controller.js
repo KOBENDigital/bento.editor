@@ -1,4 +1,4 @@
-﻿function bentoLayoutEditController($scope, notificationsService, localizationService, editorService) {
+function bentoLayoutEditController($scope, notificationsService, localizationService, editorService) {
 
 	var vm = this;
 
@@ -53,7 +53,7 @@
 
 	function addColumn() {
 		if (!vm.newCol || vm.newCol === "") return;
-		vm.model.columns.push(vm.newCol +'fr');
+		vm.model.columns.push(vm.newCol + 'fr');
 		vm.newCol = "";
 		vm.changes = true;
 	}
@@ -78,11 +78,6 @@
 					return;
 				}
 
-				//if (!hasChanged) {
-				//	editorService.close();
-				//	return;
-				//}
-
 				if (typeof index !== "undefined" && index !== null && index >= 0 && index < renderModel.length) {
 					renderModel[index] = model;
 				}
@@ -100,17 +95,10 @@
 		editorService.open(options);
 	}
 
-
-
-	
-
-
 	function removeArea(index) {
 		vm.model.areas.splice(index, 1);
 		vm.changes = true;
 	}
-
-
 
 	function close() {
 		if ($scope.model.close) {
@@ -122,11 +110,7 @@
 		openCloseOverlay();
 	}
 
-
-
 	function submit() {
-
-	
 		vm.errors = [];
 
 		if ($scope.model.submit) {
@@ -152,7 +136,6 @@
 			}
 
 			// convert from picker model to values
-
 			var layoutSettings = vm.model.layoutSettings.value;
 			vm.model.layoutSettings = layoutSettings;
 
@@ -162,20 +145,16 @@
 			if (allowSort) {
 
 				//if sort is allowed all elements need the smae allowed items
-
 				var allowedElementTypes = vm.model.allowedElementTypes.value;
 				vm.model.allowedElementTypes = allowedElementTypes;
 				var allowedContentTypes = vm.model.allowedContentTypes.value;
 				vm.model.allowedContentTypes = allowedContentTypes;
 
-				angular.forEach(vm.model.areas, function (area){
+				angular.forEach(vm.model.areas, function (area) {
 					area.allowedElementTypes = allowedElementTypes;
 					area.allowedContentTypes = allowedContentTypes;
 				});
-
-
 			} else {
-
 				if (typeof vm.model.allowedElementTypes === 'object') {
 					vm.model.allowedElementTypes = '';
 				}
@@ -183,7 +162,6 @@
 					vm.model.allowedContentTypes = '';
 				}
 			}
-
 
 			$scope.model.submit(vm.model, vm.changes);
 		}
@@ -196,41 +174,33 @@
 			columns: [],
 			areas: [],
 			layoutSettings: {
-
 				view: '/app_plugins/bento/views/prevalueeditors/singlerequiredcontenttypepicker.html',
 				value: '',
 				updating: true,
 				config: {}
-
-			}
-			,
+			},
 			allowSort: {
 				view: '/umbraco/views/prevalueeditors/boolean.html',
 				value: false
 			},
 			allowedElementTypes: {
-
 				view: '/app_plugins/bento/views/prevalueeditors/contenttypepicker.html',
 				value: '',
 				updating: true,
 				config: {}
-
 			},
 			allowedContentTypes: {
-
 				view: '/app_plugins/bento/views/prevalueeditors/contenttypepicker.html',
 				value: '',
 				updating: true,
 				config: {}
-
 			}
 		};
 	}
 
-
 	function init() {
 		setupEmptyModel();
-		if ($scope.model.layout){
+		if ($scope.model.layout) {
 			var data = JSON.parse(JSON.stringify($scope.model.layout));
 
 			vm.model.name = data.name;

@@ -1,4 +1,4 @@
-﻿function SingleContentTypePickerController($scope, contentTypeResource, editorService, angularHelper) {
+function SingleContentTypePickerController($scope, contentTypeResource, editorService, angularHelper) {
 	var vm = this;
 	vm.loading = false;
 	vm.contentTypes = [];

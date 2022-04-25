@@ -89,4 +89,3 @@
 }
 
 angular.module("umbraco").controller("bento.settings.editor.controller", bentoSettingsEditorController);
-

@@ -16,10 +16,6 @@
 
 
 		function init() {
-
-
-
-			//
 			contentResource.getById(vm.itemid).then(function (data) {
 
 				for (var v = 0; v < data.variants.length; v++) {
@@ -32,7 +28,6 @@
 
 							vm.oldValues.push({ alias: prop.alias, value: prop.value });
 							vm.options.push(prop.alias);
-
 						}
 					}
 				}
@@ -51,23 +46,18 @@
 
 								var prop = tab.properties[p];
 
-
 								//try match to an old prop with the same alias
 								var oldProp = _.findWhere(vm.oldValues, { alias: prop.alias });
 
 								vm.map.push({ new: prop.alias, old: oldProp ? oldProp.alias : undefined });
-
 							}
 						}
 					}
-
 				});
 			});
 		}
 
 		function convert() {
-
-
 			for (var v = 0; v < $scope.model.node.variants.length; v++) {
 				var variant = $scope.model.node.variants[v];
 				for (var t = 0; t < variant.tabs.length; t++) {
@@ -105,9 +95,7 @@
 			}
 		}
 
-
 		function openConvertOverlay() {
-
 			localizationService.localizeMany(["bento_mappingwarning", "bento_mappingwarningsubtitle", "bento_cancel", "bento_imOkWithThis"]).then(function (data) {
 
 				var title = data[0];
@@ -134,13 +122,11 @@
 			});
 		}
 
-
 		function submit() {
 			if ($scope.model.submit) {
 				openConvertOverlay();
 			}
 		}
-
 
 		init();
 	}

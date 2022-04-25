@@ -1,4 +1,4 @@
-﻿function bentoSettingFactory() {
+function bentoSettingFactory() {
 	function convertSettingsObjectToArray(defaultSettingsObject, blockSettingsObject) {
 		var settings = [];
 

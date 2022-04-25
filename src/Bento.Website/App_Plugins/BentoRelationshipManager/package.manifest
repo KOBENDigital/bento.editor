@@ -1,4 +1,4 @@
-﻿{
+{
 	"javascript": [
 		"~/App_Plugins/BentoRelationshipManager/relationshipmanager.controller.js"
 	]

@@ -1,4 +1,4 @@
-﻿<div ng-controller="bentolayout.edit.controller as vm">
+<div ng-controller="bentolayout.edit.controller as vm">
 	<umb-editor-view>
 		<div class="umb-editor-header">
 			<div class="flex items-center" style="height: 100%;">
@@ -18,7 +18,6 @@
 							<li ng-repeat="error in vm.errors">{{error}}</li>
 						</ul>
 					</div>
-
 					<div class="control-group umb-control-group">
 						<div class="umb-el-wrap">
 							<label class="control-label">
@@ -28,37 +27,36 @@
 								<div class="umb-property-editor">
 									<div class="umb-editor-header__name-wrapper">
 										<input data-element="editor-name-field"
-										       no-password-manager
-										       type="text"
-										       id="name"
-										       class="umb-editor-header__name-input"
-										       localize="placeholder"
-										       placeholder="@placeholders_entername"
-										       name="vm.model.name"
-										       ng-model="vm.model.name"
-										       ng-class="{'name-is-empty': vm.model.name === null || vm.model.name === ''}"
-										       ng-change="vm.layoutChanged()"
-										       umb-auto-focus
-										       focus-on-filled="true"
-										       val-server-field="vm.model.name"
-										       required
-										       aria-required="true"
-										       autocomplete="off"
-										       maxlength="255" />
+													 no-password-manager
+													 type="text"
+													 id="name"
+													 class="umb-editor-header__name-input"
+													 localize="placeholder"
+													 placeholder="@placeholders_entername"
+													 name="vm.model.name"
+													 ng-model="vm.model.name"
+													 ng-class="{'name-is-empty': vm.model.name === null || vm.model.name === ''}"
+													 ng-change="vm.layoutChanged()"
+													 umb-auto-focus
+													 focus-on-filled="true"
+													 val-server-field="vm.model.name"
+													 required
+													 aria-required="true"
+													 autocomplete="off"
+													 maxlength="255" />
 										<umb-generate-alias data-element="editor-alias"
-										                    class="umb-panel-header-alias"
-										                    alias="vm.model.alias"
-										                    alias-from="vm.model.name"
-										                    enable-lock="true"
-										                    validation-position="'right'"
-										                    server-validation-field="Alias">
+																				class="umb-panel-header-alias"
+																				alias="vm.model.alias"
+																				alias-from="vm.model.name"
+																				enable-lock="true"
+																				validation-position="'right'"
+																				server-validation-field="Alias">
 										</umb-generate-alias>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<div class="control-group umb-control-group">
 						<div class="umb-el-wrap">
 							<label class="control-label">
@@ -68,26 +66,20 @@
 								</small>
 							</label>
 							<div class="controls">
-
 								<div>
 									<prevalue-umb-editor model="vm.model.layoutSettings"></prevalue-umb-editor>
 								</div>
-
 							</div>
 						</div>
 					</div>
 				</umb-box-content>
 			</umb-box>
-
-
 			<umb-box>
 				<umb-box-header title-key="bento_layoutPreview"></umb-box-header>
 				<umb-box-content>
 					<bento-layout-preview layout="vm.model" show-markers="true"></bento-layout-preview>
 				</umb-box-content>
 			</umb-box>
-
-
 			<umb-box>
 				<umb-box-header title-key="bento_layout"></umb-box-header>
 				<umb-box-content>
@@ -99,11 +91,8 @@
 									<localize key="bento_layoutColumnsDescription">For layouts we assume that 100% of the space is available so for E.G. 1fr for each column will distribute the columns over that available space. 1f 2fr 1fr will make the second column twice as wide as the first and last using only the available space.</localize>
 								</small>
 							</label>
-
 							<div class="controls" id="layoutColumns">
-
 								<table class="table">
-
 									<thead>
 										<tr>
 											<th><localize key="bento_columnSize">Column Size</localize></th>
@@ -140,18 +129,12 @@
 				<umb-box-content>
 					<label class="control-label">
 						<localize key="bento_layoutAreas">Areas</localize>
-
 						<small><localize key="bento_layoutAreasDescription">Areas represent spaces in your CSS grid layout. Column and row are represented as spans between lines. Example.  Putting 2 in column and 1 in row will result in an area that spans from line 2 to 3 for the col and line 1 for the row to the next line.</localize></small>
 					</label>
 					<div class="control-group umb-control-group">
 						<div class="umb-el-wrap">
-
-
-
 							<div class="controls" id="layoutColumns">
-
 								<table class="table">
-
 									<thead>
 										<tr>
 											<th><localize key="bento_name">Name</localize></th>
@@ -180,7 +163,6 @@
 							</div>
 						</div>
 					</div>
-
 				</umb-box-content>
 				<umb-box-content>
 					<div class="control-group umb-control-group">

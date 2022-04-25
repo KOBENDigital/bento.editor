@@ -1,4 +1,4 @@
-﻿(function() {
+(function() {
 	"use strict";
 
 	function bentoStackSettingsEditorController($scope, notificationsService, bentoSettingFactory) {

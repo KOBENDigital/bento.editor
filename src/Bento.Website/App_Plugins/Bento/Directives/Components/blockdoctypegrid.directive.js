@@ -3,7 +3,7 @@
 
 	function blockDocTypeGridDirective() {
 
-		function link(scope, el, attr, ctrl) {
+		function link(scope) {
 
 			scope.clickItem = function (item, $event, $index) {
 				if (scope.onClick) {
@@ -18,7 +18,6 @@
 				}
 				$event.stopPropagation();
 			};
-
 		}
 
 		var directive = {

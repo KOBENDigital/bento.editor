@@ -24,14 +24,9 @@
 					return;
 				}
 
-				//if (!hasChanged) {
-				//	return;
-				//}
-
 				if (typeof index !== "undefined" && index !== null && index >= 0 && index < renderModel.length) {
 					renderModel[index] = model;
-				}
-				else {
+				} else {
 					renderModel.push(model);
 				}
 

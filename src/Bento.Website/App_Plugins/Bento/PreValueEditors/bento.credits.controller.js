@@ -1,14 +1,10 @@
-﻿function bentoCreditsController($scope, $sce) {
+function bentoCreditsController($scope, $sce) {
 	var vm = this;
 
-	
 	function init() {
-
 		if ($scope.model.value) {
 			vm.html = $sce.trustAsHtml($scope.model.value);
 		}
-
-
 	}
 
 	init();

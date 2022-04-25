@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function BentoSettingDirective() {
+	function bentoSettingDirective() {
 		return {
 			restrict: 'E',
 			replace: true,
@@ -12,6 +12,5 @@
 		};
 	}
 
-	angular.module('umbraco.directives').directive('bentoSetting', BentoSettingDirective);
-
+	angular.module('umbraco.directives').directive('bentoSetting', bentoSettingDirective);
 })();

@@ -1,4 +1,4 @@
-﻿function bentoSettingEditController($scope, notificationsService) {
+function bentoSettingEditController($scope, notificationsService) {
 	var vm = this;
 
 	vm.errors = [];
@@ -91,4 +91,3 @@
 }
 
 angular.module("umbraco").controller("bento.setting.edit.controller", bentoSettingEditController);
-

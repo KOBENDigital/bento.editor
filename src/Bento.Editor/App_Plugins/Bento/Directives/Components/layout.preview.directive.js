@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function LayoutPreviewDirective() {
+	function layoutPreviewDirective() {
 		var directive = {
 			restrict: 'E',
 			replace: true,
@@ -42,5 +42,5 @@
 		return directive;
 	}
 
-	angular.module('umbraco.directives').directive('bentoLayoutPreview', LayoutPreviewDirective);
+	angular.module('umbraco.directives').directive('bentoLayoutPreview', layoutPreviewDirective);
 })();

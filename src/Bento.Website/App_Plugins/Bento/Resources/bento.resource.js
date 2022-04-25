@@ -1,5 +1,4 @@
-﻿function bentoResource($http, umbRequestHelper) {
-
+function bentoResource($http, umbRequestHelper) {
 	return {
 		getLibraryFolderId: function (contentId, libraryFolderDoctypeAlias) {
 			return umbRequestHelper.resourcePromise(
@@ -41,4 +40,5 @@
 		}
 	};
 }
+
 angular.module('umbraco.resources').factory('bentoResource', bentoResource);

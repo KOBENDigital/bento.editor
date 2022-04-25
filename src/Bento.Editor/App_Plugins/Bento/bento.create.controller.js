@@ -36,9 +36,6 @@
 								return vm.doctypes = ent;
 							});
 					});
-
-
-
 			}
 		}
 
@@ -62,12 +59,10 @@
 		function submit() {
 			if ($scope.model.submit) {
 				vm.create();
-				//$scope.model.submit($scope.model);
 			}
 		}
 
 		function create() {
-
 			/// if we are going to embed this is where the process is kicked off.
 			if (vm.embed) {
 				let options = {
@@ -94,12 +89,7 @@
 				};
 
 				editorService.open(options);
-			}
-
-			/// else
-
-			else {
-
+			} else {
 				bentoResource.getItemTypeFolderId(vm.libraryFolderId, $scope.model.config.itemTypeFolderDoctypeAlias, vm.selectedTypeName)
 					.then(function (ent) {
 
@@ -128,10 +118,8 @@
 						};
 
 						editorService.contentEditor(options);
-
 					});
 			}
-			///
 		}
 
 		init();

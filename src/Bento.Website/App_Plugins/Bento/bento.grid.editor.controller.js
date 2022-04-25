@@ -1,7 +1,7 @@
-﻿(function () {
+(function () {
 	'use strict';
 
-	function bentoGridController($scope, editorService, bentoResource) {
+	function bentoGridController($scope) {
 
 		$scope.page = {};
 		$scope.page.loading = true;
@@ -26,7 +26,6 @@
 				$scope.control.value = vm.value;
 
 		});
-		
 
 		init();
 	}

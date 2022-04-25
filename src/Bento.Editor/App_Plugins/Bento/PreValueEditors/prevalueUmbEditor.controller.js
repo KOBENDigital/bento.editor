@@ -1,8 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function EditorDirective() {
-
+	function editorDirective() {
 		var directive = {
 			restrict: 'E',
 			replace: true,
@@ -13,9 +12,7 @@
 		};
 
 		return directive;
-
 	}
 
-	angular.module('umbraco.directives').directive('prevalueUmbEditor', EditorDirective);
-
+	angular.module('umbraco.directives').directive('prevalueUmbEditor', editorDirective);
 })();

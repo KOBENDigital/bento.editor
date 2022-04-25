@@ -1,7 +1,7 @@
 ﻿(function () {
 	'use strict';
 
-	function BentoSettingEditDirective() {
+	function bentoSettingEditDirective() {
 
 		var directive = {
 			restrict: 'E',
@@ -73,6 +73,5 @@
 		return directive;
 	}
 
-	angular.module('umbraco.directives').directive('bentoSettingEdit', BentoSettingEditDirective);
-
+	angular.module('umbraco.directives').directive('bentoSettingEdit', bentoSettingEditDirective);
 })();

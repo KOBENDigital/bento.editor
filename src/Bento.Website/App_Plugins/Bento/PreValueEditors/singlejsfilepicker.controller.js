@@ -6,7 +6,6 @@ function SingleJsFilePickerController($scope, editorService, angularHelper) {
 	vm.add = add;
 	vm.hasValue = false;
 
-
 	function init() {
 		vm.hasValue = $scope.model.value !== null && $scope.model.value !== "";
 		vm.file = $scope.model.value;
@@ -36,8 +35,8 @@ function SingleJsFilePickerController($scope, editorService, angularHelper) {
 				editorService.close();
 			}
 		};
-		editorService.treePicker(filePicker);
 
+		editorService.treePicker(filePicker);
 	}
 
 	function remove() {

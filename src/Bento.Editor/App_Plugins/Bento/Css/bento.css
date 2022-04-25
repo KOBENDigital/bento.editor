@@ -122,6 +122,8 @@
   .bento-layout-wrapper .bento-layout-item {
     border: 1px #ccc solid;
     position: relative; }
+    .sorting .bento-layout-wrapper .bento-layout-item .content {
+      display: none; }
     .bento-layout-wrapper .bento-layout-item-header {
       background-color: #fff; }
     .bento-layout-wrapper .bento-layout-item .bento-stack-item-tools a {
