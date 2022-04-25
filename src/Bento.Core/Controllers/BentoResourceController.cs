@@ -7,6 +7,7 @@ using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.BackOffice.Controllers;
+using RelationItem = Bento.Core.Models.RelationItem;
 
 namespace Bento.Core.Controllers
 {

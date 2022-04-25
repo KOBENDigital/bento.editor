@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Pluralize.NET" Version="1.0.2" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.2.0" />
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.2.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.4.3" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.4.3" />
   </ItemGroup>
 
 </Project>
