@@ -38,8 +38,7 @@
 				config: '=',
 				index: '=',
 				settings: '=',
-				culture: '=',
-				index: '=?'
+				culture: '='
 			},
 
 			controller: function ($scope, $element) {
