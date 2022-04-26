@@ -5,7 +5,7 @@
 
 		function resolveBentoItemForPaste(prop, propClearingMethod) {
 
-			// if we got an array, and it has a entry with ncContentTypeAlias this meants that we are dealing with a NestedContent property data.
+			// if we got an array, and it has a entry with ncContentTypeAlias this means that we are dealing with a NestedContent property data.
 			if ((Array.isArray(prop) && prop.length > 0 && prop[0].ncContentTypeAlias !== undefined)) {
 
 				for (var i = 0; i < prop.length; i++) {
@@ -123,7 +123,7 @@
 
 		function copyLayout(index) {
 
-			//option the dialgue to get a friendly name
+			//option the dialogue to get a friendly name
 			var options = {
 				view: "/App_Plugins/Bento/bento.copy.editor.html",
 				size: "small",
