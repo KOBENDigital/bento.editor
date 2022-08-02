@@ -55,7 +55,7 @@
 				function getPreviewUrl() {
 					if ($scope.config.useFrontendFramework !== null) {
 						if ($scope.config.useFrontendFramework) {
-							return $scope.config.FrontendFrameworkUrl;
+							return $scope.config.frontendFrameworkUrl;
 						}
 					}
 					return '/umbraco/backoffice/Bento/LoadEmbeddedContent?contentid=' + $routeParams.id;

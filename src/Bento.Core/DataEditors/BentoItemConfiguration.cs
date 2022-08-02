@@ -100,15 +100,15 @@ namespace Bento.Core.DataEditors
 		"useFrontendFramework",
 		"Use frontend framework like Next JS",
 		"boolean",
-		Description = "when enabled all back office previews will be rendered via a single view. BackOfficePreview.cshtml"
+		Description = "When enabled all back office previews will be rendered via a single view. BackOfficePreview.cshtml"
 		)]
-		public bool useFrontendFramework { get; set; }
+		public bool UseFrontendFramework { get; set; }
 
 		[ConfigurationField(
-		"FrontendFrameworkUrl",
+		"frontendFrameworkUrl",
 		"Use frontend framework like Next JS set the URL for where previews come from",
 		"textString",
-		Description = "used in conjunction with Use Frontend Framework flag"
+		Description = "Used in conjunction with Use Frontend Framework flag"
 		)]
 		public string FrontendFrameworkUrl { get; set; }
 

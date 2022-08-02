@@ -46,7 +46,7 @@
 
 		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
 			//todo: we're replacing the 'wwwroot' that gets appended in v9/core... not ideal, we're looking into getting the tree picker to start in the wwwroot https://our.umbraco.com/forum/using-umbraco-and-getting-started//108099-is-it-possible-to-start-the-editor-service-file-picker-in-the-wwwroot
-			console.log('loading site js');
+			//console.log('loading site js');
 			assetsService.loadJs($scope.model.config.jsFilePath.replace('/wwwroot', ''), $scope).then(function () { });
 		}
 

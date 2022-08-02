@@ -34,9 +34,7 @@ namespace Bento.Core.NotificationHandlers
 			{
 				var itemDoctypeCompositionAliases = new List<string>();
 
-
 				//handle bento item (singular)
-
 				var bentoItemDataTypes = _dataTypeService.GetByEditorAlias(BentoItemDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoItemDataTypes
 					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
@@ -44,27 +42,22 @@ namespace Bento.Core.NotificationHandlers
 
 				var bentoItemUseFramework = bentoItemDataTypes
 					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
-					.Select(config => config.useFrontendFramework).FirstOrDefault();
-
+					.Select(config => config.UseFrontendFramework).FirstOrDefault();
 
 				//handle bento stack
-
 				var bentoStackDataTypes = _dataTypeService.GetByEditorAlias(BentoStackDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
 					.Select(config => config.ItemDoctypeCompositionAlias));
 
 				var bentoStackUseFramework = bentoStackDataTypes
 					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
-					.Select(config => config.useFrontendFramework).FirstOrDefault();
-
-
+					.Select(config => config.UseFrontendFramework).FirstOrDefault();
 
 				if (bentoStackUseFramework && bentoItemUseFramework)
 				{
 					//no views required
 					return;
 				}
-
 
 				foreach (var content in notification.SavedEntities)
 				{
