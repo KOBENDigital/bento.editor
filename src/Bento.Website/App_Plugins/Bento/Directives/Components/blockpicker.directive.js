@@ -52,6 +52,15 @@
 					return false;
 				}
 
+				function getPreviewUrl() {
+					if ($scope.config.useFrontendFramework !== null) {
+						if ($scope.config.useFrontendFramework) {
+							return $scope.config.FrontendFrameworkUrl;
+						}
+					}
+					return '/umbraco/backoffice/Bento/LoadEmbeddedContent?contentid=' + $routeParams.id;
+				}
+
 				//hack to find out if user is admin
 				userService.getCurrentUser().then(function (userObj) {
 					var user = userObj;
@@ -351,7 +360,7 @@
 							culture: typeof ($scope.culture) !== 'undefined' ? $scope.culture : null
 						};
 
-						let url = '/umbraco/backoffice/Bento/LoadEmbeddedContent?contentid=' + $routeParams.id;
+						let url = getPreviewUrl();
 						$scope.updating = true;
 						$http.post(url, data).then(function (response) {
 

@@ -6,29 +6,19 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Content Include="App_Plugins\Bento\**\*.*">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
-		</Content>
 		<None Include="build\**\*.*">
-			<Pack>True</Pack>
+			<Pack>true</Pack>
 			<PackagePath>buildTransitive</PackagePath>
 		</None>
+		
+		<Content Include="App_Plugins\**\*.*">
+			<Pack>true</Pack>
+			<PackagePath>content\App_Plugins</PackagePath>
+			<Visible>false</Visible>
+		</Content>	
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="App_Plugins\BentoRelationshipManager\**\*.*">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
-		</Content>
-		<None Include="build\**\*.*">
-			<Pack>True</Pack>
-			<PackagePath>buildTransitive</PackagePath>
-		</None>
+	  <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="App_Plugins\Bento\line-ending-test.js" />
-	</ItemGroup>
-
 </Project>

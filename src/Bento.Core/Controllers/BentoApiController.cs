@@ -59,6 +59,7 @@ namespace Bento.Core.Controllers
 			return BentoViewResult(data, $"~/Views/Partials/Bento/{data.ContentTypeAlias}BackOffice.cshtml");
 		}
 
+
 		[HttpPost]
 		public IActionResult LoadEmbeddedStyler([FromBody] LoadEmbeddedContentRequest data)
 		{

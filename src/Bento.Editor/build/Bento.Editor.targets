@@ -1,7 +1,9 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<BentoEditorContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\Bento\**\*.*</BentoEditorContentFilesPath>
+		<BentoEditorPluginFolder>App_Plugins\Bento</BentoEditorPluginFolder>
+		<BentoEditorPluginFilesPath>$(MSBuildThisFileDirectory)..\content\$(BentoEditorPluginFolder)</BentoEditorPluginFilesPath>
+		<BentoEditorContentFilesPath>$(BentoEditorPluginFilesPath)\**\*.*</BentoEditorContentFilesPath>
 	</PropertyGroup>
 
 	<Target Name="CopyBentoEditorAssets" BeforeTargets="Build">
@@ -24,8 +26,11 @@
 		<RemoveDir Directories="@(BentoEditorDir)"  />
 	</Target>
 
+
 	<PropertyGroup>
-		<BentoRelationshipManagerContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\BentoRelationshipManager\**\*.*</BentoRelationshipManagerContentFilesPath>
+		<BentoRelationshipsPluginFolder>App_Plugins\BentoRelationshipManager</BentoRelationshipsPluginFolder>
+		<BentoRelationshipsPluginFilesPath>$(MSBuildThisFileDirectory)..\content\$(BentoRelationshipsPluginFolder)</BentoRelationshipsPluginFilesPath>
+		<BentoRelationshipManagerContentFilesPath>$(BentoRelationshipsPluginFilesPath)\**\*.*</BentoRelationshipManagerContentFilesPath>
 	</PropertyGroup>
 
 	<Target Name="CopyBentoRelationshipManagerAssets" BeforeTargets="Build">

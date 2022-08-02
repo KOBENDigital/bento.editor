@@ -89,6 +89,22 @@ namespace Bento.Core.DataEditors
 		public bool UsePreviewJs { get; set; }
 
 		[ConfigurationField(
+		"useFrontendFramework",
+		"Use frontend framework like Next JS",
+		"boolean",
+		Description = "when enabled all back office previews will be rendered via a single view. BackOfficePreview.cshtml"
+		)]
+		public bool useFrontendFramework { get; set; }
+
+		[ConfigurationField(
+		"FrontendFrameworkUrl",
+		"Use frontend framework like Next JS set the URL for where previews come from",
+		"textString",
+		Description = "used in conjunction with Use Frontend Framework flag"
+		)]
+		public string FrontendFrameworkUrl { get; set; }
+
+		[ConfigurationField(
 		"jsFilePath",
 		"JS file",
 		"/App_Plugins/Bento/Views/PreValueEditors/singlejsfilepicker.html",
