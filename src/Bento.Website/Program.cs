@@ -13,8 +13,12 @@ namespace Bento.Website
 						.Run();
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
-				Host.CreateDefaultBuilder(args)
-						.ConfigureLogging(x => x.ClearProviders())
-						.ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
+							 Host.CreateDefaultBuilder(args)
+									 .ConfigureUmbracoDefaults()
+									 .ConfigureWebHostDefaults(webBuilder =>
+									 {
+										 webBuilder.UseStaticWebAssets();
+										 webBuilder.UseStartup<Startup>();
+									 });
 	}
 }

@@ -1,38 +1,41 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<Content Include="./Views/**/*.cshtml" />
 		<Content Include="./wwwroot/**/*.*" />
 		<Content Include="./App_Plugins/**/*.*" />
-		<None Include="wwwroot\css\site.scss">
-			<Generator>SassTranspiler</Generator>
-			<LastGenOutput>site.css</LastGenOutput>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Umbraco.Cms" Version="9.4.3" />
-		<PackageReference Include="Umbraco.Cms.Core" Version="9.4.3" />
-		<PackageReference Include="Umbraco.Cms.SqlCe" Version="9.4.3" />
-		<PackageReference Include="Umbraco.SqlServerCE" Version="4.0.0.1" />
+		<Compile Remove="wwwroot\assets\**" />
+		<Compile Remove="wwwroot\css\**" />
+		<Compile Remove="wwwroot\scripts\**" />
+		<Compile Remove="wwwroot\umbraco\**" />
+		<Content Remove="wwwroot\assets\**" />
+		<Content Remove="wwwroot\css\**" />
+		<Content Remove="wwwroot\scripts\**" />
+		<Content Remove="wwwroot\umbraco\**" />
+		<EmbeddedResource Remove="wwwroot\assets\**" />
+		<EmbeddedResource Remove="wwwroot\css\**" />
+		<EmbeddedResource Remove="wwwroot\scripts\**" />
+		<EmbeddedResource Remove="wwwroot\umbraco\**" />
+		<None Remove="wwwroot\assets\**" />
+		<None Remove="wwwroot\css\**" />
+		<None Remove="wwwroot\scripts\**" />
+		<None Remove="wwwroot\umbraco\**" />
 	</ItemGroup>
 
 	<!-- Force windows to use ICU. Otherwise Windows 10 2019H1+ will do it, but older windows 10 and most if not all winodws servers will run NLS -->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+		<PackageReference Include="Umbraco.Cms" Version="10.1.0" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="10.1.0" />
 		<ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Update="wwwroot\css\site.css">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>site.scss</DependentUpon>
-		</Content>
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 	<PropertyGroup>

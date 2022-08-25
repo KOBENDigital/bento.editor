@@ -1,9 +1,9 @@
 ﻿@inherits UmbracoViewPage<IEnumerable<Bento.Core.Models.StackItem>>
 @foreach (var item in Model)
 {
-	var settings = item.Settings as Umbraco.Cms.Web.Common.PublishedModels.BentoLayoutSettings;
-
 	Guid id = Guid.Empty;
+@*	var settings = item.Settings as Umbraco.Cms.Web.Common.PublishedModels.BentoSettings;
+
 	string classString = null;
 	string styleString = null;
 	string gridGap = null;
@@ -73,9 +73,9 @@
 	if (styleList.Any())
 	{
 		styleString = string.Join(" ", styleList);
-	}
-	<section id="s-@id" class="@classString">
-		<div class="@item.Alias @gridGap section-inner">
+	}*@
+	<section id="s-@id">
+		<div class="@item.Alias section-inner">
 			@Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
 		</div>
 	</section>
