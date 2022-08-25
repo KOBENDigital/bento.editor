@@ -50,7 +50,7 @@ namespace Bento.Core.NotificationHandlers
 					.Select(config => config.ItemDoctypeCompositionAlias));
 
 				var bentoStackUseFramework = bentoStackDataTypes
-					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
+					.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
 					.Select(config => config.UseFrontendFramework).FirstOrDefault();
 
 				if (bentoStackUseFramework && bentoItemUseFramework)
