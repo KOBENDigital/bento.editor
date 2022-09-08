@@ -4,6 +4,9 @@
   "description": "Copies files from the 'Bento.Editor/App_Plugins/' project to the 'Bento.Website/App_Plugins/' project",
   "main": "gulp.js",
   "devDependencies": {
-    "gulp": "^4.0.2"
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "sass": "^1.54.9"
   }
 }

@@ -1,30 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<Content Include="./Views/**/*.cshtml" />
-		<Content Include="./wwwroot/**/*.*" />
-		<Content Include="./App_Plugins/**/*.*" />
-		<Compile Remove="wwwroot\assets\**" />
-		<Compile Remove="wwwroot\css\**" />
-		<Compile Remove="wwwroot\scripts\**" />
-		<Compile Remove="wwwroot\umbraco\**" />
-		<Content Remove="wwwroot\assets\**" />
-		<Content Remove="wwwroot\css\**" />
-		<Content Remove="wwwroot\scripts\**" />
-		<Content Remove="wwwroot\umbraco\**" />
-		<EmbeddedResource Remove="wwwroot\assets\**" />
-		<EmbeddedResource Remove="wwwroot\css\**" />
-		<EmbeddedResource Remove="wwwroot\scripts\**" />
-		<EmbeddedResource Remove="wwwroot\umbraco\**" />
-		<None Remove="wwwroot\assets\**" />
-		<None Remove="wwwroot\css\**" />
-		<None Remove="wwwroot\scripts\**" />
-		<None Remove="wwwroot\umbraco\**" />
-	</ItemGroup>
 
 	<!-- Force windows to use ICU. Otherwise Windows 10 2019H1+ will do it, but older windows 10 and most if not all winodws servers will run NLS -->
 	<ItemGroup>
@@ -34,19 +13,23 @@
 		<ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
 	</ItemGroup>
+
+
 	<ItemGroup>
-	  <Folder Include="wwwroot\" />
+		<!-- Opt-in to app-local ICU to ensure consistent globalization APIs across different platforms -->
+		<PackageReference Include="Microsoft.ICU.ICU4C.Runtime" Version="68.2.0.9" />
+		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2.0.9" Condition="$(RuntimeIdentifier.StartsWith('linux')) or $(RuntimeIdentifier.StartsWith('win')) or ('$(RuntimeIdentifier)' == '' and !$([MSBuild]::IsOSPlatform('osx')))" />
 	</ItemGroup>
 
 	<PropertyGroup>
+		<!-- Razor files are needed for the backoffice to work correctly -->
 		<CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
 	</PropertyGroup>
 
-	<!-- Set this to true if ModelsBuilder mode is not InMemoryAuto-->
 	<PropertyGroup>
+		<!-- Remove RazorCompileOnBuild and RazorCompileOnPublish when not using ModelsMode InMemoryAuto -->
 		<RazorCompileOnBuild>false</RazorCompileOnBuild>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
-		<Description>Bento Editor for Umbraco 9. A flexible block based editor that takes advantage of infinite editing.</Description>
-		<IsPackable>true</IsPackable>
 	</PropertyGroup>
+
 </Project>

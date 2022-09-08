@@ -16,7 +16,7 @@
 		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
 		border-radius: 3px;
 
-		.selected, &:hover:before {
+		&.-selected:before, &:hover:before {
 			content: "";
 			position: absolute;
 			z-index: 2;
@@ -27,18 +27,14 @@
 			border: 2px solid #f5c1bc;
 			border-radius: 5px;
 			box-shadow: 0 0 4px 0 #e86f63, inset 0 0 2px 0 #e86f63;
-			pointer-events: none
+			pointer-events: none;
+
 		}
 
-		&hover {
-			.bento-block-doc-type-grid__action:not(.-selected) {
-				opacity: 1;
-				-webkit-animation: fadeIn;
-				animation: fadeIn;
-				-webkit-animation-duration: .2s;
-				animation-duration: .2s;
-				-webkit-animation-timing-function: ease-in-out;
-				animation-timing-function: ease-in-out
+		&:hover, &.-selected{
+			.bento-block-doc-type-grid__details-name {
+				text-decoration: none;
+				color: #2152a3
 			}
 		}
 
@@ -46,67 +42,69 @@
 			opacity: .33;
 		}
 
-		.-selected:hover:before {
+		&.-selected:before {
 			opacity: .75
-		}
-
-		&-name {
-			font-weight: 700;
-			margin-bottom: 15px;
-			line-height: 1.4em;
-			display: inline-flex;
-			color: #1b264f;
-
-			.-light {
-				color: #817f85
-			}
-
-			&:focus,
-			&:hover {
-				text-decoration: none;
-				color: #2152a3
-			}
 		}
 	}
 
 	&__icon,
 	&__icon[class*=" icon-"],
 	&__icon[class^=icon-] {
-		font-size: 20px;
-		margin-right: 5px
+		font-size: 40px;
+		margin-right: 20px
 	}
 
-	&__icon-container {
-		height: 75px;
+	&__meta{
 		display: flex;
+		flex-direction: row;
 		align-items: center;
-		justify-content: center;
+	}
+
+	&__preview{
+		margin-top:15px;
+		border: 1px solid #e6e6e6;
+		width:100%;
+		aspect-ratio: 16 / 9;
+		background-size: cover;
+		background-position: center;
+		background-color: #e6e6e6;
 	}
 
 	&__content {
 		box-sizing: border-box;
-		padding: 15px
+		padding: 15px;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid #e6e6e6;
 	}
 
+
+
 	&__details {
-		&-list {
-			list-style: none;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		&-name {
+			font-weight: 700;
+			line-height: 1.4em;
+			
+			align-items: center;
+			color: #1b264f;
+
+			.-light {
+				color: #817f85
+			}
+		}
+
+
+		&-description {
 			margin-bottom: 0;
 			margin-left: 0;
 			font-size: 12px;
 
 			.-light {
 				color: #817f85
-			}
-
-			-label {
-				font-weight: 700;
-				display: inline-block
-			}
-
-			-value {
-				display: inline-block;
-				word-break: break-word
 			}
 		}
 	}

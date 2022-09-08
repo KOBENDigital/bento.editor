@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Cms.Web.BackOffice.Controllers;
+using Umbraco.Extensions;
 using RelationItem = Bento.Core.Models.RelationItem;
 
 namespace Bento.Core.Controllers
@@ -20,8 +23,9 @@ namespace Bento.Core.Controllers
 		private readonly IRelationService _relationService;
 		private readonly IUserService _userService;
 		private readonly IVariationContextAccessor _variationContextAccessor;
+		private readonly IWebHostEnvironment _environment;
 
-		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IRelationService relationService, IUserService userService, IVariationContextAccessor variationContextAccessor)
+		public BentoResourceController(IContentService contentService, IContentTypeService contentTypeService, IPagingHelper pagingHelper, IPluralizationServiceWrapper pluralizationServiceWrapper, IRelationService relationService, IUserService userService, IVariationContextAccessor variationContextAccessor, IWebHostEnvironment environment)
 		{
 			_contentService = contentService;
 			_contentTypeService = contentTypeService;
@@ -30,6 +34,7 @@ namespace Bento.Core.Controllers
 			_relationService = relationService;
 			_userService = userService;
 			_variationContextAccessor = variationContextAccessor;
+			_environment = environment;
 		}
 
 		public int GetLibraryFolderId(int contentId, string libraryFolderDoctypeAlias)
@@ -183,7 +188,24 @@ namespace Bento.Core.Controllers
 
 			var types = _contentTypeService.GetAll().Where(x => allowedAliases.Split(',').Contains(x.Alias)).ToList();
 
-			return types.Any() ? types.Select(x => new AllowedContentType { Alias = x.Alias, Name = x.Name, Description = x.Description }) : Enumerable.Empty<AllowedContentType>();
+			return types.Any() ? types.Select(x => new AllowedContentType { 
+				Alias = x.Alias, 
+				Name = x.Name, 
+				Description = x.Description, 
+				Icon = x.Icon, 
+				Preview = GetPreview(x.Alias)
+			}) : Enumerable.Empty<AllowedContentType>();
+		}
+
+		private string GetPreview(string alias)
+		{
+			var previewPath = $"/backoffice/previews/{alias}.png";
+			var file = _environment.MapPathWebRoot(previewPath);
+			if (System.IO.File.Exists(file))
+			{
+				return previewPath;
+			}
+			return null;
 		}
 	}
 }
