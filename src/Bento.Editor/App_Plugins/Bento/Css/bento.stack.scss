@@ -1,7 +1,13 @@
 ﻿.bento-stack {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 10px;
+
 	&-toolbar {
 		text-align: right;
 		height: 2em;
+		margin-bottom: 10px;
+		margin-right: 5px;
 
 		a {
 			&:hover {
@@ -12,7 +18,6 @@
 		i {
 			text-align: center;
 			width: 1.5em;
-			height: 1.5em;
 			line-height: 1.5em;
 			display: inline-block;
 		}
@@ -21,13 +26,28 @@
 	&-item {
 		position: relative;
 		background-color: #fff;
-		border: 1px solid #efefef;
 
 		&-handle {
-			background: #1b264f;
+			pointer-events: none;
+			transition: opacity ease-in-out .5s;
+			opacity: .35;
+			position: absolute;
+			display: flex;
+			justify-content: space-between;
 			color: #fff;
 			font-weight: bold;
-			padding: 10px;
+			padding: 5px;
+			z-index: 100;
+			width: 100%;
+			top: 0;
+			left: 0;
+			box-sizing: border-box;
+			border: none;
+
+
+			&:hover {
+				opacity: 1;
+			}
 
 			&:not(.no-grab) {
 				cursor: grab;
@@ -36,13 +56,32 @@
 					cursor: grabbing;
 				}
 			}
+
+			.sorting & {
+				opacity: 1;
+				justify-content: flex-end;
+			}
 		}
 
-		&-tools {
-			position: absolute;
-			right: 0;
-			top: 0;
-			padding: 10px;
+		&-right {
+			display: flex;
+		}
+
+		&-title, &-sort-options, &-tools {
+			background: #1b264f;
+			padding: 5px 15px;
+			border-radius: 10px;
+			border: 0;
+		}
+
+		&-title {
+			transition: all ease-in-out .5s;
+			pointer-events: all;
+			line-height: 1em;
+		}
+
+		&-tools, &-sort-options {
+			pointer-events: all;
 
 			a {
 				color: #fff;
@@ -56,27 +95,52 @@
 				text-align: center;
 				display: inline-block;
 				width: 1.5em;
-				height: 1.5em;
-				line-height: 1.5em;
+				height: 1em;
+				line-height: 1em;
 			}
+
+			.sorting & {
+				display: none;
+			}
+		}
+
+		&-sort-options {
+			margin-right: 5px;
 		}
 
 		&-insert {
 			text-align: center;
-			padding: 0 0 20px 0;
-
 
 			.action-buttons {
 				transition: all ease-in-out .2s;
 				opacity: 0;
-				height: .1rem;
-			}
+				height: 5px;
 
+				.btn {
+					position: relative;
+					z-index: 100;
+				}
+
+				&:before {
+					transition: width ease-in-out .5s;
+					content: '';
+					display: block;
+					width: 1%;
+					border-bottom: 2px dashed #1b264f;
+					height: 1px;
+					transform: translateY(16px);
+					margin: 0 auto;
+				}
+			}
 
 			&:hover {
 				.action-buttons {
 					opacity: 1;
-					height: 2rem;
+					height: 45px;
+
+					&:before {
+						width: 100%;
+					}
 				}
 			}
 		}
@@ -84,6 +148,7 @@
 
 
 		&-wrapper {
+
 			&.ui-sortable-helper {
 				.bento-stack-item {
 					box-shadow: rgba(0,0,0,.16) 2px 2px 10px;
@@ -96,10 +161,19 @@
 			}
 		}
 	}
+
+	&-bottom-insert {
+		padding: 10px 0 2px 0;
+		text-align: center;
+	}
 }
 
-.bento-stack-bottom-insert{
-	text-align:center;
-}
+	.action-buttons {
+		.btn {
+			border-radius: 10px;
 
-
+			i {
+				line-height: 1em;
+			}
+		}
+	}

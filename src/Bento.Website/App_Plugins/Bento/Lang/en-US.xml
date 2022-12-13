@@ -2,6 +2,7 @@
 <language alias="en_us" intName="English (US)" localName="English (US)" lcid="" culture="en-US">
 	<area alias="bento">
 		<key alias="save">Save</key>
+		<key alias="update">Update</key>
 		<key alias="createElement">Insert content</key>
 		<key alias="createNew">Create new library item</key>
 		<key alias="useExisting">Use from library</key>

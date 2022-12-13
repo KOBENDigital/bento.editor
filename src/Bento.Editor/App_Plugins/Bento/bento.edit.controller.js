@@ -46,6 +46,7 @@
 				$scope.$broadcast('formSubmitting', { scope: $scope });
 				if (vm.bentoEditForm.$valid) {
 					$scope.model.submit($scope.model);
+					vm.bentoEditForm.$dirty = false;
 				}
 			}
 		}

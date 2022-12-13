@@ -67,6 +67,7 @@
 			if (vm.embed) {
 				let options = {
 					title: 'Edit',
+					size: 'small',
 					embed: vm.embed,
 					documentTypeAlias: vm.selectedTypeAlias,
 					documentTypeName: vm.selectedTypeName,
