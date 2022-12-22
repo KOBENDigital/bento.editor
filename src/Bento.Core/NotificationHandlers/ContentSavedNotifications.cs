@@ -52,7 +52,8 @@ namespace Bento.Core.NotificationHandlers
 							RelationTypes.BentoItemsAlias,
 							true,
 							UmbracoObjectTypes.Document.GetGuid(),
-							UmbracoObjectTypes.Document.GetGuid());
+							UmbracoObjectTypes.Document.GetGuid(),
+							false);
 
 						_relationService.Save(relationType);
 
