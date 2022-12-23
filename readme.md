@@ -2,9 +2,9 @@
 
 [![NuGet release](https://img.shields.io/nuget/v/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor)
 
-# Bento Editor for Umbraco 9
+# Bento Editor for Umbraco 10
 
-The Bento Editor is a content block editor for Umbraco 9 that takes advantage of the infinite editing features of Umbraco 9.
+The Bento Editor is a content block editor for Umbraco 10 that takes advantage of the infinite editing features of Umbraco 10.
 
 The aim of Bento is to simplify the experience of creating creative layouts in Umbraco without compromising brand and design standards.
 
