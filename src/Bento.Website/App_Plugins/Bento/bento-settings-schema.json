@@ -1,4 +1,4 @@
-﻿{
+{
 	"settingAlias": {
 		"label": "string - required - user friendly",
 		"type": "string required - must be either string, text, boolean, radio, checklist, dropdown",

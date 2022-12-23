@@ -21,7 +21,7 @@ namespace Bento.Core.NotificationHandlers
 		private readonly IHostingEnvironment _hostingEnvironment;
 		private readonly ILogger<ContentTypeServiceNotifications> _logger;
 
-		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IHostingEnvironment hostingEnvironment, ILogger<ContentTypeServiceNotifications> logger )
+		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IHostingEnvironment hostingEnvironment, ILogger<ContentTypeServiceNotifications> logger)
 		{
 			_dataTypeService = dataTypeService;
 			_hostingEnvironment = hostingEnvironment;
@@ -34,14 +34,30 @@ namespace Bento.Core.NotificationHandlers
 			{
 				var itemDoctypeCompositionAliases = new List<string>();
 
+				//handle bento item (singular)
 				var bentoItemDataTypes = _dataTypeService.GetByEditorAlias(BentoItemDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoItemDataTypes
 					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
 					.Select(config => config.ItemDoctypeCompositionAlias));
 
+				var bentoItemUseFramework = bentoItemDataTypes
+					.Select(dataType => (BentoItemConfiguration)dataType.Configuration)
+					.Select(config => config.UseFrontendFramework).FirstOrDefault();
+
+				//handle bento stack
 				var bentoStackDataTypes = _dataTypeService.GetByEditorAlias(BentoStackDataEditor.EditorAlias);
 				itemDoctypeCompositionAliases.AddRange(bentoStackDataTypes.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
 					.Select(config => config.ItemDoctypeCompositionAlias));
+
+				var bentoStackUseFramework = bentoStackDataTypes
+					.Select(dataType => (BentoStackConfiguration)dataType.Configuration)
+					.Select(config => config.UseFrontendFramework).FirstOrDefault();
+
+				if (bentoStackUseFramework && bentoItemUseFramework)
+				{
+					//no views required
+					return;
+				}
 
 				foreach (var content in notification.SavedEntities)
 				{
@@ -60,19 +76,12 @@ namespace Bento.Core.NotificationHandlers
 						var backofficeViewMessage = string.Empty;
 
 						var view = new StringBuilder();
-						view.AppendLine("@Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedElement>");
+						view.AppendLine("@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<IPublishedElement>");
 
 						var contentAlias = content.Alias.First().ToString().ToUpper() + content.Alias.Substring(1);
 
-						if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento")))
-						{
-							Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento"));
-						}
-
-						if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts")))
-						{
-							Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts"));
-						}
+						EnsureBentoDirectoryExists();
+						EnsureBentoLayoutsDirectoryExists();
 
 						if (!File.Exists(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
 						{
@@ -131,6 +140,22 @@ namespace Bento.Core.NotificationHandlers
 						"Bento setup", "Error getting Bento data types. Please see the log for more info.",
 						EventMessageType.Warning)
 				);
+			}
+		}
+
+		private void EnsureBentoLayoutsDirectoryExists()
+		{
+			if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts")))
+			{
+				Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts"));
+			}
+		}
+
+		private void EnsureBentoDirectoryExists()
+		{
+			if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento")))
+			{
+				Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento"));
 			}
 		}
 	}

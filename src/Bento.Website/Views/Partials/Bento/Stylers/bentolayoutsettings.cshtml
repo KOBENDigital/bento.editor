@@ -1,0 +1,61 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Cms.Web.Common.PublishedModels.BentoLayoutSettings>
+@{
+	var settings = Model;
+	Guid id = Guid.Empty;
+	string classString = null;
+	string styleString = null;
+
+	var classList = new List<string>();
+	var styleList = new List<string>();
+
+	if (settings != null)
+	{
+		id = settings.Key;
+
+		if (settings.BackgroundColour != null && !string.IsNullOrEmpty(settings.BackgroundColour.Label))
+		{
+			classList.Add($"bkg-{settings.BackgroundColour.Label.ToLower()}");
+		}
+
+		//if (settings.BackgroundImage != null)
+		//{
+		//	classList.Add($"bkg-image");
+		//	styleList.Add($"background-image: url('{Url.GetCropUrl(settings.BackgroundImage, "background")}');");
+		//	if (settings.BackgroundOverlay)
+		//	{
+		//		classList.Add($"bkg-overlay");
+		//	}
+		//}
+	}
+
+	if (classList.Any())
+	{
+		classString = string.Join(" ", classList);
+	}
+
+	if (styleList.Any())
+	{
+		styleString = string.Join(" ", styleList);
+	}
+}
+<div class="bento bento-styler-wrapper">
+	<div @(id != Guid.Empty ? $"id=\"s-{id}\"" : null) class="bento-styler @classString">
+	</div>
+</div>
+@if (id != Guid.Empty)
+{
+	<style>
+		#s-@id  {
+			@Html.Raw(styleString)
+		}
+		@if (settings.BackgroundColour != null && !string.IsNullOrEmpty(settings.BackgroundColour.Label))
+		{
+			<text>
+				.bkg-overlay:after {
+					background-color: #@settings.BackgroundColour.Color;
+					opacity: 0.8;
+			}
+		</text>
+		}
+	</style>
+}

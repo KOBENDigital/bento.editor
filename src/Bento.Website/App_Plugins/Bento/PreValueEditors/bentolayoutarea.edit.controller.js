@@ -1,4 +1,4 @@
-﻿function bentoLayoutAreaEditController($scope, notificationsService, localizationService) {
+function bentoLayoutAreaEditController($scope, notificationsService, localizationService) {
 
 	var vm = this;
 
@@ -47,7 +47,6 @@
 		});
 	}
 
-
 	function saveArea() {
 
 		if (!vm.area.name || !vm.area.alias || !vm.area.colLine1 || !vm.area.rowLine1) return;
@@ -69,9 +68,7 @@
 
 		vm.model.allowedElementTypes = vm.area.allowedElementTypes.value;
 		vm.model.allowedContentTypes = vm.area.allowedContentTypes.value;
-
 	}
-
 
 	function setupEmptyArea() {
 		vm.area = {
@@ -82,25 +79,19 @@
 			rowLine1: undefined,
 			rowLine2: undefined,
 			allowedElementTypes: {
-
 				view: '/app_plugins/bento/views/prevalueeditors/contenttypepicker.html',
 				value: '',
 				updating: true,
 				config: {}
-
 			},
 			allowedContentTypes: {
-
 				view: '/app_plugins/bento/views/prevalueeditors/contenttypepicker.html',
 				value: '',
 				updating: true,
 				config: {}
-
 			}
 		};
 	}
-
-
 
 	function close() {
 		if ($scope.model.close) {
@@ -168,7 +159,6 @@
 
 			vm.area.allowedElementTypes.value = data.allowedElementTypes !== undefined ? data.allowedElementTypes : '';
 			vm.area.allowedContentTypes.value = data.allowedContentTypes !== undefined ? data.allowedContentTypes : '';
-
 		}
 	}
 

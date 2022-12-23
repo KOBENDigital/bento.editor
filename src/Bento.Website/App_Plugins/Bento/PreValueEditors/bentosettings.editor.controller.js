@@ -1,4 +1,4 @@
-﻿function bentoSettingsEditorController($scope, angularHelper, editorService, notificationsService, bentoSettingFactory) {
+function bentoSettingsEditorController($scope, angularHelper, editorService, notificationsService, bentoSettingFactory) {
 	var vm = this;
 
 	vm.settings = [];
@@ -89,4 +89,3 @@
 }
 
 angular.module("umbraco").controller("bento.settings.editor.controller", bentoSettingsEditorController);
-

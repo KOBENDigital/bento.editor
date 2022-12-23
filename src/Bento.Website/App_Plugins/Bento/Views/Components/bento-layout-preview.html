@@ -1,4 +1,4 @@
-﻿<div>
+<div>
 	<div ng-if="showMarkers" class="bento-layout-preview-markers" style="display: grid; grid-template-columns: {{gridColumns}}">
 		<div ng-repeat="col in layout.columns track by $index"><span>{{$index + 1}}</span><span class="last" ng-if="$index + 1 === layout.columns.length">{{$index +2}}</span></div>
 	</div>

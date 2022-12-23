@@ -1,4 +1,4 @@
-﻿function bentoPreValueEditController($scope, notificationsService) {
+function bentoPreValueEditController($scope, notificationsService) {
 	var vm = this;
 
 	vm.close = close;

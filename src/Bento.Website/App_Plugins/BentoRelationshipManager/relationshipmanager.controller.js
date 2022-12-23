@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
 	"use strict";
 
 	function controller($location, editorState, userService, bentoResource, dateHelper) {

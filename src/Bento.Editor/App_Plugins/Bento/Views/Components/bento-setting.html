@@ -1,0 +1,68 @@
+﻿<div class="control-group umb-control-group">
+	<div class="umb-el-wrap">
+		<label class="control-label ng-binding" for="{{setting.alias}}" ng-if="setting.type !== 'boolean'" ng-attr-title="{{setting.alias}}" title="{{setting.label}}">
+			{{setting.label}}{{setting.required ? ' *' : ''}}
+		</label>
+		<div class="controls" id="{{setting.alias}}">
+			<div class="umb-property-editor db g-isolate-scope" ng-class="{'umb-property-editor--preview': preview}" model="setting" preview="false">
+				<div disable-tabindex="preview" class="ng-isolate-scope">
+					<div class="ng-scope">
+						<textarea ng-if="setting.type === 'text'" name="{{setting.alias}}" class="umb-property-editor umb-textarea ng-scope" ng-model="setting.value" rows="4"></textarea>
+						<input ng-if="setting.type === 'string'" type="text" name="{{setting.alias}}" class="umb-property-editor umb-textstring ng-scope" ng-model="setting.value" />
+						<select ng-if="setting.type === 'dropdown' && setting.multiple" name="{{setting.alias}}" ng-model="setting.value" multiple>
+							<option ng-repeat="preValue in setting.preValues track by preValue.value" value="{{preValue.value}}">
+								{{preValue.label}}
+							</option>
+						</select>
+						<select ng-if="setting.type === 'dropdown' && !setting.multiple" name="{{setting.alias}}" ng-model="setting.value">
+							<option value="" disabled="disabled"><localize key="bento_selectAnOption">Select an option</localize></option>
+							<option ng-repeat="preValue in setting.preValues track by preValue.value" value="{{preValue.value}}" ng-selected="preValue.selected">
+								{{preValue.label}}
+							</option>
+						</select>
+						<div ng-if="setting.type === 'radio'">
+							<ul class="unstyled">
+								<li ng-repeat="preValue in setting.preValues track by preValue.value">
+									<umb-radiobutton name="{{setting.alias}}" value="{{preValue.value}}" model="setting.value" text="{{preValue.label}}"></umb-radiobutton>
+								</li>
+							</ul>
+						</div>
+						<div ng-if="setting.type === 'checklist'">
+							<ul class="unstyled">
+								<li ng-repeat="preValue in setting.preValues track by preValue.value">
+									<label class="checkbox umb-form-check umb-form-check--checkbox">
+										<input type="checkbox" name="{{preValue.value}}"
+													 value="true"
+													 ng-model="preValue.selected"
+													 ng-checked="preValue.selected"
+													 class="umb-form-check__input" />
+										<div class="umb-form-check__state umb-form-check__state" aria-hidden="true">
+											<div class="umb-form-check__check">
+												<i class="umb-form-check__icon icon-check"></i>
+											</div>
+										</div>
+										<span class="umb-form-check__text">{{preValue.label}}</span>
+									</label>
+								</li>
+							</ul>
+						</div>
+
+						<label ng-if="setting.type === 'boolean'" class="checkbox umb-form-check umb-form-check--checkbox">
+							<input type="checkbox"
+										 name="{{setting.alias}}"
+										 ng-model="setting.value"
+										 ng-checked="setting.value"
+										 class="umb-form-check__input" />
+							<div class="umb-form-check__state umb-form-check__state" aria-hidden="true">
+								<div class="umb-form-check__check">
+									<i class="umb-form-check__icon icon-check"></i>
+								</div>
+							</div>
+							<span class="umb-form-check__text">{{setting.label}}</span>
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

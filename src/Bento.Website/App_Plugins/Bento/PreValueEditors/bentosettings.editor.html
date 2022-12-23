@@ -1,5 +1,4 @@
-﻿<div ng-controller="bento.settings.editor.controller as vm" class="umb-property-editor umb-contentpicker">
-
+<div ng-controller="bento.settings.editor.controller as vm" class="umb-property-editor umb-contentpicker">
 	<ng-form name="multiUrlPickerForm">
 		<div ui-sortable="vm.sortableOptions" ng-model="vm.settings">
 			<div class="umb-node-preview" ng-repeat="setting in vm.settings">
@@ -21,9 +20,7 @@
 					</a>
 				</div>
 			</div>
-
 		</div>
-
 		<a class="umb-node-preview-add"
 		   href
 		   ng-click="vm.openSettingEditor()"

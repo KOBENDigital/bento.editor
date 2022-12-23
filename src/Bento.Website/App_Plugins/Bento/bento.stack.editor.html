@@ -1,4 +1,4 @@
-﻿<ng-form name="bentoEditForm" ng-controller="bento.stack.editor.controller as vm">
+<ng-form name="bentoEditForm" ng-controller="bento.stack.editor.controller as vm">
 
 
 	<link ng-repeat="url in vm.cssFonts" data-ng-if="url" rel="stylesheet" data-ng-href="{{vm.trustSrc(url)}}" />
@@ -24,7 +24,7 @@
 				<div class="umb-box-header bento-stack-item-handle">
 					<div>
 						<div ng-if="layout.layout !== undefined">
-							<i class="icon {{ layout.layout.icon }}"></i> {{ layout.name }}
+							<i class="icon {{ layout.icon }}"></i> {{ layout.name }}
 						</div>
 						<div ng-if="layout.layout === undefined">
 							Layout has been removed and is no longer available
@@ -32,15 +32,16 @@
 					</div>
 					<div class="bento-stack-item-tools">
 						<div style="position:relative;">
-							<a href="" ng-click="vm.toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
-							<a href="" ng-click="vm.openLayouts(layout)" ng-if="vm.getAvailableLayouts().length > 1"><i class="umb-control-tool-icon icon-layout"></i></a>
 							<a href="" ng-click="vm.openSettings(layout)" ng-if="layout.layout.layoutSettings !== ''"><i class="umb-control-tool-icon icon-settings"></i></a>
+							<a href="" ng-click="vm.openLayouts(layout,true)" ng-if="vm.getAvailableLayouts().length > 1"><i class="umb-control-tool-icon icon-layout"></i></a>
+							<a href="" ng-click="vm.copyLayout($index)"><i class="umb-control-tool-icon icon-documents"></i></a>
+							<a href="" ng-click="vm.toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
 						</div>
 					</div>
 				</div>
 
-				<div class="bento-stack-item-content" ng-hide="vm.sorting">
-					<bento-layout ng-if="layout.layout !== undefined" updating="vm.itemUpdating" alias="item.alias" areas="layout.areas" layout="layout.layout" icon="layout.icon" name="layout.name" culture="vm.culture" config="model.config" settings="layout.settings"></bento-layout>
+				<div class="bento-stack-item-content" ng-class="{sorting : vm.sorting}">
+					<bento-layout ng-if="layout.layout !== undefined" alias="layout.alias" areas="layout.areas" layout="layout.layout" icon="layout.icon" name="layout.name" culture="vm.culture" config="model.config" settings="layout.settings" index="$index"></bento-layout>
 					<div class="bento-picker-button-wrapper" ng-if="layout.layout === undefined">To recover any content that was in the old removed layout, exchange for another layout.  Data may be lost if there are less areas in the new layout.</div>
 				</div>
 			</div>

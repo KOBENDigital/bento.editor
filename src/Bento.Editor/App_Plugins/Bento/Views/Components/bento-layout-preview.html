@@ -1,0 +1,12 @@
+﻿<div>
+	<div ng-if="showMarkers" class="bento-layout-preview-markers" style="display: grid; grid-template-columns: {{gridColumns}}">
+		<div ng-repeat="col in layout.columns track by $index"><span>{{$index + 1}}</span><span class="last" ng-if="$index + 1 === layout.columns.length">{{$index +2}}</span></div>
+	</div>
+	<div class="bento-layout-preview">
+		<div class="bento-layout-wrapper" style="grid-template-columns: {{gridColumns}}">
+			<div ng-repeat="area in layout.areas" class="bento-layout-item" style="{{getAreaStyles(area)}} min-height: 15px;">
+				<small>{{area.alias}}</small>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+﻿
+.bento-picker-button-wrapper {
+	display: flex;
+	justify-content: center;
+	padding: 20px;
+}
+
+.bento-picker-button {
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid #eee;
+		background:#fefefe;
+	border-radius: 5px;
+	padding: 10px;
+		margin:5px;
+	width: 50%;
+	max-width: 180px;
+	cursor: pointer;
+
+	&:hover {
+		box-shadow:rgba(0,0,0,0.16) 0px 0px 10px;
+		background: #f3f3f5;
+		color: #1b264f;
+	}
+
+	i {
+		font-size: 1.5em;
+		display: block;
+		padding-bottom: 10px;
+	}
+}
+
+.bento-layout{
+	position:relative;
+}
+
+.bento-warning {
+	background-color: #fff3cd;
+	border: 2px #ffeeba solid;
+		padding:1em;
+
+}

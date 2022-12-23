@@ -5,8 +5,11 @@ using Bento.Core.Services;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Umbraco.Cms.Core.Composing;
+using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.DependencyInjection;
+using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
 using Umbraco.Extensions;
@@ -18,27 +21,20 @@ namespace Bento.Core.Composers
 		public void Compose(IUmbracoBuilder builder)
 		{
 			//routing
-			//var globalSettings = new GlobalSettings();
 			builder.Services.Configure<UmbracoPipelineOptions>(options =>
 			{
-				//options.AddFilter(new UmbracoPipelineFilter(nameof(BentoApiController))
-				//{
-				//	Endpoints = app => app.UseEndpoints(endpoints =>
-				//	{
-				//		endpoints.MapControllerRoute(
-				//			"Bento Api Controller",
-				//			globalSettings.UmbracoPath + "/backoffice/Api/Bento/{action}/{id}",
-				//			new { Controller = "BentoApi", Action = "Index" });
-				//	})
-				//});
 				options.AddFilter(new UmbracoPipelineFilter(nameof(BentoApiController))
 				{
 					Endpoints = app => app.UseEndpoints(endpoints =>
 					{
+						var globalSettings = app.ApplicationServices.GetRequiredService<IOptions<GlobalSettings>>().Value;
+						var hostingEnvironment = app.ApplicationServices.GetRequiredService<IHostingEnvironment>();
+						var backofficeArea = Umbraco.Cms.Core.Constants.Web.Mvc.BackOfficePathSegment;
+
 						endpoints.MapControllerRoute(
 							"Bento Backoffice Previews Controller",
-							"/BentoApi/{action}/{id?}",
-							new { Controller = "BentoApi", Action = "Index" }); //todo: should we have a default route? i guess if we can work out how to lock down the controller, then no?
+							$"/{globalSettings.GetUmbracoMvcArea(hostingEnvironment)}/{backofficeArea}/Bento/{{action}}/{{id?}}",
+							new { Controller = "BentoApi" });
 					})
 				});
 			});
