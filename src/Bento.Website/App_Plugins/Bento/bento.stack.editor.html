@@ -1,0 +1,64 @@
+<ng-form name="bentoEditForm" ng-controller="bento.stack.editor.controller as vm">
+
+
+	<link ng-repeat="url in vm.cssFonts" data-ng-if="url" rel="stylesheet" data-ng-href="{{vm.trustSrc(url)}}" />
+
+	<div style="{{'max-width:' + vm.maxEditorWidth}}">
+		<div class="bento-stack-toolbar action-buttons" ng-if="vm.layouts.length > 0">
+			<a ng-click="vm.setSort()" class="btn btn-primary">{{vm.sorting ? 'done' : 're-order'}}</a>
+		</div>
+
+		<div class="bento-stack" ui-sortable="vm.sortOptions" ng-model="vm.layouts">
+			<div class="bento-stack-item-wrapper" ng-repeat="layout in vm.layouts">
+
+				<div ng-hide="vm.sorting" class="bento-stack-item-insert">
+					<div class="action-buttons">
+						<!--<button type="button" ng-click="vm.addItem($index)" class="btn btn-primary"><i class="umb-control-tool-icon icon-add"></i> insert item</button>-->
+						<button type="button" ng-click="vm.addLayout($index)" class="btn btn-primary"><i class="umb-control-tool-icon icon-layout"></i> <span><localize key="bento_insertLayout">Insert Layout</localize></span></button>
+					</div>
+				</div>
+
+				<div class="bento-stack-item" ng-class="{sorting : vm.sorting}">
+					<div class="bento-stack-item-handle">
+						<div class="bento-stack-item-title">
+							<div ng-if="layout.layout !== undefined && !vm.sorting">
+								<i class="icon {{ layout.icon }}"></i> {{ layout.name }}
+							</div>
+							<div ng-if="vm.sorting">
+								<i class="icon icon-navigation"></i> drag
+							</div>
+							<div ng-if="layout.layout === undefined">
+								Layout has been removed and is no longer available
+							</div>
+						</div>
+
+						<div class="bento-stack-item-right">
+							<div class="bento-stack-item-sort-options">
+								<a title="Move Up" ng-click="vm.sortUp($index)" ng-if="$index != 0"><i class="umb-control-tool-icon icon-arrow-up"></i></a>
+								<a title="Move Down" ng-click="vm.sortDown($index)" ng-if="$index < (vm.layouts.length -1)"><i class="umb-control-tool-icon icon-arrow-down"></i></a>
+							</div>
+							<div class="bento-stack-item-tools">
+								<a title="Layout Settings" ng-click="vm.openSettings(layout)" ng-if="layout.layout.layoutSettings !== ''"><i class="umb-control-tool-icon icon-settings"></i></a>
+								<a title="Change Settings" ng-click="vm.openLayouts(layout,true)" ng-if="vm.getAvailableLayouts().length > 1"><i class="umb-control-tool-icon icon-layout"></i></a>
+								<a title="Copy Layout" ng-click="vm.copyLayout($index)"><i class="umb-control-tool-icon icon-documents"></i></a>
+								<a title="Remove Layout" ng-click="vm.toggleDeleteConfirm($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<div class="bento-stack-item-content">
+						<bento-layout ng-if="layout.layout !== undefined" alias="layout.alias" areas="layout.areas" layout="layout.layout" icon="layout.icon" name="layout.name" culture="vm.culture" config="model.config" settings="layout.settings" index="$index"></bento-layout>
+						<div class="bento-picker-button-wrapper" ng-if="layout.layout === undefined">To recover any content that was in the old removed layout, exchange for another layout.  Data may be lost if there are less areas in the new layout.</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div ng-if="!vm.sorting" class="bento-stack-bottom-insert">
+				<div class="action-buttons">
+					<button type="button" ng-click="vm.addLayout(vm.layouts.length)" class="btn btn-primary"><i class="umb-control-tool-icon icon-layout"></i> <span><localize key="bento_insertLayout">Insert Layout</localize></span></button>
+				</div>
+			</div>
+		</div>
+	</div>
+</ng-form>

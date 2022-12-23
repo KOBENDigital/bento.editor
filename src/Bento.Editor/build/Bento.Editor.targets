@@ -1,0 +1,56 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<BentoEditorPluginFolder>App_Plugins\Bento</BentoEditorPluginFolder>
+		<BentoEditorPluginFilesPath>$(MSBuildThisFileDirectory)..\content\$(BentoEditorPluginFolder)</BentoEditorPluginFilesPath>
+		<BentoEditorContentFilesPath>$(BentoEditorPluginFilesPath)\**\*.*</BentoEditorContentFilesPath>
+	</PropertyGroup>
+
+	<Target Name="CopyBentoEditorAssets" BeforeTargets="Build">
+		<ItemGroup>
+			<BentoEditorContentFiles Include="$(BentoEditorContentFilesPath)" />
+		</ItemGroup>
+		<Message Text="Copying Bento files: $(BentoEditorContentFilesPath) - #@(BentoEditorContentFiles->Count()) files"  Importance="high" />
+		<Copy
+		SourceFiles="@(BentoEditorContentFiles)"
+		DestinationFiles="@(BentoEditorContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\Bento\%(RecursiveDir)%(Filename)%(Extension)')"
+		SkipUnchangedFiles="true" />
+
+	</Target>
+
+	<Target Name="ClearBentoEditorAssets" BeforeTargets="Clean">
+		<ItemGroup>
+			<BentoEditorDir Include="$(MSBuildProjectDirectory)\App_Plugins\Bento\" />
+		</ItemGroup>
+		<Message Text="Clear old Bento data"  Importance="high" />
+		<RemoveDir Directories="@(BentoEditorDir)"  />
+	</Target>
+
+
+	<PropertyGroup>
+		<BentoRelationshipsPluginFolder>App_Plugins\BentoRelationshipManager</BentoRelationshipsPluginFolder>
+		<BentoRelationshipsPluginFilesPath>$(MSBuildThisFileDirectory)..\content\$(BentoRelationshipsPluginFolder)</BentoRelationshipsPluginFilesPath>
+		<BentoRelationshipManagerContentFilesPath>$(BentoRelationshipsPluginFilesPath)\**\*.*</BentoRelationshipManagerContentFilesPath>
+	</PropertyGroup>
+
+	<Target Name="CopyBentoRelationshipManagerAssets" BeforeTargets="Build">
+		<ItemGroup>
+			<BentoRelationshipManagerContentFiles Include="$(BentoRelationshipManagerContentFilesPath)" />
+		</ItemGroup>
+		<Message Text="Copying BentoRelationshipManager files: $(BentoRelationshipManagerContentFilesPath) - #@(BentoRelationshipManagerContentFiles->Count()) files"  Importance="high" />
+		<Copy
+		SourceFiles="@(BentoRelationshipManagerContentFiles)"
+		DestinationFiles="@(BentoRelationshipManagerContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\BentoRelationshipManager\%(RecursiveDir)%(Filename)%(Extension)')"
+		SkipUnchangedFiles="true" />
+
+	</Target>
+
+	<Target Name="ClearBentoRelationshipManagerAssets" BeforeTargets="Clean">
+		<ItemGroup>
+			<BentoRelationshipManagerDir Include="$(MSBuildProjectDirectory)\App_Plugins\BentoRelationshipManager\" />
+		</ItemGroup>
+		<Message Text="Clear old BentoRelationshipManager data"  Importance="high" />
+		<RemoveDir Directories="@(BentoRelationshipManagerDir)"  />
+	</Target>
+
+</Project>

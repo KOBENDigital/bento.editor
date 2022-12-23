@@ -1,0 +1,471 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Lora|Montserrat:400,700&display=swap');
+
+$desktop: 1440px;
+$tablet: 1024px;
+$heading: 'Lora', serif;
+$body: 'Montserrat', sans-serif;
+
+@import 'colours';
+@import 'mixins';
+@import 'layouts';
+
+body {
+	margin: 0;
+	padding: 2em;
+	font-size: 16px;
+	color: $black;
+}
+
+a {
+	font-weight: bold;
+}
+
+h1, h2, h3 {
+	font-family: $heading;
+	color: $dark-blue;
+}
+
+h1 {
+	color: $steel;
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.6em;
+}
+
+h3 {
+	font-size: 1.4em;
+}
+
+h4 {
+	font-size: 1.4em;
+	font-weight: 700;
+}
+
+h5 {
+	font-size: 1.2em;
+	font-weight: 700;
+}
+
+h6 {
+	font-weight: 700;
+}
+
+strong {
+	font-weight: 700;
+}
+
+p {
+	line-height: 1.5em;
+	margin-bottom: .5em;
+	font-family: $body;
+}
+
+a {
+	font-weight: bold;
+	transition: all .5s;
+}
+
+img {
+	display: block;
+	width: 100%;
+	border-radius: 3px;
+	@include box-shadow;
+
+	&.no-shadow {
+		box-shadow: unset;
+	}
+}
+
+.body-wrapper {
+	max-width: 1440px;
+	margin: 2em auto 2em auto;
+}
+
+section {
+	position: relative;
+	padding: 2em;
+
+	&.lead-section {
+		background-color: $lightgray;
+	}
+
+	.section-inner {
+		position: relative;
+		z-index: 2;
+	}
+}
+
+
+.bkg-tan {
+	background-color: $tan;
+}
+
+.bkg-steel {
+	background-color: $steel;
+}
+
+.bkg-dark-blue {
+	background-color: $dark-blue;
+}
+
+.bkg-black {
+	background-color: $black;
+}
+
+.bkg-gray {
+	background-color: $lightgray;
+}
+
+.v- {
+	&middle {
+		display: flex;
+		align-items: center;
+	}
+
+	&bottom {
+		display: flex;
+		align-items: flex-end;
+	}
+}
+
+.mt {
+
+	&-none {
+		padding-top: 0em;
+	}
+
+	&-small {
+		padding-top: 2em;
+	}
+
+	&-default, &-medium {
+		padding-top: 4em;
+	}
+
+	&-large {
+		padding-top: 6em;
+	}
+}
+
+.mb {
+
+	&-none {
+		padding-bottom: 0em;
+	}
+
+	&-small {
+		padding-bottom: 2em;
+	}
+
+	&-medium {
+		padding-bottom: 4em;
+	}
+
+	&-large {
+		padding-bottom: 6em;
+	}
+}
+
+.gl {
+	&-none {
+		padding-left: 0em;
+	}
+
+	&-small {
+		padding-left: 2em;
+	}
+
+	&-medium {
+		padding-left: 3.5em;
+	}
+
+	&-large {
+		padding-left: 5em;
+	}
+
+	@media screen and (min-width:$tablet) {
+		&-none {
+			padding-left: 0em;
+		}
+
+		&-small {
+			padding-left: 2em;
+		}
+
+		&-medium {
+			padding-left: 6em;
+		}
+
+		&-large {
+			padding-left: 10em;
+		}
+	}
+
+	@media screen and (min-width:$desktop) {
+		&-none {
+			padding-left: 0em;
+		}
+
+		&-small {
+			padding-left: 2em;
+		}
+
+		&-medium {
+			padding-left: 8em;
+		}
+
+		&-large {
+			padding-left: 16em;
+		}
+	}
+}
+
+.gr {
+	&-none {
+		padding-right: 0em;
+	}
+
+	&-small {
+		padding-right: 2em;
+	}
+
+	&-medium {
+		padding-right: 3.5em;
+	}
+
+	&-large {
+		padding-right: 5em;
+	}
+
+	@media screen and (min-width:$tablet) {
+		&-none {
+			padding-right: 0em;
+		}
+
+		&-small {
+			padding-right: 2em;
+		}
+
+		&-medium {
+			padding-right: 6em;
+		}
+
+		&-large {
+			padding-right: 10em;
+		}
+	}
+
+	@media screen and (min-width:$desktop) {
+		&-none {
+			padding-right: 0em;
+		}
+
+		&-small {
+			padding-right: 2em;
+		}
+
+		&-medium {
+			padding-right: 8em;
+		}
+
+		&-large {
+			padding-right: 16em;
+		}
+	}
+}
+
+.bkg-image {
+	background-position: center;
+	background-size: cover;
+}
+
+.bkg-overlay {
+	&:before {
+		opacity: 0.5;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		content: ' ';
+		z-index: 0;
+	}
+}
+
+.bkg {
+
+	&-tan {
+		background-color: $tan;
+	}
+
+	&-steel {
+		background-color: $steel;
+	}
+
+	&-dark-blue {
+		background-color: $dark-blue;
+	}
+
+	&-black {
+		background-color: $black;
+	}
+
+	&-gray {
+		background-color: $lightgray;
+	}
+}
+
+.txt {
+
+	&-tan {
+		color: $tan;
+
+		h1, h2, h3 {
+			color: $lightgray;
+		}
+
+		a {
+			color: $lightgray;
+
+			&:hover {
+				color: lighten($lightgray,30%);
+			}
+		}
+	}
+
+	&-gray {
+		color: $lightgray;
+
+		h1, h2, h3 {
+			color: $tan;
+		}
+
+		a {
+			color: $tan;
+
+			&:hover {
+				color: lighten($tan,30%);
+			}
+		}
+	}
+
+	&-steel {
+		color: $steel;
+
+		h1, h2, h3 {
+			color: $dark-blue;
+		}
+
+		a {
+			color: $dark-blue;
+
+			&:hover {
+				color: lighten($dark-blue,30%);
+			}
+		}
+	}
+
+	&-dark-blue {
+		color: $dark-blue;
+
+		h1, h2, h3 {
+			color: $steel;
+		}
+
+		a {
+			color: $steel;
+
+			&:hover {
+				color: lighten($steel,30%);
+			}
+		}
+	}
+
+	&-black {
+		color: $black;
+
+		h1, h2, h3 {
+			color: $dark-blue;
+		}
+
+		a {
+			color: $steel;
+
+			&:hover {
+				color: lighten($steel,30%);
+			}
+		}
+	}
+}
+
+.hidden {
+	&-m {
+		@media screen and (max-width: $tablet) {
+			display: none;
+		}
+	}
+
+	&-t {
+		@media screen and (min-width: $tablet) and (max-width: $desktop) {
+			display: none;
+		}
+	}
+
+	&-d {
+		@media screen and (min-width: $desktop) {
+			display: none;
+		}
+	}
+}
+
+.feature-wrapper {
+	height: 100%;
+	box-sizing: border-box;
+
+	.feature {
+		display: flex;
+		flex-direction: column;
+		align-content: center;
+		height: 100%;
+
+		img {
+			max-width: 100px;
+		}
+
+		&-content {
+			flex-grow: 1;
+		}
+
+		&-button {
+			flex-shrink: 1;
+			flex-grow: 0;
+			padding-top: 1em;
+		}
+	}
+}
+
+.neg {
+	&-top {
+		margin-top: -5em;
+	}
+
+	&-bottom {
+		margin-bottom: -5em;
+	}
+}
+
+.btn {
+	border: 2px solid $dark-blue;
+	border-radius: 5px;
+	padding: .5em .5em;
+	font-family: $heading;
+	text-decoration: none;
+	color: $dark-blue;
+	font-size: .9em;
+}
+
+.box-shadow {
+	@include box-shadow;
+}

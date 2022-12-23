@@ -1,0 +1,6 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.RichTextBentoElement>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+	Layout = null;
+}
+@Html.Raw(Model.Body)

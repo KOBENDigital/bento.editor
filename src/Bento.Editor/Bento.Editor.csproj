@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Description>Bento Editor for Umbraco 10/11. A flexible block based editor that takes advantage of infinite editing.</Description>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="build\**\*.*">
+			<Pack>true</Pack>
+			<PackagePath>buildTransitive</PackagePath>
+		</None>
+		
+		<Content Include="App_Plugins\**\*.*">
+			<Pack>true</Pack>
+			<PackagePath>content\App_Plugins</PackagePath>
+			<Visible>false</Visible>
+		</Content>	
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
+	</ItemGroup>
+</Project>
