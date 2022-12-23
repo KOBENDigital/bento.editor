@@ -38,6 +38,8 @@
 		vm.itemUpdating = true;
 		vm.remove = remove;
 		vm.setSort = setSort;
+		vm.sortUp = sortUp;
+		vm.sortDown = sortDown;
 		vm.addLayout = addLayout;
 		vm.openSettings = openSettings;
 		vm.openLayouts = openLayouts;
@@ -46,6 +48,7 @@
 		vm.getAvailableLayouts = getAvailableLayouts;
 		vm.copyLayout = copyLayout;
 		vm.dataTypeKey = $scope.umbProperty.property.dataTypeKey;
+		vm.maxEditorWidth = $scope.model.config.maxEditorWidth ?? "100%";
 
 		if ($scope.model.config.usePreviewJs && $scope.model.config.jsFilePath && $scope.model.config.jsFilePath !== null && $scope.model.config.jsFilePath !== '') {
 			//todo: we're replacing the 'wwwroot' that gets appended in v9/core... not ideal, we're looking into getting the tree picker to start in the wwwroot https://our.umbraco.com/forum/using-umbraco-and-getting-started//108099-is-it-possible-to-start-the-editor-service-file-picker-in-the-wwwroot
@@ -359,7 +362,7 @@
 		}
 
 		vm.sortOptions = {
-			handle: '> .bento-stack-item .bento-stack-item-handle',
+			handle: '> .bento-stack-item .bento-stack-item-handle .bento-stack-item-title',
 			stop: function (e, ui) {
 				updateSavedValue();
 			},
@@ -372,6 +375,18 @@
 				}
 			}
 		};
+
+		function sortUp(index) {
+			var layout = vm.layouts.splice(index, 1)[0];
+			vm.layouts.splice(index - 1, 0, layout);
+			updateSavedValue()
+		}
+
+		function sortDown(index) {
+			var layout = vm.layouts.splice(index, 1)[0];
+			vm.layouts.splice(index + 1, 0, layout);
+			updateSavedValue()
+		}
 
 		function updateSavedValue() {
 			//clear the value

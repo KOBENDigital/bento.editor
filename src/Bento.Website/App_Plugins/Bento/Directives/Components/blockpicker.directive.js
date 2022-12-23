@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function bentoBlockPickerDirective(editorService, bentoResource, contentResource, userService, $routeParams, $sce, $http) {
+	function bentoBlockPickerDirective(editorService, backdropService, bentoResource, contentResource, userService, $routeParams, $sce, $http) {
 
 		var directive = {
 			restrict: 'E',
@@ -99,7 +99,7 @@
 						view: '/App_Plugins/Bento/bento.create.html',
 						embed: embed,
 						config: $scope.config,
-						size: 'medium',
+						size: 'small',
 						area: $scope.area,
 						submit: (model) => {
 
@@ -153,13 +153,14 @@
 					editorService.open(options);
 				}
 
-				function open() {
+				function open($event) {
 
 					var options;
 
 					if ($scope.embedded) {
 						options = {
 							title: 'Edit',
+							size: 'small',
 							embed: $scope.embedded,
 							nodeData: $scope.item.contentData,
 							documentTypeAlias: $scope.item.contentData.contentTypeAlias,
@@ -198,7 +199,9 @@
 								$scope.item.index = $scope.index;
 
 								$scope.$emit("bentoSyncVal", $scope.item);
+
 								editorService.close();
+
 							},
 							close: () => {
 								editorService.close();

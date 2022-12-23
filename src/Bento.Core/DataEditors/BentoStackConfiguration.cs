@@ -127,5 +127,13 @@ namespace Bento.Core.DataEditors
 		Description = "Select whether to hide the property label."
 		)]
 		public bool HideLabel { get; set; }
+
+		[ConfigurationField(
+"maxEditorWidth",
+"Maximum Editor Width",
+"textString",
+Description = "Set the maximum width of the Bento editor (usually the width of your design). Default is 100%"
+)]
+		public string MaxEditorWidth { get; set; }
 	}
 }

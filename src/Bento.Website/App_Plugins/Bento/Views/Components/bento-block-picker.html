@@ -1,4 +1,3 @@
-<div>
 	<umb-load-indicator ng-if="updating"></umb-load-indicator>
 	<div class="bento-picker-button-wrapper" ng-if="!hasId(item.id) && !hasContentData(item.contentData)">
 
@@ -21,19 +20,17 @@
 		</div>
 	</div>
 
-	<div class="clearfix"></div>
+	<div class="bento-item-preview" ng-if="hasId(item.id) || hasContentData(item.contentData)" style="height:100%;">
 
-	<div class="bento-item-preview" ng-if="hasId(item.id) || hasContentData(item.contentData)">
-
-		<div class="backend-block" ng-click="open()">
+		<div class="backend-block" ng-click="open(this)">
 			<div class="backend-content">
 				<umb-load-indicator ng-if="updating"></umb-load-indicator>
 				<div class="bento">
 					<bento-block-preview use-css="{{config.useCssFile}}" stylesheet="{{config.cssFilePath}}" use-backoffice-js="{{config.usePreviewJs}}" user-code="{{config.jsUserCode}}"></bento-block-preview>
 				</div>
 			</div>
-
 		</div>
+
 		<div class="bento-item-preview-meta">
 			<div ng-if="!embedded">
 				<i class="icon icon-books"></i>
@@ -41,7 +38,7 @@
 				<a href ng-click="convert(item.id)" ng-if="adminOnly  && allowedElementTypes.length > 0"><i class="icon icon-pushpin"></i></a>
 
 			</div>
-			<div>
+			<div ng-if="!embedded">
 				<umb-badge size="xs" color="{{status.color}}">
 					{{status.label}}
 				</umb-badge>
@@ -54,7 +51,5 @@
 			<div ng-if="!embedded">
 				id: {{id}}
 			</div>
-
 		</div>
 	</div>
-</div>                                                                                                                                                    

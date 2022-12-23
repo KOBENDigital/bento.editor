@@ -40,6 +40,7 @@
 		vm.item.contentData = undefined;
 		vm.contentNode = undefined;
 		vm.config = $scope.model.config;
+		vm.maxEditorWidth = $scope.model.config.maxEditorWidth ?? "100%";
 
 		//setup the clipboard service
 		clipboardService.registrerTypeResolvers();
