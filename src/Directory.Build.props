@@ -1,12 +1,12 @@
 <Project>
 	<PropertyGroup>
-		<Version>3.0.0</Version>
+		<Version>6.0.0</Version>
 		<Authors>KØBEN digital</Authors>
 		<Company>KØBEN digital</Company>
 		<PackageProjectUrl>https://www.koben.com.au/umbraco-cms/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/KOBENDigital/Bento.Editor</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>Umbraco</PackageTags>
-		<PackageReleaseNotes>Umbraco 9.0 Dotnet core version</PackageReleaseNotes>
+		<PackageReleaseNotes>Umbraco 11.0 Dotnet core version</PackageReleaseNotes>
 	</PropertyGroup>
 </Project>
