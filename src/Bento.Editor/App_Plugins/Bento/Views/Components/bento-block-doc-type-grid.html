@@ -1,0 +1,29 @@
+<div class="bento-block-doc-type-grid">
+  <div class="bento-block-doc-type-grid__item" ng-repeat="item in content" ng-class="{'-selected': item.selected}"
+    ng-click="clickItem(item, $event, $index)">
+
+    <i ng-if="item.selected" class="icon-check bento-block-doc-type-grid__checkmark"></i>
+
+    <div class="bento-block-doc-type-grid__content">
+      <div class="bento-block-doc-type-grid__meta">
+        <i class="bento-block-doc-type-grid__icon {{ item.icon }}"></i>
+
+        <span class="bento-block-doc-type-grid__details" ng-class="{'-light': !item.published && item.updater != null}">
+          <span class="bento-block-doc-type-grid__details-name">{{ item.name }}</span>
+          <span ng-if="item.description" class="bento-block-doc-type-grid__details-description">{{
+            item.description }}</span>
+        </span>
+      </div>
+      <div class="bento-block-doc-type-grid__preview" ng-if="item.preview"
+        style="background-image:url('{{item.preview}}');">
+
+      </div>
+    </div>
+
+  </div>
+
+  <umb-empty-state ng-if="!content" position="center">
+    <localize key="content_noItemsToShow">There are no items to show</localize>
+  </umb-empty-state>
+
+</div>

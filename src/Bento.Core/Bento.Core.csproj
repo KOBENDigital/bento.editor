@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Pluralize.NET" Version="1.0.2" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.1.0" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="10.1.0" />
+  </ItemGroup>
+
+</Project>

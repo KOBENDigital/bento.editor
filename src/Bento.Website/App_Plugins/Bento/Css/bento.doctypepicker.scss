@@ -1,0 +1,140 @@
+.bento-block-doc-type-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-template-rows: auto;
+	grid-gap: 15px;
+
+	&__item {
+		background: #fff;
+		flex: 0 1 200px;
+		cursor: pointer;
+		position: relative;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
+		border-radius: 3px;
+
+		&.-selected:before, &:hover:before {
+			content: "";
+			position: absolute;
+			z-index: 2;
+			top: -2px;
+			left: -2px;
+			right: -2px;
+			bottom: -2px;
+			border: 2px solid #f5c1bc;
+			border-radius: 5px;
+			box-shadow: 0 0 4px 0 #e86f63, inset 0 0 2px 0 #e86f63;
+			pointer-events: none;
+
+		}
+
+		&:hover, &.-selected{
+			.bento-block-doc-type-grid__details-name {
+				text-decoration: none;
+				color: #2152a3
+			}
+		}
+
+		&:hover:before {
+			opacity: .33;
+		}
+
+		&.-selected:before {
+			opacity: .75
+		}
+	}
+
+	&__icon,
+	&__icon[class*=" icon-"],
+	&__icon[class^=icon-] {
+		font-size: 40px;
+		margin-right: 20px
+	}
+
+	&__meta{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+	&__preview{
+		margin-top:15px;
+		border: 1px solid #e6e6e6;
+		width:100%;
+		aspect-ratio: 16 / 9;
+		background-size: cover;
+		background-position: center;
+		background-color: #e6e6e6;
+	}
+
+	&__content {
+		box-sizing: border-box;
+		padding: 15px;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid #e6e6e6;
+	}
+
+
+
+	&__details {
+
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		&-name {
+			font-weight: 700;
+			line-height: 1.4em;
+			
+			align-items: center;
+			color: #1b264f;
+
+			.-light {
+				color: #817f85
+			}
+		}
+
+
+		&-description {
+			margin-bottom: 0;
+			margin-left: 0;
+			font-size: 12px;
+
+			.-light {
+				color: #817f85
+			}
+		}
+	}
+
+	&__checkmark {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		border: 2px solid #fff;
+		width: 26px;
+		height: 26px;
+		background: #2bc37c;
+		border-radius: 50px;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: #fff;
+		cursor: pointer
+	}
+
+	&__no-items {
+		font-size: 16px;
+		font-weight: 700;
+		color: #d8d7d9;
+		padding-top: 50px;
+		padding-bottom: 50px
+	}
+}
+
+
+
+

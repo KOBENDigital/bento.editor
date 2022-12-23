@@ -1,0 +1,239 @@
+<div ng-controller="bentolayout.edit.controller as vm">
+	<umb-editor-view>
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_selectLayout">Select Layout</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+		<umb-editor-container>
+			<umb-box>
+				<umb-box-header title-key="bento_generalSettings"></umb-box-header>
+				<umb-box-content>
+					<div ng-show="vm.errors.length > 0" class="alert alert-error property-error ng-binding ng-isolate-scope ng-hide">
+						<ul>
+							<li ng-repeat="error in vm.errors">{{error}}</li>
+						</ul>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_layoutName">Layout name</localize> *
+							</label>
+							<div class="controls" id="layoutName">
+								<div class="umb-property-editor">
+									<div class="umb-editor-header__name-wrapper">
+										<input data-element="editor-name-field"
+													 no-password-manager
+													 type="text"
+													 id="name"
+													 class="umb-editor-header__name-input"
+													 localize="placeholder"
+													 placeholder="@placeholders_entername"
+													 name="vm.model.name"
+													 ng-model="vm.model.name"
+													 ng-class="{'name-is-empty': vm.model.name === null || vm.model.name === ''}"
+													 ng-change="vm.layoutChanged()"
+													 umb-auto-focus
+													 focus-on-filled="true"
+													 val-server-field="vm.model.name"
+													 required
+													 aria-required="true"
+													 autocomplete="off"
+													 maxlength="255" />
+										<umb-generate-alias data-element="editor-alias"
+																				class="umb-panel-header-alias"
+																				alias="vm.model.alias"
+																				alias-from="vm.model.name"
+																				enable-lock="true"
+																				validation-position="'right'"
+																				server-validation-field="Alias">
+										</umb-generate-alias>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_layoutSettings">Layout Settings</localize>
+								<small>
+									<localize key="bento_layoutSettingsDescription">Layout settings allow you to control settings for the layout</localize>
+								</small>
+							</label>
+							<div class="controls">
+								<div>
+									<prevalue-umb-editor model="vm.model.layoutSettings"></prevalue-umb-editor>
+								</div>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+			</umb-box>
+			<umb-box>
+				<umb-box-header title-key="bento_layoutPreview"></umb-box-header>
+				<umb-box-content>
+					<bento-layout-preview layout="vm.model" show-markers="true"></bento-layout-preview>
+				</umb-box-content>
+			</umb-box>
+			<umb-box>
+				<umb-box-header title-key="bento_layout"></umb-box-header>
+				<umb-box-content>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_layoutColumns">Layout Columns</localize> *
+								<small>
+									<localize key="bento_layoutColumnsDescription">For layouts we assume that 100% of the space is available so for E.G. 1fr for each column will distribute the columns over that available space. 1f 2fr 1fr will make the second column twice as wide as the first and last using only the available space.</localize>
+								</small>
+							</label>
+							<div class="controls" id="layoutColumns">
+								<table class="table">
+									<thead>
+										<tr>
+											<th><localize key="bento_columnSize">Column Size</localize></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody ui-sortable ng-model="vm.model.columns">
+										<tr class="area-list" ng-repeat="column in vm.model.columns track by $index">
+
+											<td>{{column}}</td>
+											<td><a href ng-click="vm.removeColumn($index)"><i class="icon icon-trash"></i></a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_columnSize">Column</localize>
+							</label>
+							<div class="controls" id="layoutAlias">
+								<div class="umb-property-editor">
+									<div>
+										<input type="number" name="{{vm.newCol}}" class="umb-property-editor umb-textstring" ng-model="vm.newCol" />
+									</div>
+									<div><a href class="btn" ng-click="vm.addColumn()">Add</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+				<umb-box-content>
+					<label class="control-label">
+						<localize key="bento_layoutAreas">Areas</localize>
+						<small><localize key="bento_layoutAreasDescription">Areas represent spaces in your CSS grid layout. Column and row are represented as spans between lines. Example.  Putting 2 in column and 1 in row will result in an area that spans from line 2 to 3 for the col and line 1 for the row to the next line.</localize></small>
+					</label>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<div class="controls" id="layoutColumns">
+								<table class="table">
+									<thead>
+										<tr>
+											<th><localize key="bento_name">Name</localize></th>
+											<th><localize key="bento_alias">Alias</localize></th>
+											<th><localize key="bento_columns">Columns</localize></th>
+											<th><localize key="bento_rows">rows</localize></th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody ui-sortable ng-model="vm.model.areas">
+										<tr class="area-list" ng-repeat="area in vm.model.areas">
+											<td>{{area.name}}</td>
+											<td>{{area.alias}}</td>
+											<td>{{area.column}}</td>
+											<td>{{area.row}}</td>
+											<td>
+												<div>
+													<a href ng-click="vm.openAreaEditor(area, $index)"><i class="umb-control-tool-icon icon-edit"></i></a>
+													<a href ng-click="vm.removeArea($index)"><i class="umb-control-tool-icon icon-trash"></i></a>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<div><a href class="btn" ng-click="vm.openAreaEditor(null, -1)">Add</a></div>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+				<umb-box-content>
+					<div class="control-group umb-control-group">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_allowSorting">Allow sorting</localize>
+								<small>
+									<localize key="bento_allowSortingDescription">With sorting enabled all layout areas must allow the same types.</localize>
+								</small>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<prevalue-umb-editor model="vm.model.allowSort"></prevalue-umb-editor>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="control-group umb-control-group" ng-if="vm.model.allowSort.value == true">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_allowedElementTypes">Allowed single use item types</localize>
+							</label>
+							<div class="controls" ">
+								<div class="umb-property-editor">
+									<div>
+										<prevalue-umb-editor model="vm.model.allowedElementTypes"></prevalue-umb-editor>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="control-group umb-control-group" ng-if="vm.model.allowSort.value == true">
+						<div class="umb-el-wrap">
+							<label class="control-label">
+								<localize key="bento_allowedContentTypes">Allowed reusable library item types</localize>
+							</label>
+							<div class="controls">
+								<div class="umb-property-editor">
+									<div>
+										<prevalue-umb-editor model="vm.model.allowedContentTypes"></prevalue-umb-editor>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</umb-box-content>
+			</umb-box>
+		</umb-editor-container>
+
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+										button-style="link"
+										label-key="general_close"
+										shortcut="esc"
+										action="vm.confirmClose()">
+				</umb-button>
+				<umb-button type="button"
+										button-style="action"
+										label-key="general_submit"
+										action="vm.submit()">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+
+	</umb-editor-view>
+	<umb-overlay ng-if="vm.closeOverlay.show"
+							 model="vm.closeOverlay"
+							 position="right">
+	</umb-overlay>
+</div>

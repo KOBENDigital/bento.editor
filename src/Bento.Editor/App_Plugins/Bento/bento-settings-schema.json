@@ -1,0 +1,16 @@
+﻿{
+	"settingAlias": {
+		"label": "string - required - user friendly",
+		"type": "string required - must be either string, text, boolean, radio, checklist, dropdown",
+		"value": "string|boolean|array - optional - string for string, text and radio | boolean for boolean settings | array for checklist and dropdown settings - must match a preValue item value for checklist, radio and dropdown",
+		"preValues": [
+			{
+				"label": "string - required - user friendly",
+				"value": "string - required - value to be used by code"
+			}
+		],
+		"required": "boolean - optional - true or false",
+		"validationPattern": "string - optional - must be a valid Javascript regex pattern",
+		"multiple": "boolean - optional - only used by dropdown setting" 
+	}
+}

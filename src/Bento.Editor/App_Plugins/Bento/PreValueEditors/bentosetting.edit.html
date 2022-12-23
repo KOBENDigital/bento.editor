@@ -1,0 +1,66 @@
+﻿<div ng-controller="bento.setting.edit.controller as vm">
+	<umb-editor-view>
+		<div class="umb-editor-header">
+			<div class="flex items-center" style="height: 100%;">
+				<div class="flex items-center" style="flex: 1;">
+					<div id="nameField" class="umb-editor-header__name-and-description" style="flex: 1 1 auto;">
+						<localize key="bento_editSetting">Edit Setting</localize>
+					</div>
+				</div>
+			</div>
+		</div>
+		<umb-editor-container>
+			<umb-box>
+				<umb-box-content>
+					<div ng-show="vm.errors.length > 0" class="alert alert-error property-error ng-binding ng-isolate-scope ng-hide">
+						<ul>
+							<li ng-repeat="error in vm.errors">{{error}}</li>
+						</ul>
+					</div>
+					<div class="control-group umb-control-group" ng-if="vm.createMode">
+						<div class="umb-el-wrap">
+							<label class="control-label ng-binding" for="setting-type" title="Setting Type">
+								Type
+							</label>
+							<div class="controls" id="setting-type">
+								<div class="umb-property-editor db g-isolate-scope" model="setting" preview="false">
+									<div disable-tabindex="preview" class="ng-isolate-scope">
+										<div class="ng-scope">
+											<select name="setting.type" ng-model="vm.setting.type">
+												<option ng-repeat="type in vm.settingTypes" value="{{type}}">{{type}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div ng-switch on="vm.setting.type">
+						<bento-setting-edit setting="vm.setting" setting-changed="vm.settingChanged"></bento-setting-edit>
+					</div>
+				</umb-box-content>
+			</umb-box>
+		</umb-editor-container>
+
+		<umb-editor-footer>
+			<umb-editor-footer-content-right>
+				<umb-button type="button"
+				            button-style="link"
+				            label-key="general_close"
+				            shortcut="esc"
+				            action="vm.confirmClose()">
+				</umb-button>
+				<umb-button type="button"
+				            button-style="action"
+				            label-key="general_submit"
+				            action="vm.submit()">
+				</umb-button>
+			</umb-editor-footer-content-right>
+		</umb-editor-footer>
+	</umb-editor-view>
+
+	<umb-overlay ng-if="vm.closeOverlay.show"
+	             model="vm.closeOverlay"
+	             position="right">
+	</umb-overlay>
+</div>

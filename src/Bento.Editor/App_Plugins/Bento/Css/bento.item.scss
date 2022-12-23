@@ -1,0 +1,31 @@
+﻿.bento-item {
+
+	&-preview {
+		cursor: zoom-in;
+		transition: box-shadow 0.5s;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		height:100%;
+
+		&:hover {
+			box-shadow: #f5c1bc 0px 0px 10px;
+		}
+
+		&-meta {
+
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			font-weight: bold;
+			transition: background-color .2s;
+			padding: 5px;
+
+		}
+	}
+}
+
+.backend-block {
+	padding: 20px;
+	font-family: "Lato", Helvetica, Arial, sans-serif;
+}
+
