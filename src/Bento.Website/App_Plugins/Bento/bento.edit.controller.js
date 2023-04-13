@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	function bentoEditController($scope, $injector, contentResource, localizationService, overlayService, navigationService) {
+	function bentoEditController($scope, contentResource, localizationService, overlayService, navigationService) {
 
 		var vm = this;
 
@@ -10,9 +10,7 @@
 		vm.close = close;
 		vm.embed = $scope.model.embed;
 
-		//todo: is this ia thing in v9?
-		//check for Matryoshka
-		vm.directiveExists = $injector.has('matryoshkaTabbedContentDirective');
+
 
 		vm.title = "Edit " + $scope.model.documentTypeName;
 

@@ -117,6 +117,8 @@
 
 							initBlock();
 							$scope.$emit("bentoSyncVal", $scope.item);
+							
+							editorService.close();
 						},
 						close: () => {
 							editorService.close();
@@ -153,7 +155,7 @@
 					editorService.open(options);
 				}
 
-				function open($event) {
+				function open() {
 
 					var options;
 

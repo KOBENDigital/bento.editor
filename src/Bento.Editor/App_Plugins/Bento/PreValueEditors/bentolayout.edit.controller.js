@@ -79,10 +79,11 @@
 				}
 
 				if (typeof index !== "undefined" && index !== null && index >= 0 && index < renderModel.length) {
-					renderModel[index] = model;
+					 vm.model.areas[index] = model;
+
 				}
 				else {
-					renderModel.push(model);
+					vm.model.areas.push(model);
 				}
 
 				editorService.close();
@@ -139,7 +140,7 @@
 			var layoutSettings = vm.model.layoutSettings.value;
 			vm.model.layoutSettings = layoutSettings;
 
-			var allowSort = vm.model.allowSort.value;
+			var allowSort = vm.model.allowSort.value === "1";
 			vm.model.allowSort = allowSort;
 
 			if (allowSort) {

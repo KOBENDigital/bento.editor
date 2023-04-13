@@ -346,7 +346,7 @@
 					var value = buildSettingsData(model.node);
 					layout.settings = value; // this is what we will save
 
-					$scope.$broadcast("bentoStackSyncVal");
+					updateSavedValue();
 					editorService.close();
 
 				},
@@ -419,7 +419,6 @@
 		var unsubscribe = $scope.$on("bentoSyncStack", function (ev, args) {
 			vm.layouts[args.index].areas = args.areas;
 			updateSavedValue();
-
 		});
 
 		$scope.$on('$destroy', function () {
