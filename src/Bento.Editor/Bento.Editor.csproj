@@ -19,6 +19,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="App_Plugins\Bento\PreValueEditors\bento.editor.sizedropdown.controller.js" />
+	  <None Remove="App_Plugins\Bento\PreValueEditors\bento.editor.sizedropdown.html" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 	</ItemGroup>
 </Project>

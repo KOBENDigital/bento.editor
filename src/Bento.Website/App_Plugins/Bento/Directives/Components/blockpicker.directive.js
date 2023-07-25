@@ -99,7 +99,7 @@
 						view: '/App_Plugins/Bento/bento.create.html',
 						embed: embed,
 						config: $scope.config,
-						size: 'small',
+						size: "small",
 						area: $scope.area,
 						submit: (model) => {
 
@@ -118,7 +118,7 @@
 							initBlock();
 							$scope.$emit("bentoSyncVal", $scope.item);
 							
-							editorService.close();
+							//editorService.close();
 						},
 						close: () => {
 							editorService.close();
@@ -162,7 +162,7 @@
 					if ($scope.embedded) {
 						options = {
 							title: 'Edit',
-							size: 'small',
+							size: $scope.config.bentoEditorSize || "small",
 							embed: $scope.embedded,
 							nodeData: $scope.item.contentData,
 							documentTypeAlias: $scope.item.contentData.contentTypeAlias,

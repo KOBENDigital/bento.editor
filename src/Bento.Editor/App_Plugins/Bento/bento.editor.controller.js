@@ -27,6 +27,7 @@
 
 	function bentoEditorController($scope, $sce, assetsService, clipboardService, overlayService, editorState) {
 
+
 		var vm = this;
 
 		vm.remove = remove;
@@ -183,10 +184,19 @@
 				/// old bento hacks
 				var data = {};
 
-				if ($scope.model.value.id !== undefined) {
-					data = $scope.model.value;
+				var jsonObj = {};
+
+				//check if $scope.model.value iS JSON or not
+				if (typeof $scope.model.value === "string") {
+					jsonObj = JSON.parse($scope.model.value);
 				} else {
-					data.id = $scope.model.value;
+					jsonObj = $scope.model.value;
+				}
+
+				if (jsonObj.id !== undefined) {
+					data = jsonObj;
+				} else {
+					data.id = jsonObj;
 					data.key = undefined;
 					data.contentData = undefined;
 					data.icon = undefined;
@@ -208,6 +218,11 @@
 			}
 
 			init();
+
+			// you are probably in the doctype editor so we have no umbProperty
+			if ($scope.umbProperty == null) {
+				return;
+			}
 
 			if ($scope.umbProperty.property) {
 				updatePropertyActionStates();

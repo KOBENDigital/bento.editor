@@ -67,7 +67,7 @@
 			if (vm.embed) {
 				let options = {
 					title: 'Edit',
-					size: 'small',
+					size: $scope.model.config.bentoEditorSize || "small",
 					embed: vm.embed,
 					documentTypeAlias: vm.selectedTypeAlias,
 					documentTypeName: vm.selectedTypeName,

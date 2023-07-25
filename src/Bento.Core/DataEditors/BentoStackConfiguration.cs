@@ -120,20 +120,38 @@ namespace Bento.Core.DataEditors
 		)]
 		public string JsUserCode { get; set; }
 
+
 		[ConfigurationField(
-		"hideLabel",
-		"Hide Label",
-		"boolean",
-		Description = "Select whether to hide the property label."
-		)]
+			"bentoEditorSize",
+			"Editor Size",
+			"/App_Plugins/Bento/Views/PreValueEditors/sizedropdown.html",
+			Description = "Set the size of the Bento element editors"
+			)]
+		public string BentoEditorSize { get; set; }
+
+
+		[ConfigurationField(
+			"hideLabel",
+			"Hide Label",
+			"boolean",
+			Description = "Select whether to hide the property label."
+			)]
 		public bool HideLabel { get; set; }
 
 		[ConfigurationField(
-"maxEditorWidth",
-"Maximum Editor Width",
-"textString",
-Description = "Set the maximum width of the Bento editor (usually the width of your design). Default is 100%"
-)]
+			"maxEditorWidth",
+			"Maximum Editor Width",
+			"textString",
+			Description = "Set the maximum width of the Bento editor (usually the width of your design). Default is 100%"
+			)]
 		public string MaxEditorWidth { get; set; }
+
+		[ConfigurationField(
+			"debugMode",
+			"Enable Debug",
+			"boolean",
+			Description = "Select whether to show the property debug data."
+			)]
+		public bool DebugMode { get; set; }
 	}
 }
