@@ -10,7 +10,6 @@ function SingleContentTypePickerController($scope, contentTypeResource, editorSe
 
 	function init() {
 		vm.loading = true;
-		vm.hasValue = $scope.model.value !== null && $scope.model.value !== "";
 		contentTypeResource.getAll().then(function (all) {
 			allContentTypes = all;
 			vm.loading = false;
@@ -19,6 +18,9 @@ function SingleContentTypePickerController($scope, contentTypeResource, editorSe
 			vm.contentTypes = _.filter(allContentTypes, function (contentType) {
 				return currentContentTypes.indexOf(contentType.alias) >= 0;
 			});
+
+			//ensure the document type alias has not changed
+			vm.hasValue = vm.contentTypes.length > 0;
 		});
 	}
 

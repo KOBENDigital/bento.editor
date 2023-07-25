@@ -1,4 +1,4 @@
-﻿function SingleContentTypePickerController($scope, contentTypeResource, editorService, angularHelper) {
+﻿function ContentTypePickerController($scope, contentTypeResource, editorService, angularHelper) {
 	var vm = this;
 	vm.loading = false;
 	vm.contentTypes = [];
@@ -57,4 +57,4 @@
 	init();
 }
 
-angular.module('umbraco').controller("Bento.PrevalueEditors.ContentTypePickerController", SingleContentTypePickerController);
+angular.module('umbraco').controller("Bento.PrevalueEditors.ContentTypePickerController", ContentTypePickerController);
