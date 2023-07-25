@@ -28,6 +28,11 @@
 
 	function bentoStackEditorController($scope, $sce, editorService, notificationsService, assetsService, localizationService, overlayService, clipboardService) {
 
+		if ($scope.umbProperty == null) {
+			return;
+		}
+
+
 		clipboardService.registrerTypeResolvers();
 
 		var vm = this;

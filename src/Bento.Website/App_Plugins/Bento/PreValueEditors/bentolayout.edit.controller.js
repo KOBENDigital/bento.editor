@@ -140,7 +140,7 @@ function bentoLayoutEditController($scope, notificationsService, localizationSer
 			var layoutSettings = vm.model.layoutSettings.value;
 			vm.model.layoutSettings = layoutSettings;
 
-			var allowSort = vm.model.allowSort.value === "1";
+			var allowSort = vm.model.allowSort === "1" || vm.model.allowSort === "True" || vm.model.allowSort === true;
 			vm.model.allowSort = allowSort;
 
 			if (allowSort) {

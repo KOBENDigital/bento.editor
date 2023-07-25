@@ -49,7 +49,8 @@
 		"/App_Plugins/Bento/PreValueEditors/bento.credits.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/singlecssfilepicker.controller.js",
 		"/App_Plugins/Bento/PreValueEditors/singlejsfilepicker.controller.js",
-		"/App_Plugins/Bento/PreValueEditors/jscodeeditor.controller.js"
+		"/App_Plugins/Bento/PreValueEditors/jscodeeditor.controller.js",
+		"/App_Plugins/Bento/PreValueEditors/bento.editor.sizedropdown.controller.js"
 	],
 	"css": [
 		"/App_Plugins/Bento/css/Bento.css",
