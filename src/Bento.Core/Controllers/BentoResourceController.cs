@@ -186,7 +186,11 @@ namespace Bento.Core.Controllers
 				return Enumerable.Empty<AllowedContentType>();
 			}
 
-			var types = _contentTypeService.GetAll().Where(x => allowedAliases.Split(',').Contains(x.Alias)).ToList();
+			var types = _contentTypeService
+				.GetAll()
+				.Where(x => allowedAliases.Split(',').Contains(x.Alias))
+				.OrderBy(x => x.Name)
+				.ToList();
 
 			return types.Any() ? types.Select(x => new AllowedContentType { 
 				Alias = x.Alias, 
