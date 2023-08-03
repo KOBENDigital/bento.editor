@@ -1,82 +1,10 @@
-﻿@inherits UmbracoViewPage<IEnumerable<Bento.Core.Models.StackItem>>
-@foreach (var item in Model)
+﻿@inherits UmbracoViewPage<IEnumerable<Bento.Core.Models.StackItem>?>
+@if (Model?.Any() == true)
 {
-	Guid id = Guid.Empty;
-@*	var settings = item.Settings as Umbraco.Cms.Web.Common.PublishedModels.BentoSettings;
-
-	string classString = null;
-	string styleString = null;
-	string gridGap = null;
-
-	var classList = new List<string>();
-	var styleList = new List<string>();
-
-	if (settings != null)
+	foreach (var item in Model)
 	{
-		id = settings.Key;
-		if (!string.IsNullOrEmpty(settings.BottomMargin))
-		{
-			classList.Add($"mb-{settings.BottomMargin.ToLower()}");
-		}
-
-		//if (!string.IsNullOrEmpty(settings.TopMargin))
-		//{
-		//	classList.Add($"mt-{settings.TopMargin}");
-		//}
-
-		//if (!string.IsNullOrEmpty(settings.GutterLeft))
-		//{
-		//	classList.Add($"gl-{settings.GutterLeft}");
-		//}
-
-		//if (!string.IsNullOrEmpty(settings.GutterRight))
-		//{
-		//	classList.Add($"gr-{settings.GutterRight}");
-		//}
-
-		//if (!string.IsNullOrEmpty(settings.CSsclass))
-		//{
-		//	classList.Add(settings.CSsclass);
-		//}
-
-		//if (settings.TextColour != null && !string.IsNullOrEmpty(settings.TextColour.Label))
-		//{
-		//	classList.Add($"txt-{settings.TextColour.Label}");
-		//}
-
-		//if (settings.BackgroundColour != null && !string.IsNullOrEmpty(settings.BackgroundColour.Label))
-		//{
-		//	classList.Add($"bkg-{settings.BackgroundColour.Label}");
-		//}
-
-		//if (settings.BackgroundImage != null)
-		//{
-		//	classList.Add($"bkg-image");
-		//	styleList.Add($"background-image: url('{Url.GetCropUrl(settings.BackgroundImage, "background")}');");
-		//	if (settings.BackgroundOverlay)
-		//	{
-		//		classList.Add($"bkg-overlay");
-		//	}
-		//}
-
-		if (settings.HasValue("gridGap"))
-		{
-			gridGap = $"grid-gap-{settings.GridGap.ToLower()}";
-		}
+		<section>
+			@await Html.PartialAsync($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
+		</section>
 	}
-
-	if (classList.Any())
-	{
-		classString = string.Join(" ", classList);
-	}
-
-	if (styleList.Any())
-	{
-		styleString = string.Join(" ", styleList);
-	}*@
-	<section id="s-@id">
-		<div class="@item.Alias section-inner">
-			@Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", item)
-		</div>
-	</section>
 }

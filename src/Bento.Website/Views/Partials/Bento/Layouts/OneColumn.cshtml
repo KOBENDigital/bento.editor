@@ -1,0 +1,34 @@
+﻿@using Serilog
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits UmbracoViewPage<Bento.Core.Models.StackItem>
+@{
+	var area = Model.Areas.SingleOrDefault();
+
+	if (area?.Content != null)
+	{
+		try
+		{
+			if (Model.Settings?.Value<bool>("hide") != true)
+			{
+				if (area.Content.Value<bool>("hide") != true)
+				{
+					<div>
+						@await Html.PartialAsync($"~/Views/Partials/Bento/{area.Content.ContentType.Alias}.cshtml", area.Content)
+					</div>
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			var publishedRequest = UmbracoContext?.PublishedRequest?.PublishedContent;
+			if (publishedRequest == null)
+			{
+				Log.Error(ex, "Error rendering Bento Item view for {Alias}", area.Content.ContentType.Alias);
+			}
+			else
+			{
+				Log.Error(ex, "Error rendering Bento Item view for {Alias} in content ID {Id} {Name}", area.Content.ContentType.Alias, publishedRequest.Id, publishedRequest.Name);
+			}
+		}
+	}
+}
