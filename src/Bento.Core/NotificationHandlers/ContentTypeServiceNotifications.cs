@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using Bento.Core.Constants;
 using Bento.Core.DataEditors;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Umbraco.Cms.Core.Events;
-using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.Notifications;
 using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
 using BentoItemDataEditor = Bento.Core.Constants.BentoItemDataEditor;
 using File = System.IO.File;
 
@@ -18,13 +19,13 @@ namespace Bento.Core.NotificationHandlers
 	public class ContentTypeServiceNotifications : INotificationHandler<ContentTypeSavedNotification>
 	{
 		private readonly IDataTypeService _dataTypeService;
-		private readonly IHostingEnvironment _hostingEnvironment;
+		private readonly IWebHostEnvironment _webHostEnvironment;
 		private readonly ILogger<ContentTypeServiceNotifications> _logger;
 
-		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IHostingEnvironment hostingEnvironment, ILogger<ContentTypeServiceNotifications> logger)
+		public ContentTypeServiceNotifications(IDataTypeService dataTypeService, IWebHostEnvironment webHostEnvironment, ILogger<ContentTypeServiceNotifications> logger)
 		{
 			_dataTypeService = dataTypeService;
-			_hostingEnvironment = hostingEnvironment;
+			_webHostEnvironment = webHostEnvironment;
 			_logger = logger;
 		}
 
@@ -83,18 +84,18 @@ namespace Bento.Core.NotificationHandlers
 						EnsureBentoDirectoryExists();
 						EnsureBentoLayoutsDirectoryExists();
 
-						if (!File.Exists(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
+						if (!File.Exists(_webHostEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml")))
 						{
 							var websiteView = new StringBuilder();
 							websiteView.Append(view);
 							websiteView.AppendLine($"<p>View for Bento doctype '{content.Name}' (alias: {content.Alias})</p>");
 
-							File.WriteAllText(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml"), websiteView.ToString());
+							File.WriteAllText(_webHostEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}.cshtml"), websiteView.ToString());
 
 							websiteViewMessage = $"'~/Views/Bento/{contentAlias}.cshtml'";
 						}
 
-						if (!File.Exists(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml")))
+						if (!File.Exists(_webHostEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml")))
 						{
 							var backOfficeView = new StringBuilder();
 							backOfficeView.Append(view);
@@ -105,7 +106,7 @@ namespace Bento.Core.NotificationHandlers
 							backOfficeView.AppendLine("\t</div>");
 							backOfficeView.AppendLine("</div>");
 
-							File.WriteAllText(_hostingEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"), backOfficeView.ToString());
+							File.WriteAllText(_webHostEnvironment.MapPathWebRoot($"~\\..\\Views\\Partials\\Bento\\{contentAlias}BackOffice.cshtml"), backOfficeView.ToString());
 
 							backofficeViewMessage = $"'~/Views/Partials/Bento/{contentAlias}BackOffice.cshtml'";
 						}
@@ -145,17 +146,17 @@ namespace Bento.Core.NotificationHandlers
 
 		private void EnsureBentoLayoutsDirectoryExists()
 		{
-			if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts")))
+			if (!Directory.Exists(_webHostEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts")))
 			{
-				Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts"));
+				Directory.CreateDirectory(_webHostEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento\\Layouts"));
 			}
 		}
 
 		private void EnsureBentoDirectoryExists()
 		{
-			if (!Directory.Exists(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento")))
+			if (!Directory.Exists(_webHostEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento")))
 			{
-				Directory.CreateDirectory(_hostingEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento"));
+				Directory.CreateDirectory(_webHostEnvironment.MapPathWebRoot("~\\..\\Views\\Partials\\Bento"));
 			}
 		}
 	}

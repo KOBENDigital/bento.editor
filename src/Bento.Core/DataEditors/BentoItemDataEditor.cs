@@ -17,17 +17,19 @@ namespace Bento.Core.DataEditors
 		private readonly ILocalizedTextService _localizedTextService;
 		private readonly IShortStringHelper _shortStringHelper;
 		private readonly IJsonSerializer _jsonSerializer;
+		private readonly IEditorConfigurationParser _editorConfigurationParser;
 
 		public BentoItemDataEditor(
 			ILocalizedTextService localizedTextService,
 			IShortStringHelper shortStringHelper,
 			IJsonSerializer jsonSerializer,
-			IIOHelper ioHelper)
+			IIOHelper ioHelper, IEditorConfigurationParser editorConfigurationParser)
 		{
 			_localizedTextService = localizedTextService;
 			_shortStringHelper = shortStringHelper;
 			_jsonSerializer = jsonSerializer;
 			_ioHelper = ioHelper;
+			_editorConfigurationParser = editorConfigurationParser;
 		}
 
 		public string Alias => Bento.Core.Constants.BentoItemDataEditor.EditorAlias;
@@ -46,7 +48,7 @@ namespace Bento.Core.DataEditors
 
 		public IPropertyIndexValueFactory PropertyIndexValueFactory => new DefaultPropertyIndexValueFactory();
 
-		public IConfigurationEditor GetConfigurationEditor() => new BentoItemConfigurationEditor(_ioHelper);
+		public IConfigurationEditor GetConfigurationEditor() => new BentoItemConfigurationEditor(_ioHelper, _editorConfigurationParser);
 
 		/// <summary>
 		/// i think this gets called when you set up the datatype
