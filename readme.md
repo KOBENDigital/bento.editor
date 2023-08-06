@@ -142,9 +142,10 @@ Bento Layouts, Items and Elements are all CSHTML views that live in the ```/View
 Bento Stack properties are of type ```IEnumerable<Bento.Core.Models.StackItem>```. Rending a Bento Stack property can be done as follows:
 
 ```
-@foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty){
+@foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty)
+{
   <section>
-      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
+      @await Html.PartialAsync($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
   </section>
 }
 ```
@@ -159,9 +160,9 @@ Rendering a layout requires looping through the areas of a layout. The ```StackI
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Bento.Core.Models.StackItem>
 @foreach (var area in Model.Areas.Where(x => x.Content != null))
 {
-  <div class="@Model.Alias-@area.Alias">
-    @Html.Partial($"~/Views/Partials/Bento/{area.Content.ContentType.Alias}.cshtml", area.Content)
-  </div>
+  <section>
+    @await Html.PartialAsync($"~/Views/Partials/Bento/{area.Content.ContentType.Alias}.cshtml", area.Content)
+  </section>
 }
 ```
 ### Library Items and Single Use Items
