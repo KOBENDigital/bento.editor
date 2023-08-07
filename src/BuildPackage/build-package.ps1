@@ -1,26 +1,56 @@
 param (
-
     [Parameter(Mandatory)]
     [string]
-    [Alias("v")]
-    $version, #version to build
+    $version = (Read-Host -Prompt "Version to build using semantic versioning e.g. 1.0.1"),
 
     [Parameter()]
     [string]
-    $suffix, # optional suffix to append to version (for pre-releases)
+    $suffix = (Read-Host -Prompt "Optional: suffix to append to version (for pre-releases)"),
 
     [Parameter()]
     [string]
-    $env = 'release', #build environment to use when packing
+    $env = (Read-Host -Prompt "Optional: build environment to use when packing, defaults to 'release'"),
 
     [Parameter()]
     [switch]
-    $pushToLocalNugetFeed = $true, #push to a local nuget feed
+    $pushToLocalNugetFeed,
+
+    $pushToLocalNugetFeedUserInput = (Read-Host -Prompt "Optional: push to a local nuget feed? (Y/N defaults to Y)"),
 
     [Parameter()]
     [string]
-    $localNugetFeed = 'C:\Temp\packages' #local nuget feed location
+    $localNugetFeedPath
 )
+
+if ([string]::IsNullOrWhiteSpace($env)) {
+    $env = 'release'
+}
+
+if ([string]::IsNullOrWhiteSpace($pushToLocalNugetFeedUserInput))
+{
+    $pushToLocalNugetFeed = $true
+}
+elseif ($pushToLocalNugetFeedUserInput -eq 'Y') {
+    $pushToLocalNugetFeed = $true
+}
+else
+{
+    $pushToLocalNugetFeed = $false
+}
+
+if ($pushToLocalNugetFeed) {
+    $localNugetFeedPathUserInput = Read-Host -Prompt "Optional: local nuget feed location (defaults to C:\Temp\packages)"
+}
+
+if ([string]::IsNullOrWhiteSpace($localNugetFeedPathUserInput))
+{
+    $localNugetFeedPath = 'C:\Temp\packages'
+}
+
+if ($version -notmatch "\d+(?:\.\d+)+") {
+    Write-Host "Please enter your version number using semantic versioning e.g. 1.0.1"
+    exit
+}
 
 if ($version.IndexOf('-') -ne -1) {
     Write-Host "Version shouldn't contain a - (remember version and suffix are seperate)"
@@ -56,13 +86,7 @@ dotnet restore ..
 ""; "##### Packaging"; "----------------------------------" ; ""
 
 dotnet pack ..\Bento.Core\Bento.Core.csproj --no-restore -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$fullVersion
-
-#after installing the package, this version results in the 'App_Plugins/Bento' folder being included in the project and a 'Bento.Editor.dll' in the bin
-#when you uninstall, the 'App_Plugins/Bento' folder is removed from the project and disk
 dotnet pack ..\Bento.Editor\Bento.Editor.csproj --no-restore -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$fullVersion
-
-#this results in the 'App_Plugins/Bento' folder being copied but included in the project but there is no 'Bento.Editor.dll' in the bin
-#.\nuget pack "..\Bento.Editor\Bento.Editor.nuspec" -version $fullVersion -OutputDirectory $outFolder
 
 if ($pushToLocalNugetFeed) {
     #""; "##### Publishing to local nuget feed"; "----------------------------------" ; ""
