@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<Description>Bento Editor for Umbraco 11. A flexible block based editor that takes advantage of infinite editing.</Description>
-		<Version>6.0.4</Version>
+		<Version>6.0.5</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
