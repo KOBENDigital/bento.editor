@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Bento.Core.Models;
+﻿using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.Models.PublishedContent;
 using Umbraco.Cms.Core.Services;
@@ -154,12 +153,26 @@ namespace Bento.Core.Controllers
 
 			foreach (var relationType in relationsTypes)
 			{
+				if (string.IsNullOrWhiteSpace(relationType.Name))
+				{
+					continue;
+				}
+
 				var items = new List<RelationItem>();
 
 				foreach (var relation in relations)
 				{
 					var parent = _contentService.GetById(relation.ParentId);
+					if (parent == null)
+					{
+						continue;
+					}
+
 					var creatorId = _userService.GetProfileById(parent.CreatorId);
+					if (creatorId == null)
+					{
+						continue;
+					}
 
 					items.Add(new RelationItem
 					{
@@ -186,7 +199,11 @@ namespace Bento.Core.Controllers
 				return Enumerable.Empty<AllowedContentType>();
 			}
 
-			var types = _contentTypeService.GetAll().Where(x => allowedAliases.Split(',').Contains(x.Alias)).ToList();
+			var types = _contentTypeService
+				.GetAll()
+				.Where(x => allowedAliases.Split(',').Contains(x.Alias))
+				.OrderBy(x => x.Name)
+				.ToList();
 
 			return types.Any() ? types.Select(x => new AllowedContentType { 
 				Alias = x.Alias, 

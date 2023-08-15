@@ -61,11 +61,11 @@ namespace Bento.Core.ValueConverters
 				IPublishedElement content = null;
 				if (area.Key != Guid.Empty && area.ContentData == null)
 				{
-					content = publishedContentCache.GetById(area.Key);
+					content = publishedContentCache?.GetById(area.Key);
 				}
 				else if (area.Id != 0 && area.ContentData == null)
 				{
-					content = publishedContentCache.GetById(area.Id);
+					content = publishedContentCache?.GetById(area.Id);
 				}
 				else if (area.ContentData != null)
 				{
@@ -75,10 +75,10 @@ namespace Bento.Core.ValueConverters
 
 				return content;
 			}
-			catch (Exception e)
+			catch
 			{
 				// this is to catch legacy bento setups
-				var content = publishedContentCache.GetById(Int32.Parse(interString));
+				var content = publishedContentCache?.GetById(int.Parse(interString));
 
 				return content;
 			}

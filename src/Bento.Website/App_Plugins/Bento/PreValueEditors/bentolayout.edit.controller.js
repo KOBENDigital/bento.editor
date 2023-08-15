@@ -63,7 +63,6 @@ function bentoLayoutEditController($scope, notificationsService, localizationSer
 		vm.changes = true;
 	}
 
-
 	function openAreaEditor(area, index) {
 		var renderModel = vm.model.areas;
 
@@ -79,10 +78,8 @@ function bentoLayoutEditController($scope, notificationsService, localizationSer
 				}
 
 				if (typeof index !== "undefined" && index !== null && index >= 0 && index < renderModel.length) {
-					 vm.model.areas[index] = model;
-
-				}
-				else {
+					vm.model.areas[index] = model;
+				} else {
 					vm.model.areas.push(model);
 				}
 
@@ -140,12 +137,12 @@ function bentoLayoutEditController($scope, notificationsService, localizationSer
 			var layoutSettings = vm.model.layoutSettings.value;
 			vm.model.layoutSettings = layoutSettings;
 
-			var allowSort = vm.model.allowSort === "1" || vm.model.allowSort === "True" || vm.model.allowSort === true;
+			var allowSort = vm.model.allowSort.value === "1" || vm.model.allowSort.value === "True" || vm.model.allowSort.value === true;
 			vm.model.allowSort = allowSort;
 
 			if (allowSort) {
 
-				//if sort is allowed all elements need the smae allowed items
+				//if sort is allowed all elements need the same allowed items
 				var allowedElementTypes = vm.model.allowedElementTypes.value;
 				vm.model.allowedElementTypes = allowedElementTypes;
 				var allowedContentTypes = vm.model.allowedContentTypes.value;

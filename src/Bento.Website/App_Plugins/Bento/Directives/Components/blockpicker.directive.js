@@ -388,7 +388,7 @@
 						contentResource.getById($scope.item.id).then(setWrapper);
 
 						//mvc view
-						let url = '/umbraco/backoffice/Bento/LoadLibraryContent?id=' + $scope.id + '&contentid=' + $routeParams.id;
+						let url = '/umbraco/backoffice/Bento/LoadLibraryContent?id=' + $scope.item.id + '&contentid=' + $routeParams.id;
 
 						if (typeof ($scope.culture) !== 'undefined') {
 							url += '&culture=' + $scope.culture;

@@ -1,30 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Description>Bento Editor for Umbraco 11. A flexible block based editor that takes advantage of infinite editing.</Description>
-    <Version>6.0.4</Version>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Description>Bento Editor for Umbraco 11. A flexible block based editor that takes advantage of infinite editing.</Description>
+		<Version>6.0.5</Version>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<None Include="build\**\*.*">
 			<Pack>true</Pack>
 			<PackagePath>buildTransitive</PackagePath>
 		</None>
-		
+
 		<Content Include="App_Plugins\**\*.*">
 			<Pack>true</Pack>
 			<PackagePath>content\App_Plugins</PackagePath>
 			<Visible>false</Visible>
-		</Content>	
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="App_Plugins\Bento\PreValueEditors\bento.editor.sizedropdown.controller.js" />
-	  <None Remove="App_Plugins\Bento\PreValueEditors\bento.editor.sizedropdown.html" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
+		<ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 	</ItemGroup>
 </Project>

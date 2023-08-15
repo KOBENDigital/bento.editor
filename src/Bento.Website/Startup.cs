@@ -1,14 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using Bento.Core.NotificationHandlers;
-using Umbraco.Cms.Core.DependencyInjection;
-using Umbraco.Cms.Core.Notifications;
-using Umbraco.Extensions;
-
 namespace Bento.Website
 {
 	public class Startup
@@ -42,12 +31,11 @@ namespace Bento.Website
 		{
 #pragma warning disable IDE0022 // Use expression body for methods
 			services.AddUmbraco(_env, _config)
-					.AddBackOffice()
-					.AddWebsite()
-					.AddComposers()
-					.Build();
+			.AddBackOffice()
+			.AddWebsite()
+			.AddComposers()
+			.Build();
 #pragma warning restore IDE0022 // Use expression body for methods
-
 		}
 
 		/// <summary>
@@ -65,17 +53,17 @@ namespace Bento.Website
 			app.UseHttpsRedirection();
 
 			app.UseUmbraco()
-					.WithMiddleware(u =>
-					{
-						u.UseBackOffice();
-						u.UseWebsite();
-					})
-					.WithEndpoints(u =>
-					{
-						u.UseInstallerEndpoints();
-						u.UseBackOfficeEndpoints();
-						u.UseWebsiteEndpoints();
-					});
+			.WithMiddleware(u =>
+			{
+				u.UseBackOffice();
+				u.UseWebsite();
+			})
+			.WithEndpoints(u =>
+			{
+				u.UseInstallerEndpoints();
+				u.UseBackOfficeEndpoints();
+				u.UseWebsiteEndpoints();
+			});
 		}
 	}
 }

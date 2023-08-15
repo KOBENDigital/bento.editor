@@ -3,7 +3,7 @@
 		<ng-form name="prevalueRequiredFieldForm">
 			<umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
 			<div ng-show="!vm.loading">
-				<umb-node-preview ng-repeat="contentType in vm.contentTypes"
+				<umb-node-preview ng-repeat="contentType in vm.contentTypes | orderBy: 'name'"
 				                  class="mt1"
 				                  icon="contentType.icon"
 				                  name="contentType.name"

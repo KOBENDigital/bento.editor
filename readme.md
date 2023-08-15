@@ -4,7 +4,12 @@
 
 # Bento Editor for Umbraco 11
 
-The Bento Editor is a content block editor for Umbraco 11 that takes advantage of the infinite editing features of Umbraco 11.
+|NuGet Packages    |Version           |
+|:-----------------|:-----------------|
+|**Release**|[![NuGet download](http://img.shields.io/nuget/vpre/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor/)|[![NuGet count](https://img.shields.io/nuget/dt/Bento.Editor.svg)](https://www.nuget.org/packages/Bento/)|
+|**Release Core**|[![NuGet download](http://img.shields.io/nuget/vpre/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/)|[![NuGet count](https://img.shields.io/nuget/dt/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/)|
+
+The Bento Editor is a content block editor for Umbraco 11 that takes advantage of the infinite editing features of Umbraco.
 
 The aim of Bento is to simplify the experience of creating creative layouts in Umbraco without compromising brand and design standards.
 
@@ -14,12 +19,22 @@ License: MIT
 
 ## :bento: Building and running the source
 
-After forking and cloning the repo, open the VS solution and run the Bento.Website project. It uses the embedded SQLCE database. This will enable you to play with some test content and learn how some of the concepts of Bento work.
+After forking and cloning the repo, open the Visual Studio solution and run the `Bento.Website` project and navigate to the backoffice (a SQLite database is provided with a base set up). This will enable you to play with some test content and learn how some of the concepts of Bento work.
 
-The Umbraco login details:
+Username: admin  
+(Yes the username should be an email address... but we didn't want a dummy email address getting spammed with password reset requests!)  
+Password: testtest1234
 
-username: admin@admin.com
-password: bentobentobento
+If you'd prefer to use your own database, right click the `Bento.Website` project, select `Manage User Secrets` and paste the following JSON updating the database connection and provider where applicable:
+
+```JSON
+{
+	"ConnectionStrings": {
+		"umbracoDbDSN": "",
+		"umbracoDbDSN_ProviderName": ""
+	}
+}
+```
 
 ### Frontend Build
 
@@ -127,9 +142,10 @@ Bento Layouts, Items and Elements are all CSHTML views that live in the ```/View
 Bento Stack properties are of type ```IEnumerable<Bento.Core.Models.StackItem>```. Rending a Bento Stack property can be done as follows:
 
 ```
-@foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty){
+@foreach(Bento.Core.Models.StackItem layout in Model.MyBentoStackProperty)
+{
   <section>
-      @Html.Partial($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
+      @await Html.PartialAsync($"~/Views/Partials/Bento/layouts/{item.Alias}.cshtml", layout)
   </section>
 }
 ```
@@ -144,9 +160,9 @@ Rendering a layout requires looping through the areas of a layout. The ```StackI
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Bento.Core.Models.StackItem>
 @foreach (var area in Model.Areas.Where(x => x.Content != null))
 {
-  <div class="@Model.Alias-@area.Alias">
-    @Html.Partial($"~/Views/Partials/Bento/{area.Content.ContentType.Alias}.cshtml", area.Content)
-  </div>
+  <section>
+    @await Html.PartialAsync($"~/Views/Partials/Bento/{area.Content.ContentType.Alias}.cshtml", area.Content)
+  </section>
 }
 ```
 ### Library Items and Single Use Items

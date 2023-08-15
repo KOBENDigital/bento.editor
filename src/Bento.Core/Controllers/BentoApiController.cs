@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +49,7 @@ namespace Bento.Core.Controllers
 			}
 
 			var publishedContentCache = _publishedSnapshotAccessor.GetRequiredPublishedSnapshot().Content;
-			var model = publishedContentCache.GetById(true, id);
+			var model = publishedContentCache?.GetById(true, id) ?? throw new Exception($"Unable to load library content using Id: {id}");
 
 			return View($"~/Views/Partials/Bento/{model.ContentType.Alias}BackOffice.cshtml", model);
 		}
@@ -69,7 +70,7 @@ namespace Bento.Core.Controllers
 		{
 			//todo: this isn't ideal... but the controller needs to find a piece of content otherwise it won't find a route
 			var context = _umbracoContextAccessor.GetRequiredUmbracoContext();
-			return context.Content.GetAtRoot().FirstOrDefault();
+			return context.Content?.GetAtRoot().FirstOrDefault();
 		}
 
 		private IActionResult BentoViewResult(LoadEmbeddedContentRequest data, string viewPath)
