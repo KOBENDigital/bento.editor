@@ -30,4 +30,5 @@
 		<UserSecretsId>f423ebd9-7632-45cf-96cb-63b93dfda47c</UserSecretsId>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Umbraco.Web.UI' " />
 </Project>

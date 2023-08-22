@@ -75,7 +75,7 @@ namespace Bento.Core.DataEditors
 		[ConfigurationField(
 		"fontCssUrls",
 		"Font CSS Urls",
-		"textString",
+		"textstring",
 		Description = "If you are using a custom web font from Google or equivilant and would like to use it in the back office previews, paste the urls here separated by *'s"
 		)]
 		public string FontCssUrls { get; set; }
@@ -107,7 +107,7 @@ namespace Bento.Core.DataEditors
 		[ConfigurationField(
 		"frontendFrameworkUrl",
 		"Use frontend framework like Next JS set the URL for where previews come from",
-		"textString",
+		"textstring",
 		Description = "Used in conjunction with Use Frontend Framework flag"
 		)]
 		public string FrontendFrameworkUrl { get; set; }
@@ -147,7 +147,7 @@ namespace Bento.Core.DataEditors
 		[ConfigurationField(
 		"maxEditorWidth",
 		"Maximum Editor Width",
-		"textString",
+		"textstring",
 		Description = "Set the maximum width of the Bento editor (usually the width of your design). Default is 100%"
 		)]
 		public string MaxEditorWidth { get; set; }
