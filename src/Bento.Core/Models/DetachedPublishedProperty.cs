@@ -57,6 +57,11 @@ namespace Bento.Core.Models
 			return XPathValue;
 		}
 
+		public object GetDeliveryApiValue(bool expanding, string culture = null, string segment = null)
+		{
+			return Value;
+		}
+
 		public IPublishedPropertyType PropertyType => _propertyType;
 
 		public string Alias => _propertyType.Alias;
