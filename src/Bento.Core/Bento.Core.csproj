@@ -2,13 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
-		<Version>12.1.0</Version>
+		<Version>12.2.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Pluralize.NET" Version="1.0.2" />
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="12.1.1" />
-		<PackageReference Include="Umbraco.Cms.Web.Website" Version="12.1.1" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="12.3.3" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="12.3.3" />
 	</ItemGroup>
 
 </Project>
