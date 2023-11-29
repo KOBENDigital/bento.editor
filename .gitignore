@@ -576,3 +576,4 @@ FodyWeavers.xsd
 !**/umbraco/Data/packages
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,umbraco,visualstudio
+.DS_Store
