@@ -6,8 +6,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Umbraco.Cms" Version="12.1.1" />
-		<PackageReference Include="Umbraco.Cms.Core" Version="12.1.1" />
+		<PackageReference Include="Umbraco.Cms" Version="12.3.3" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="12.3.3" />
 		<ProjectReference Include="..\Bento.Core\Bento.Core.csproj" />
 		<RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="68.2" />
 	</ItemGroup>
