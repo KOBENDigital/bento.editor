@@ -33,6 +33,7 @@ namespace Bento.Website
 			services.AddUmbraco(_env, _config)
 			.AddBackOffice()
 			.AddWebsite()
+			.AddDeliveryApi()
 			.AddComposers()
 			.Build();
 #pragma warning restore IDE0022 // Use expression body for methods

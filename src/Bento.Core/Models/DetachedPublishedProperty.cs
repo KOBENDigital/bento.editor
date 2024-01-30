@@ -59,7 +59,7 @@ namespace Bento.Core.Models
 
 		public object GetDeliveryApiValue(bool expanding, string culture = null, string segment = null)
 		{
-			return Value;
+			return DataValue;
 		}
 
 		public IPublishedPropertyType PropertyType => _propertyType;
