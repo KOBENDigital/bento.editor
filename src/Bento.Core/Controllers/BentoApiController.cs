@@ -2,6 +2,7 @@
 using System.Linq;
 using Bento.Core.Models;
 using Bento.Core.Services.Interfaces;
+using Bento.Core.ValueConverters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -27,17 +28,17 @@ namespace Bento.Core.Controllers
 	[MiddlewareFilter(typeof(UnhandledExceptionLoggerFilter))]
 	public class BentoApiController : UmbracoPageController, IVirtualPageController
 	{
-		private readonly IEmbeddedContentService _embeddedContentService;
+		private readonly BentoAreaValueConverter _bentoAreaConverter;
 		private readonly IPublishedSnapshotAccessor _publishedSnapshotAccessor;
 		private readonly IVariationContextAccessor _variationContextAccessor;
 		private readonly IUmbracoContextAccessor _umbracoContextAccessor;
 
-		public BentoApiController(ILogger<UmbracoPageController> logger, ICompositeViewEngine compositeViewEngine, IEmbeddedContentService embeddedContentService, IPublishedSnapshotAccessor publishedSnapshotAccessor, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine)
+		public BentoApiController(ILogger<UmbracoPageController> logger, ICompositeViewEngine compositeViewEngine,  IPublishedSnapshotAccessor publishedSnapshotAccessor, BentoAreaValueConverter bentoAreaValueConverter, IVariationContextAccessor variationContextAccessor, IUmbracoContextAccessor umbracoContextAccessor) : base(logger, compositeViewEngine)
 		{
-			_embeddedContentService = embeddedContentService;
 			_publishedSnapshotAccessor = publishedSnapshotAccessor;
 			_variationContextAccessor = variationContextAccessor;
 			_umbracoContextAccessor = umbracoContextAccessor;
+			_bentoAreaConverter = bentoAreaValueConverter;
 		}
 
 		[HttpGet]
@@ -95,7 +96,7 @@ namespace Bento.Core.Controllers
 				return null;
 			}
 
-			var content = _embeddedContentService.ConvertValueToContent(data.Guid, data.ContentTypeAlias, data.DataJson);
+			var content = _bentoAreaConverter.ConvertToElement(data);
 
 			return View(viewPath, content);
 		}

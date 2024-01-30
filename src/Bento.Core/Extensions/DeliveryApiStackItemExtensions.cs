@@ -1,6 +1,8 @@
 ﻿using Bento.Core.Models;
+using System;
 using System.Linq;
 using Umbraco.Cms.Core.DeliveryApi;
+using Umbraco.Cms.Core.Models.PublishedContent;
 
 namespace Bento.Core.Extensions
 
@@ -9,24 +11,27 @@ namespace Bento.Core.Extensions
 	{
 		internal static ApiStackItem CreateApiStackItem(this StackItem stackItem, IApiElementBuilder apiElementBuilder)
 		{
-			return new ApiStackItem
-			{
-				Alias = stackItem.Alias,
-				Areas = stackItem.Areas.Select(x => x.CreateApiArea(apiElementBuilder)),
-				Settings = apiElementBuilder.Build(stackItem.Settings)
-			};
+			var item = new ApiStackItem();
+
+			item.Alias = stackItem.Alias;
+				item.Areas = stackItem.Areas.Select(x => x.CreateApiArea(apiElementBuilder));
+			item.Settings = stackItem.Settings != null ? apiElementBuilder.Build(stackItem.Settings) : null;
+
+			return item;
 		}
 
 		internal static ApiArea CreateApiArea(this Area area, IApiElementBuilder apiElementBuilder)
 		{
-			return new ApiArea
-			{
-				Key = area.Key,
-				Id = area.Id,
-				Alias = area.Alias,
-				Name = area.Name,
-				Content = apiElementBuilder.Build(area.Content)
-			};
+
+			var apiArea = new ApiArea();
+
+			apiArea.Alias = area.Alias;
+			apiArea.Content = apiElementBuilder.Build(area.Content);
+			apiArea.Id = area.Id;
+			apiArea.Key = area.Key;
+			apiArea.Name = area.Name;
+
+			return apiArea;
 		}
 	}
 }

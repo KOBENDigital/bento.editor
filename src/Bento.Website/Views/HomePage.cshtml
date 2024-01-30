@@ -4,4 +4,6 @@
 	Layout = "~/Views/Shared/_layout.cshtml";
 }
 
+@await Html.PartialAsync("~/Views/Partials/BentoItem.cshtml", Model.BentoItemTest)
+
 @await Html.PartialAsync("~/Views/Partials/BentoStack.cshtml", Model.BentoStack)

@@ -3,6 +3,7 @@ using Bento.Core.Controllers;
 using Bento.Core.NotificationHandlers;
 using Bento.Core.Services;
 using Bento.Core.Services.Interfaces;
+using Bento.Core.ValueConverters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -11,6 +12,7 @@ using Umbraco.Cms.Core.Configuration.Models;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Hosting;
 using Umbraco.Cms.Core.Notifications;
+using Umbraco.Cms.Core.PropertyEditors.ValueConverters;
 using Umbraco.Cms.Web.Common.ApplicationBuilder;
 using Umbraco.Extensions;
 
@@ -50,7 +52,10 @@ namespace Bento.Core.Composers
 			//services
 			builder.Services.AddUnique<IPagingHelper, PagingHelper>();
 			builder.Services.AddUnique<IPluralizationServiceWrapper, PluralizationServiceWrapper>();
-			builder.Services.AddUnique<IEmbeddedContentService, EmbeddedContentService>();
+
+			builder.Services.AddSingleton<BentoItemValueConverter>();
+			builder.Services.AddSingleton<BentoAreaValueConverter>();
+			builder.Services.AddSingleton<BentoStackItemSettingsConverter>();
 
 			//todo: i can't work out why we're doing this? it was from umbraco 8 and the thinking is it might have something to do with variants and multilingual setup?
 			//controllers
