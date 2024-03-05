@@ -89,8 +89,14 @@ dotnet pack ..\Bento.Core\Bento.Core.csproj --no-restore -c $env -o $outFolder /
 dotnet pack ..\Bento.Editor\Bento.Editor.csproj --no-restore -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$fullVersion
 
 if ($pushToLocalNugetFeed) {
-    #""; "##### Publishing to local nuget feed"; "----------------------------------" ; ""
-    .\nuget init $outFolder $localNugetFeed
+    "----------------------------------"
+    Write-Host "##### Publishing to local nuget feed"
+    $packages = Get-ChildItem $outFolder"\*.nupkg" -Recurse -Force
+    ForEach ($package in $packages)
+    {
+        .\nuget add $package -source $localNugetFeedPath
+    }
+    "----------------------------------"; ""
 }
 
 Write-Host "Bento Packaged : $fullVersion"
