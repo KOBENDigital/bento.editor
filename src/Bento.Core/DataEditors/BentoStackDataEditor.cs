@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Umbraco.Cms.Core.Cache;
 using Umbraco.Cms.Core.IO;
 using Umbraco.Cms.Core.Models;
 using Umbraco.Cms.Core.PropertyEditors;
@@ -19,11 +21,22 @@ namespace Bento.Core.DataEditors
 		private readonly IJsonSerializer _jsonSerializer;
 		private readonly IEditorConfigurationParser _editorConfigurationParser;
 
+		private readonly IContentService _contentService;
+		private readonly IContentTypeService _contentTypeService;
+		private readonly IDataTypeConfigurationCache _dataTypeConfigurationCache;
+		private readonly Lazy<PropertyEditorCollection> _propertyEditors;
+		private readonly IPropertyValidationService _propertyValidationService;
+
 		public BentStackPropertyEditor(
-			IIOHelper ioHelper, 
-			ILocalizedTextService localizedTextService, 
-			IShortStringHelper shortStringHelper, 
-			IJsonSerializer jsonSerializer, 
+			IContentService contentService,
+						IContentTypeService contentTypeService,
+						Lazy<PropertyEditorCollection> propertyEditors,
+						IDataTypeConfigurationCache dataTypeConfigurationCache,
+						IPropertyValidationService propertyValidationService,
+			IIOHelper ioHelper,
+			ILocalizedTextService localizedTextService,
+			IShortStringHelper shortStringHelper,
+			IJsonSerializer jsonSerializer,
 			IEditorConfigurationParser editorConfigurationParser)
 		{
 			_ioHelper = ioHelper;
@@ -31,6 +44,12 @@ namespace Bento.Core.DataEditors
 			_shortStringHelper = shortStringHelper;
 			_jsonSerializer = jsonSerializer;
 			_editorConfigurationParser = editorConfigurationParser;
+			_contentService = contentService;
+			_contentTypeService = contentTypeService;
+			_propertyEditors = propertyEditors;
+			_dataTypeConfigurationCache = dataTypeConfigurationCache;
+			_propertyValidationService = propertyValidationService;
+
 		}
 
 		public string Alias => Bento.Core.Constants.BentoStackDataEditor.EditorAlias;
@@ -57,7 +76,13 @@ namespace Bento.Core.DataEditors
 		/// <returns></returns>
 		public IDataValueEditor GetValueEditor()
 		{
-			var editor = new BentoStackDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer);
+			var editor = new BentoStackDataValueEditor(_contentTypeService,
+								_propertyEditors.Value,
+								_dataTypeConfigurationCache,
+								_localizedTextService,
+								_shortStringHelper,
+								_jsonSerializer,
+								_propertyValidationService);
 			editor.View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
 			editor.ValueType = "JSON";
 			return editor;
@@ -76,7 +101,13 @@ namespace Bento.Core.DataEditors
 				hideLabel = config["hideLabel"].TryConvertTo<bool>().Result;
 			}
 
-			var editor = new BentoStackDataValueEditor(_localizedTextService, _shortStringHelper, _jsonSerializer);
+			var editor = new BentoStackDataValueEditor(_contentTypeService,
+								_propertyEditors.Value,
+								_dataTypeConfigurationCache,
+								_localizedTextService,
+								_shortStringHelper,
+								_jsonSerializer,
+								_propertyValidationService);
 			editor.View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
 			editor.ValueType = "JSON";
 			editor.HideLabel = hideLabel;
