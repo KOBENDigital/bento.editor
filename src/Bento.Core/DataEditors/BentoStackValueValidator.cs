@@ -36,7 +36,7 @@ namespace Bento.Core.DataEditors
 							foreach (var area in layout.Areas)
 							{
 
-								if (area != null && area.ContentData.TryGetValue("contentTypeAlias", out var contentTypeAlias) == true && contentTypeAlias is string)
+								if (area != null && area.ContentData != null && area.ContentData.TryGetValue("contentTypeAlias", out var contentTypeAlias) == true && contentTypeAlias is string)
 								{
 									if (_elementTypes.Value.TryGetValue((string)contentTypeAlias, out var elementType) == true)
 									{
