@@ -82,9 +82,11 @@ namespace Bento.Core.DataEditors
 								_localizedTextService,
 								_shortStringHelper,
 								_jsonSerializer,
-								_propertyValidationService);
-			editor.View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
-			editor.ValueType = "JSON";
+								_propertyValidationService)
+			{
+				View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+				ValueType = "JSON"
+			};
 			return editor;
 		}
 
@@ -107,10 +109,12 @@ namespace Bento.Core.DataEditors
 								_localizedTextService,
 								_shortStringHelper,
 								_jsonSerializer,
-								_propertyValidationService);
-			editor.View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath);
-			editor.ValueType = "JSON";
-			editor.HideLabel = hideLabel;
+								_propertyValidationService)
+			{
+				View = _ioHelper.ResolveRelativeOrVirtualUrl(DataEditorViewPath),
+				ValueType = "JSON",
+				HideLabel = hideLabel
+			};
 			return editor;
 		}
 	}

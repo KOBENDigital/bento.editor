@@ -2,12 +2,12 @@
 
 [![NuGet release](https://img.shields.io/nuget/v/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor)
 
-# Bento Editor for Umbraco 12
+# Bento Editor for Umbraco 13
 
-|NuGet Packages    |Version           |
-|:-----------------|:-----------------|
-|**Release**|[![NuGet download](http://img.shields.io/nuget/vpre/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor/)|[![NuGet count](https://img.shields.io/nuget/dt/Bento.Editor.svg)](https://www.nuget.org/packages/Bento/)|
-|**Release Core**|[![NuGet download](http://img.shields.io/nuget/vpre/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/)|[![NuGet count](https://img.shields.io/nuget/dt/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/)|
+| NuGet Packages   | Version                                                                                                              |
+| :--------------- | :------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Release**      | [![NuGet download](http://img.shields.io/nuget/vpre/Bento.Editor.svg)](https://www.nuget.org/packages/Bento.Editor/) | [![NuGet count](https://img.shields.io/nuget/dt/Bento.Editor.svg)](https://www.nuget.org/packages/Bento/)    |
+| **Release Core** | [![NuGet download](http://img.shields.io/nuget/vpre/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/)     | [![NuGet count](https://img.shields.io/nuget/dt/Bento.Core.svg)](https://www.nuget.org/packages/Bento.Core/) |
 
 Bento Editor is a content block editor for Umbraco that takes advantage of the infinite editing features of Umbraco.
 
