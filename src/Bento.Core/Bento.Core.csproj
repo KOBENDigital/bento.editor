@@ -1,14 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
-		<Version>13.1.0</Version>
+		<Version>13.2.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Pluralize.NET" Version="1.0.2" />
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.1.0" />
-		<PackageReference Include="Umbraco.Cms.Web.Website" Version="13.1.0" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.2.0" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="13.2.0" />
 	</ItemGroup>
 
 </Project>
