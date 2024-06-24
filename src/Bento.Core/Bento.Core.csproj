@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
+		<Description>Bento Editor for Umbraco 13. A flexible block based editor that takes advantage of infinite editing.</Description>
 		<Version>13.2.1</Version>
 	</PropertyGroup>
 
