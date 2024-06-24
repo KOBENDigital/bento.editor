@@ -84,8 +84,8 @@ namespace Bento.Core.DataEditors
 								}
 							}
 						}
-						return layouts;
 					}
+					return layouts;
 				}
 			}
 			return Array.Empty<object>();
